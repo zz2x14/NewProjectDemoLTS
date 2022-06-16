@@ -17,6 +17,13 @@ public class PlayerController : CharacterBase
     [SerializeField] private Collider2D normalColl;
     [SerializeField] private Collider2D hangColl;
 
+    [Header("攻击检测")] 
+    [SerializeField] private Transform attackPoint01;
+    [SerializeField] private Transform attackPoint02;
+    [SerializeField] private Transform attackPoint03;
+    [SerializeField] private float attackRange;
+    [SerializeField] private LayerMask enemyLayer;
+
     private Rigidbody2D rb;
     
     private PlayerInput playerInput;
@@ -34,6 +41,9 @@ public class PlayerController : CharacterBase
 
     public bool IsInStairs => stairsDetector.IsInStairs;
     public bool IsOnStairs => stairsDetector.IsOnStairs;
+
+    private Coroutine invincibleCor;
+    private bool canHurt = true;
     
     private void Awake()
     {
@@ -54,7 +64,12 @@ public class PlayerController : CharacterBase
         playerInput.EnableGameplayInput();
     }
 
-    
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireSphere(attackPoint01.position,attackRange);
+    }
+
     #region RbVelocity
     
     public void Move(float speed)
@@ -85,7 +100,7 @@ public class PlayerController : CharacterBase
 
     #endregion
 
-    #region MovementStatesMethod
+    #region StatesMethod
     
     public void SetGravity(float gravity)
     {
@@ -133,22 +148,36 @@ public class PlayerController : CharacterBase
 
     IEnumerator InvincibleFrameCor()
     {
-        gameObject.layer = 0;
+        canHurt = false;
 
         yield return new WaitForSeconds(invincibleInterval);
 
-        gameObject.layer = 6;
+        canHurt = true;
     }
     
     public override void TakenDamage(float value)
     {
+        if(playerData.baseData.CurHealth <= 0 || !canHurt) return;
+
+        if (invincibleCor != null)
+        {
+            StopCoroutine(invincibleCor);
+        }
+        invincibleCor = StartCoroutine(nameof(InvincibleFrameCor));
+        
         base.TakenDamage(value);
         
-        if(playerData.baseData.CurHealth <= 0) return;
-
-        StartCoroutine(nameof(InvincibleFrameCor));
-
         playerData.baseData.CurHealth = Mathf.Max(playerData.baseData.CurHealth - value, 0f);
+    }
+
+    public void Attack1()
+    {
+        Collider2D enemy = Physics2D.OverlapCircle(attackPoint01.position, attackRange, enemyLayer);
+
+        if (enemy != null)
+        {
+            enemy.GetComponent<ITakenDamage>().TakenDamage(playerData.baseData.AttackDamage);
+        }
     }
 
 

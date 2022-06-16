@@ -21,12 +21,12 @@ public class PlayerStateMachine : StateMachine
 
     private void OnEnable()
     {
-        CharacterBase.OnHurt += ToHurtState;
+        playerController.OnHurt += ToHurtState;
     }
 
     private void OnDisable()
     {
-        CharacterBase.OnHurt -= ToHurtState;
+        playerController.OnHurt -= ToHurtState;
     }
 
     private void Start()
@@ -46,7 +46,8 @@ public class PlayerStateMachine : StateMachine
 
     private void InitializePlayerStates()
     {
-        stateTable = new Dictionary<Type, PlayerStateBase>(playerStates.Count);
+        stateTable = new Dictionary<Type, IState>(playerStates.Count);
+        
         for (int i = 0; i < playerStates.Count; i++)
         {
             playerStates[i].InitializeState(this,playerController,playerInput);

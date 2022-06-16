@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseData:
     maxHealth: 100
-    curHealth: 0
+    curHealth: 80
     attackDamage: 10

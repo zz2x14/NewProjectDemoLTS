@@ -12,8 +12,8 @@ public abstract class StateMachine : MonoBehaviour
     private Animator anim;
     public Animator Anim => anim;
     
-    protected Dictionary<Type, PlayerStateBase> stateTable;
-
+    protected Dictionary<Type, IState> stateTable;
+    
     protected virtual void Awake()
     {
         anim = GetComponentInChildren<Animator>();
@@ -37,6 +37,8 @@ public abstract class StateMachine : MonoBehaviour
 
     public void SwitchState(IState targetState)
     {
+        if(curState == targetState) return;
+        
         lastState = curState;
         curState.OnExit();
         SwitchOn(targetState);
@@ -44,8 +46,12 @@ public abstract class StateMachine : MonoBehaviour
 
     public void SwitchState(Type stateType)
     {
+        if(curState.GetType() == stateType) return;
+        
         lastState = curState;
         curState.OnExit();
         SwitchOn(stateTable[stateType]);
     }
+
+ 
 }
