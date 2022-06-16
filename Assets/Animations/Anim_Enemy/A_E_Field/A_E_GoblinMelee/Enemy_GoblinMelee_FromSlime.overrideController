@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Enemy_GoblinMelee_FromSlime
+  m_Controller: {fileID: 9100000, guid: 00713bd7f16b3ef4489e2f0c3e1ec208, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 801e89a014c684643bdb692e8cb610c9, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 24ac626e7547bf246acdbe1b6de465b9, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 2521490e2d8d421488d597b12f410ff0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e9b036c526594074fa043ac7087399c3, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 41938f2b77e1b584194c5c9846fbd1dd, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: eb427f4a2b5df5b488d8f81914d31e34, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: a400cb98f97f420449f85b5ae4c811b0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e10141de8e3729249aa8597945144c33, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: b2672992cf03c0b48ac641911617f411, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7a5fa60cd2f7cb3459c27db8522cc5fa, type: 2}
