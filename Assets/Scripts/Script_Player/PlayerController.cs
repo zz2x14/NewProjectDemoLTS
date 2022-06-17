@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
 
@@ -21,7 +22,8 @@ public class PlayerController : CharacterBase
     [SerializeField] private Transform attackPoint01;
     [SerializeField] private Transform attackPoint02;
     [SerializeField] private Transform attackPoint03;
-    [SerializeField] private float attackRange;
+    [SerializeField] private float attackRange01;
+    [SerializeField] private float attackRange02;
     [SerializeField] private LayerMask enemyLayer;
 
     private Rigidbody2D rb;
@@ -66,8 +68,11 @@ public class PlayerController : CharacterBase
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.black;
-        Gizmos.DrawWireSphere(attackPoint01.position,attackRange);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(attackPoint01.position,attackRange01);
+        
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(attackPoint02.position,attackRange02);
     }
 
     #region RbVelocity
@@ -172,12 +177,17 @@ public class PlayerController : CharacterBase
 
     public void Attack1()
     {
-        Collider2D enemy = Physics2D.OverlapCircle(attackPoint01.position, attackRange, enemyLayer);
+        Collider2D enemy = Physics2D.OverlapCircle(attackPoint01.position, attackRange01, enemyLayer);
 
         if (enemy != null)
         {
-            enemy.GetComponent<ITakenDamage>().TakenDamage(playerData.baseData.AttackDamage);
+            enemy.GetComponent<ITakenDamage>().TakenDamage(playerData.baseData.attackDamage);
         }
+    }
+    public void Attack2()
+    {
+        Physics2D.OverlapCircle(attackPoint01.position, attackRange01, enemyLayer).
+            GetComponent<ITakenDamage>().TakenDamage(playerData.baseData.attackDamage);
     }
 
 

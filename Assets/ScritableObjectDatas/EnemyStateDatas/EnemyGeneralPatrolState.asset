@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 675a3e431f006464388c6885752305d7, type: 3}
-  m_Name: PlayerHurtState
+  m_Script: {fileID: 11500000, guid: cbd2564c39be6d64abfb8a072deae69b, type: 3}
+  m_Name: EnemyGeneralPatrolState
   m_EditorClassIdentifier: 
-  animName: PlayerHurt
-  playerHurtBackDir: {x: -0.15, y: 1.25}
+  animName: Move

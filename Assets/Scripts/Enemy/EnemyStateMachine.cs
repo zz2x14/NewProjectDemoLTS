@@ -21,11 +21,16 @@ public class EnemyStateMachine : StateMachine
         enemyController.OnHurt += ToHurtState;
     }
 
+    private void OnDisable()
+    {
+        enemyController.OnHurt -= ToHurtState;
+    }
+
     private void Start()
     {
         InitializeEnemeyStates();
         
-        SwitchOn(stateTable[typeof(EnemyGeneralIdleState)]);
+        SwitchOn(stateTable[statesList[0].GetType()]);
     }
 
     // protected override void Update()

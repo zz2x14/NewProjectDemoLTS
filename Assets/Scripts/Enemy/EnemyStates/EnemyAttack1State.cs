@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "EnemyState/EnemyAttack1State",fileName = "EnemyAttack1State")]
 public class EnemyAttack1State : EnemyStateBase
 {
+    private float attackStartTime;
+    
     public override void OnEnter()
     {
         base.OnEnter();
@@ -16,27 +18,11 @@ public class EnemyAttack1State : EnemyStateBase
     {
         base.OnGameLogicUpdate();
 
-        if (!enemy.WillTouchPlayer())
+        if (isAnimOver)
         {
-            if (enemy.FoundPlayer)
-            {
-                stateMachine.SwitchState(typeof(EnemyGeneralChaseState));
-            }
-            else
-            {
-                stateMachine.SwitchState(typeof(EnemyHomingState));
-            }
+            stateMachine.SwitchState(typeof(EnemyAttackIdleState));
         }
     }
 
-    public override void OnPhysicalLogicUpdate()
-    {
-        base.OnPhysicalLogicUpdate();
-    }
-
-    public override void OnExit()
-    {
-        base.OnExit();
-    }
     
 }

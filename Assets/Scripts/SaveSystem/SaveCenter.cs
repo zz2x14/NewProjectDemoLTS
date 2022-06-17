@@ -17,7 +17,7 @@ public class SaveCenter
         
         baseData.CurHealth = data.CurHealth;
         baseData.MaxHealth = data.MaxHealth;
-        baseData.AttackDamage = data.AttackDamage;
+        baseData.attackDamage = data.attackDamage;
     }
     
 }

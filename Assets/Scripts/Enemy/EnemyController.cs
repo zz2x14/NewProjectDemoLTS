@@ -2,15 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EnemyController : CharacterBase
 {
     private Rigidbody2D rb;
     
-    [SerializeField] private EnemyData enemyData;
+    public EnemyData enemyData;
+
+    [Header("攻击")] 
+    [SerializeField] private float attackInterval;
     
     [Header("移动")] 
-    [SerializeField] private float moveSpeed;
+    [SerializeField] protected float moveSpeed;
     [SerializeField] private float chaseSpeed;
 
     [Header("玩家检测")] 
@@ -22,34 +26,40 @@ public class EnemyController : CharacterBase
     [SerializeField] private float attackRange;
     [SerializeField] private Transform attackPoint;
 
-    private Transform playerPos;
+    protected Transform playerPos;
     public Vector3 OriginalPos { get; private set; }
 
-    private Vector2 playerDir;
+    protected Vector2 playerDir;
 
-    public bool FoundPlayer => Physics2D.OverlapCircle(transform.position, detectorRange, playerLayer);
+    //Sign:属性也是可以复写的
+    public virtual bool FoundPlayer => Physics2D.OverlapCircle(transform.position, detectorRange, playerLayer);
+    public virtual bool PlayerInAttackRange => Physics2D.OverlapCircle(attackPoint.position, attackRange ,playerLayer);
 
     public float MoveSpeed => moveSpeed;
     public float ChaseSpeed => chaseSpeed;
 
-    private void Awake()
+    public float AttackInterval => attackInterval;
+
+    private readonly Vector3 flipXScale = new Vector3(-1, 1, 1);
+
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         OriginalPos = transform.position;
         
         enemyData.InitializeHealth();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         playerPos = FindObjectOfType<PlayerController>().transform;
     }
 
-    private void OnDrawGizmosSelected()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position,detectorRange);
@@ -73,25 +83,26 @@ public class EnemyController : CharacterBase
 
         if (player != null)
         {
-            player.GetComponent<ITakenDamage>().TakenDamage(enemyData.baseData.AttackDamage);
+            player.GetComponent<ITakenDamage>().TakenDamage(enemyData.baseData.attackDamage);
         }
     }
 
-    public void ChasePlayerOnlyX(float speed)
+    public void ChasePlayer()
     {
         transform.localScale = playerPos.transform.position.x < transform.position.x
             ? Vector3.one
-            : new Vector3(-1, 1, 1);  
+            : flipXScale;
         
         playerDir = (playerPos.position - transform.position).normalized;
       
-        SetRbVelocityOnlyX(playerDir * speed);
+        SetRbVelocityOnlyX(playerDir * chaseSpeed);
     }
 
     public void MoveToDestination(float speed,Vector3 destination)
     {
-        Vector2 dir = (destination - transform.position).normalized;
-        SetRbVelocity(dir * speed);
+        transform.localScale = transform.position.x > destination.x ? Vector3.one : flipXScale;
+        
+        SetRbVelocity((destination - transform.position).normalized * speed);
     }
     
     public void SetRbVelocity(Vector2 velocity)

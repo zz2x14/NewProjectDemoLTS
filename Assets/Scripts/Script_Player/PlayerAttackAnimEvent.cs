@@ -16,4 +16,9 @@ public class PlayerAttackAnimEvent : MonoBehaviour
     {
         myself.Attack1();
     }
+
+    public void Attack2AnimationEvent()
+    {
+        myself.Attack2();
+    }
 }

@@ -6,12 +6,15 @@ using UnityEngine;
 public class PlayerHurtState : PlayerStateBase
 {
     [SerializeField] private Vector2 playerHurtBackDir;
-    
+    private Vector2 hurtForce;
+
     public override void OnEnter()
     {
         base.OnEnter();
-        
-        player.SetRbVelocity(playerHurtBackDir);
+
+        //TODO：优化 击退方向根据目标攻击在角色方向进行判断
+        hurtForce = new Vector2(playerHurtBackDir.x * player.transform.localScale.x, playerHurtBackDir.y);
+        player.SetRbVelocity(hurtForce);
         player.SetGravity(1f);
     }
 

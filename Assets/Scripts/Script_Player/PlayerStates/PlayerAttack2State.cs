@@ -40,8 +40,4 @@ public class PlayerAttack2State : PlayerStateBase
             playerStateMachine.SwitchState(typeof(PlayerIdleState));
         }
     }
-    
-  
-
- 
 }

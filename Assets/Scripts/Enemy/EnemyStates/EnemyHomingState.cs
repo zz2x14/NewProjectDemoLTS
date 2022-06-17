@@ -21,7 +21,15 @@ public class EnemyHomingState : EnemyStateBase
 
         if (enemy.ArrivedDestination(enemy.OriginalPos))
         {
-            stateMachine.SwitchState(typeof(EnemyGeneralIdleState));
+            switch (enemy.enemyData.enemyType)
+            {
+                case EnemyType.Guard:
+                    stateMachine.SwitchState(typeof(EnemyGeneralIdleState));
+                    break;
+                case EnemyType.Patrol:
+                    stateMachine.SwitchState(typeof(EnemyGeneralPatrolState));
+                    break;
+            }
         }
     }
 

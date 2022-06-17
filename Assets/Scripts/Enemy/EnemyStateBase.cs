@@ -12,26 +12,26 @@ public class EnemyStateBase : ScriptableObject,IState
 
     [SerializeField] private string animName;
 
-    private float animStartTime;
-    private float animDuration => Time.time - animStartTime;
+    private float stateStartTime;
+    protected float stateDuration => Time.time - stateStartTime;
 
-    protected bool isAnimOver => animDuration >= stateMachine.Anim.GetCurrentAnimatorStateInfo(0).length;
+    protected bool isAnimOver => stateDuration >= stateMachine.Anim.GetCurrentAnimatorStateInfo(0).length;
     
-    public void InitializeState(EnemyController enemyController,EnemyStateMachine enemyStateMachine)
+    public virtual void InitializeState(EnemyController enemyController,EnemyStateMachine enemyStateMachine)
     {
         enemy = enemyController;
         stateMachine = enemyStateMachine;
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         animNameID = Animator.StringToHash(animName);
-        animStartTime = Time.time;
     }
 
     public virtual void OnEnter()
     {
         stateMachine.Anim.CrossFade(animNameID,0.1f);
+        stateStartTime = Time.time;
     }
 
     public virtual void OnGameLogicUpdate()

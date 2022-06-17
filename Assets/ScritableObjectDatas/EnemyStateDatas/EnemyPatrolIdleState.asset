@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 675a3e431f006464388c6885752305d7, type: 3}
-  m_Name: PlayerHurtState
+  m_Script: {fileID: 11500000, guid: 1864b850bed6cbf46b2299372c4ebd7d, type: 3}
+  m_Name: EnemyPatrolIdleState
   m_EditorClassIdentifier: 
-  animName: PlayerHurt
-  playerHurtBackDir: {x: -0.15, y: 1.25}
+  animName: Idle
+  waitTime: 0.5
