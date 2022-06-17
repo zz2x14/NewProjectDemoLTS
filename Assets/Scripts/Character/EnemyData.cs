@@ -18,7 +18,8 @@ public class EnemySelfData
 
 public enum EnemyType
 {
-    Guard,
-    Patrol
+    SlimeLike,
+    GolblinMeleeLike,
+    GoblinRangeLike
 }
 

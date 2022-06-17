@@ -11,9 +11,20 @@ public class EnemyHurtState : EnemyStateBase
 
         if (isAnimOver)
         {
-           stateMachine.SwitchState(typeof(EnemyHurtIdleState));
+            switch (enemy.enemyData.enemyType)
+            {
+                case EnemyType.SlimeLike:
+                    stateMachine.SwitchState(typeof(EnemyHurtIdleState));
+                    break;
+                case EnemyType.GolblinMeleeLike:
+                    stateMachine.SwitchState(typeof(EnemyHurtIdleState));
+                    break;
+                case EnemyType.GoblinRangeLike:
+                    stateMachine.SwitchState(typeof(EnemyShootEscapeState));
+                    break;
+            }
+         
         }
     }
-
     
 }

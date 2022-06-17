@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseData:
     maxHealth: 100
-    curHealth: 0
+    curHealth: 40
     attackDamage: 20
   enemySelfData:
-    enemyID: 3
+    enemyID: 2
     enemyName: GoblinMelee
   enemyType: 1

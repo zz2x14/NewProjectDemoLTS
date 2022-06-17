@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemyStateBase : ScriptableObject,IState
 {
     protected EnemyController enemy;
+   
     protected EnemyStateMachine stateMachine;
     
     private int animNameID;

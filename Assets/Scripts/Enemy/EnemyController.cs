@@ -10,37 +10,37 @@ public class EnemyController : CharacterBase
     
     public EnemyData enemyData;
 
-    [Header("攻击")] 
-    [SerializeField] private float attackInterval;
-    
     [Header("移动")] 
     [SerializeField] protected float moveSpeed;
-    [SerializeField] private float chaseSpeed;
+    [SerializeField] protected float chaseSpeed;
 
-    [Header("玩家检测")] 
+    [Header("玩家检测(远程攻击有所区别)")] 
     [SerializeField] private float detectorRange;
-    [SerializeField] private LayerMask playerLayer;
-
-    [Header("攻击检测")] 
+    [SerializeField] protected LayerMask playerLayer;
+    
+    [Header("攻击间隔")] 
+    [SerializeField] private float attackInterval;
+    
+    [Header("攻击检测(远程攻击有所区别)")] 
     [SerializeField] private float attackStopDistance;
-    [SerializeField] private float attackRange;
-    [SerializeField] private Transform attackPoint;
+    [SerializeField] protected float attackRange;
+    [SerializeField] protected Transform attackPoint;
+    
+    //Sign:属性也是可以复写的
+    public virtual bool FoundPlayer => Physics2D.OverlapCircle(transform.position, detectorRange, playerLayer);
+    public virtual bool PlayerInAttackRange => Physics2D.OverlapCircle(attackPoint.position, attackRange ,playerLayer);
 
     protected Transform playerPos;
     public Vector3 OriginalPos { get; private set; }
 
     protected Vector2 playerDir;
 
-    //Sign:属性也是可以复写的
-    public virtual bool FoundPlayer => Physics2D.OverlapCircle(transform.position, detectorRange, playerLayer);
-    public virtual bool PlayerInAttackRange => Physics2D.OverlapCircle(attackPoint.position, attackRange ,playerLayer);
-
     public float MoveSpeed => moveSpeed;
     public float ChaseSpeed => chaseSpeed;
 
     public float AttackInterval => attackInterval;
 
-    private readonly Vector3 flipXScale = new Vector3(-1, 1, 1);
+    protected readonly Vector3 flipXScale = new Vector3(-1, 1, 1);
 
     protected virtual void Awake()
     {
@@ -72,11 +72,12 @@ public class EnemyController : CharacterBase
     {
         return Vector2.Distance(transform.position, destination) <= 0.1f;
     }
+ 
     public bool WillTouchPlayer()
     {
         return Vector2.Distance(transform.position, playerPos.position) <= attackStopDistance;
     }
-
+    
     public void Attack()
     {
         Collider2D player = Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);
@@ -86,7 +87,7 @@ public class EnemyController : CharacterBase
             player.GetComponent<ITakenDamage>().TakenDamage(enemyData.baseData.attackDamage);
         }
     }
-
+    
     public void ChasePlayer()
     {
         transform.localScale = playerPos.transform.position.x < transform.position.x

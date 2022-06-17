@@ -16,7 +16,7 @@ public class EnemyGeneralIdleState : EnemyStateBase
 
         if (enemy.FoundPlayer)
         {
-            stateMachine.SwitchState(typeof(EnemyGeneralChaseState));
+            stateMachine.SwitchState(typeof(EnemyGeneralIdleState));
         }
     }
 

@@ -23,10 +23,10 @@ public class EnemyHomingState : EnemyStateBase
         {
             switch (enemy.enemyData.enemyType)
             {
-                case EnemyType.Guard:
+                case EnemyType.SlimeLike:
                     stateMachine.SwitchState(typeof(EnemyGeneralIdleState));
                     break;
-                case EnemyType.Patrol:
+                case EnemyType.GolblinMeleeLike:
                     stateMachine.SwitchState(typeof(EnemyGeneralPatrolState));
                     break;
             }
