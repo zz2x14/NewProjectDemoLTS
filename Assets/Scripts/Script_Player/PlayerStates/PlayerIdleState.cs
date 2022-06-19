@@ -24,6 +24,11 @@ public class PlayerIdleState : PlayerStateBase
         {
             playerStateMachine.SwitchState(typeof(PlayerAttackState));
         }
+
+        if (player.CanShoot && input.IsShootKeyPressed)
+        {
+            playerStateMachine.SwitchState(typeof(PlayerShootState));
+        }
         
         if (input.IsRunning)//并没有同时加上判断毕竟按下按键的情况 - 否则会出现其它状态无法正常转换到跑步状态
         {

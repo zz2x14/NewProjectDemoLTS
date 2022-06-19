@@ -2,24 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PoolManager : PersistentSingletonTool<PoolManager>
 {
     private Dictionary<GameObject, Pool> poolTable = new Dictionary<GameObject, Pool>();
 
-    public Pool[] bulletPools;
+    public Pool[] enemyBulletPools;
+    public Pool[] playerBulletPools;
     
     protected override void Awake()
     {
         base.Awake();
         
-        InitializePools(bulletPools);
+        InitializePools(enemyBulletPools);
+        InitializePools(playerBulletPools);
     }
     
 #if UNITY_EDITOR
     private void OnDestroy()
     {
-        CheckPoolSize(bulletPools);
+        CheckPoolSize(enemyBulletPools);
+        CheckPoolSize(playerBulletPools);
     }
 #endif
 

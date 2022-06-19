@@ -16,4 +16,8 @@ public class EnemyAttackAnimEvent : MonoBehaviour
         myself.Attack();
     }
 
+    public void FlyAttackAnimationEvent()
+    {
+        myself.FlyAttack();
+    }
 }

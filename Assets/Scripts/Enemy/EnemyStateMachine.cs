@@ -19,26 +19,21 @@ public class EnemyStateMachine : StateMachine
     private void OnEnable()
     {
         enemyController.OnHurt += ToHurtState;
+        enemyController.OnDeath += ToDeathState;
     }
 
     private void OnDisable()
     {
         enemyController.OnHurt -= ToHurtState;
+        enemyController.OnDeath -= ToDeathState;
     }
 
     private void Start()
     {
         InitializeEnemeyStates();
         
-        SwitchOn(stateTable[statesList[0].GetType()]);
+        SwitchOn(statesList[0]);
     }
-
-    // protected override void Update()
-    // {
-    //     base.Update();
-    //     
-    //     Debug.Log(curState);
-    // }
 
     private void InitializeEnemeyStates()
     {
@@ -54,6 +49,11 @@ public class EnemyStateMachine : StateMachine
     private void ToHurtState()
     {
         SwitchState(typeof(EnemyHurtState));
+    }
+
+    private void ToDeathState()
+    {
+        SwitchState(typeof(EnemyDeathState));
     }
 
 }

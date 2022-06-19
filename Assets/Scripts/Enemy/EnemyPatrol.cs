@@ -19,5 +19,6 @@ public class EnemyPatrol : EnemyController
     public void MoveToNextPoint()
     {
         MoveToDestination(moveSpeed,patrolPoints[PatrolIndex].position);
+        FaceToPlayer();
     }
 }

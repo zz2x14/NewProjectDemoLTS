@@ -32,6 +32,11 @@ public class PlayerJumpState : PlayerStateBase
     public override void OnGameLogicUpdate()
     {
         base.OnGameLogicUpdate();
+        
+        if (player.CanShoot && input.IsShootKeyPressed)
+        {
+            playerStateMachine.SwitchState(typeof(PlayerShootState));
+        }
 
         if (input.IsAttackKeyPressed)
         {

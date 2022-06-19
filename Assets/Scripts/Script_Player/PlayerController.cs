@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 
 public class PlayerController : CharacterBase
 {
-    [SerializeField] private CharacterData playerData;
+    [SerializeField] private PlayerData playerData;
     
     [Header("无敌时间")]
     [SerializeField] private float invincibleInterval;
@@ -25,6 +25,15 @@ public class PlayerController : CharacterBase
     [SerializeField] private float attackRange01;
     [SerializeField] private float attackRange02;
     [SerializeField] private LayerMask enemyLayer;
+
+    [Header("射击")] 
+    [SerializeField] private float shootInterval;
+    [SerializeField] private Transform shootPoint;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private float bulletSpeed;
+
+    private float lastShootTime;
+    public bool CanShoot => lastShootTime <= Time.time - shootInterval;
 
     private Rigidbody2D rb;
     
@@ -54,6 +63,8 @@ public class PlayerController : CharacterBase
         groundDetector = GetComponentInChildren<PlayerGroundDetector>();
         hangDetector = GetComponentInChildren<PlayerHangDetector>();
         stairsDetector = GetComponentInChildren<PlayerOnStairsDetector>();
+
+        lastShootTime = Time.time - shootInterval;
     }
 
     private void OnEnable()
@@ -173,6 +184,11 @@ public class PlayerController : CharacterBase
         base.TakenDamage(value);
         
         playerData.baseData.CurHealth = Mathf.Max(playerData.baseData.CurHealth - value, 0f);
+        
+        if (playerData.baseData.CurHealth == 0)
+        {
+            Death();
+        }
     }
 
     public void Attack1()
@@ -186,9 +202,22 @@ public class PlayerController : CharacterBase
     }
     public void Attack2()
     {
-        Physics2D.OverlapCircle(attackPoint01.position, attackRange01, enemyLayer).
-            GetComponent<ITakenDamage>().TakenDamage(playerData.baseData.attackDamage);
+        Collider2D enemy = Physics2D.OverlapCircle(attackPoint02.position, attackRange02, enemyLayer);
+
+        if (enemy != null)
+        {
+            enemy.GetComponent<ITakenDamage>().TakenDamage(playerData.baseData.attackDamage);
+        }
     }
-
-
+    public void Shoot()
+    {
+        lastShootTime = Time.time;
+        
+        var playerBullet = 
+            PoolManager.Instance.Release(bulletPrefab, shootPoint.position,shootPoint.rotation).GetComponent<PlayerBullet>();
+        playerBullet.FlyDir = transform.localScale.x;
+        playerBullet.FlySpeed = bulletSpeed;
+        playerBullet.Damage = playerData.selfData.shootDamage;
+    }
+ 
 }

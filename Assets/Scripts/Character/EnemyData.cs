@@ -20,6 +20,8 @@ public enum EnemyType
 {
     SlimeLike,
     GolblinMeleeLike,
-    GoblinRangeLike
+    GoblinRangeLike,
+    WaspLike,
+    TrollLike
 }
 

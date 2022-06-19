@@ -22,11 +22,13 @@ public class PlayerStateMachine : StateMachine
     private void OnEnable()
     {
         playerController.OnHurt += ToHurtState;
+        playerController.OnDeath += ToDeathState;
     }
 
     private void OnDisable()
     {
         playerController.OnHurt -= ToHurtState;
+        playerController.OnDeath -= ToDeathState;
     }
 
     private void Start()
@@ -55,9 +57,14 @@ public class PlayerStateMachine : StateMachine
         }
     }
 
-    public void ToHurtState()
+    private void ToHurtState()
     {
         SwitchState(typeof(PlayerHurtState));
+    }
+
+    private void ToDeathState()
+    {
+        SwitchState(typeof(PlayerDeathState));
     }
     
 }

@@ -13,10 +13,10 @@ public class PlayerInput : MonoBehaviour
     public float MoveXInputX => moveXInput.x;
     public bool IsRunning => Mathf.Abs(moveXInput.x) > 0;
 
-
     public bool IsRunKey => playerInputActions.Gameplay.AxisXMove.WasPerformedThisFrame();
     public bool IsJumpKeyPressed => playerInputActions.Gameplay.Jump.WasPressedThisFrame();
     public bool IsAttackKeyPressed => playerInputActions.Gameplay.Attack.WasPressedThisFrame();
+    public bool IsShootKeyPressed => playerInputActions.Gameplay.Shoot.WasPressedThisFrame();
     public bool IsRollKeyPressed => playerInputActions.Gameplay.Roll.WasPressedThisFrame();
     public bool IsFallKeyPressed => playerInputActions.Gameplay.Fall.WasPressedThisFrame();
     public bool IsFallKey => playerInputActions.Gameplay.Fall.WasPerformedThisFrame();

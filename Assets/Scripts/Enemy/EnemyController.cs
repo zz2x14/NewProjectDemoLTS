@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class EnemyController : CharacterBase
 {
@@ -30,9 +31,8 @@ public class EnemyController : CharacterBase
     public virtual bool FoundPlayer => Physics2D.OverlapCircle(transform.position, detectorRange, playerLayer);
     public virtual bool PlayerInAttackRange => Physics2D.OverlapCircle(attackPoint.position, attackRange ,playerLayer);
 
-    protected Transform playerPos;
+    public Transform PlayerPos { get; private set; }
     public Vector3 OriginalPos { get; private set; }
-
     protected Vector2 playerDir;
 
     public float MoveSpeed => moveSpeed;
@@ -41,6 +41,12 @@ public class EnemyController : CharacterBase
     public float AttackInterval => attackInterval;
 
     protected readonly Vector3 flipXScale = new Vector3(-1, 1, 1);
+    
+    private Vector2 randomPoint;
+    private float randomPointX;
+    private float randomPointY;
+
+    public bool FlyAttackedPlayer { get; set; }
 
     protected virtual void Awake()
     {
@@ -56,9 +62,9 @@ public class EnemyController : CharacterBase
 
     protected virtual void Start()
     {
-        playerPos = FindObjectOfType<PlayerController>().transform;
+        PlayerPos = FindObjectOfType<PlayerController>().transform;
     }
-
+  
     protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -68,17 +74,17 @@ public class EnemyController : CharacterBase
         Gizmos.DrawWireSphere(attackPoint.position,attackRange);
     }
 
-    public bool ArrivedDestination(Vector3 destination)
+    public bool CloseToDestination(Vector3 destination,float distance)
     {
-        return Vector2.Distance(transform.position, destination) <= 0.1f;
+        return Vector2.Distance(transform.position, destination) <= distance;
     }
  
     public bool WillTouchPlayer()
     {
-        return Vector2.Distance(transform.position, playerPos.position) <= attackStopDistance;
+        return Vector2.Distance(transform.position, PlayerPos.position) <= attackStopDistance;
     }
     
-    public void Attack()
+    public virtual void Attack()
     {
         Collider2D player = Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);
 
@@ -87,23 +93,30 @@ public class EnemyController : CharacterBase
             player.GetComponent<ITakenDamage>().TakenDamage(enemyData.baseData.attackDamage);
         }
     }
-    
-    public void ChasePlayer()
+    public void FlyAttack()
     {
-        transform.localScale = playerPos.transform.position.x < transform.position.x
-            ? Vector3.one
-            : flipXScale;
+        FlyAttackedPlayer = true;
+    }
+    
+    public void ChasePlayerHorizontal()
+    {
+        FaceToPlayer();
         
-        playerDir = (playerPos.position - transform.position).normalized;
+        playerDir = (PlayerPos.position - transform.position).normalized;
       
         SetRbVelocityOnlyX(playerDir * chaseSpeed);
     }
 
     public void MoveToDestination(float speed,Vector3 destination)
     {
-        transform.localScale = transform.position.x > destination.x ? Vector3.one : flipXScale;
-        
         SetRbVelocity((destination - transform.position).normalized * speed);
+    }
+
+    public void FaceToPlayer()
+    {
+        transform.localScale = PlayerPos.transform.position.x < transform.position.x
+            ? Vector3.one
+            : flipXScale;
     }
     
     public void SetRbVelocity(Vector2 velocity)
@@ -134,5 +147,30 @@ public class EnemyController : CharacterBase
         base.TakenDamage(value);
 
         enemyData.baseData.CurHealth = Mathf.Max(enemyData.baseData.CurHealth - value, 0f);
+        
+        if (enemyData.baseData.CurHealth == 0)
+        {
+            Death();
+        }
     }
+    
+    public void DontCollidePlayer()
+    {
+        gameObject.layer = 13;
+    }
+    public void RecoverNormalLayer()
+    {
+        gameObject.layer = 11;
+    }
+
+    public Vector2 GetRandomPointAroundSth(Transform target,Vector2 min,Vector2 max)
+    {
+        randomPointX = Random.Range(min.x, max.x);
+        randomPointY = Random.Range(min.y, max.y);
+        
+        randomPoint = new Vector2(target.position.x + randomPointX, target.position.y + randomPointY);
+      
+        return randomPoint;
+    }
+   
 }
