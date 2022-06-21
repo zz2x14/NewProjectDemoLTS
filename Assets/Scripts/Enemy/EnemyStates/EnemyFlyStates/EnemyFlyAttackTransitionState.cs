@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "EnemyState/EnemyFlyAttackTransitionState",fileName = "EnemyFlyAttackTransitionState")]
-public class EnemyFlyAttackTransitionState : EnemyStateBase
+public class EnemyFlyAttackTransitionState : EnemyFlyStateBase
 {
     [SerializeField] private float waitToMoveTimeRate;
     
@@ -13,15 +13,19 @@ public class EnemyFlyAttackTransitionState : EnemyStateBase
     {
         base.OnEnter();
         
-        enemy.DontCollidePlayer();
+        //enemy.DontCollidePlayer();
 
-        
         enemy.SetRbVelocity(Vector2.zero);
     }
 
     public override void OnGameLogicUpdate()
     {
         base.OnGameLogicUpdate();
+        
+        if (!enemy.FoundPlayer)
+        {
+            stateMachine.SwitchState(typeof(EnemyHomingState));
+        }
 
         if (readyToMove)
         {
@@ -29,10 +33,5 @@ public class EnemyFlyAttackTransitionState : EnemyStateBase
         }
     }
     
-    public override void OnExit()
-    {
-        base.OnExit();
-        
-        enemy.RecoverNormalLayer();
-    }
+  
 }

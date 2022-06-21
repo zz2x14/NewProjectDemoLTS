@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: EnemyGeneralChaseState
   m_EditorClassIdentifier: 
   animName: Move
-  attackReadyTime: 0.9
+  waitAttackTime: 0.75

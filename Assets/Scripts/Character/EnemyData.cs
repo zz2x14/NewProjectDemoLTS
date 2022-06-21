@@ -6,7 +6,13 @@ using UnityEngine;
 public class EnemyData : CharacterData
 {
     public EnemySelfData enemySelfData;
+    
+    [SerializeField] private bool isBoss = false;
+    public BossData bossData;
+    
     public EnemyType enemyType;
+    
+    public bool IsBoss => isBoss;
 }
 
 [System.Serializable]
@@ -16,12 +22,20 @@ public class EnemySelfData
     public string enemyName;
 }
 
+[System.Serializable]
+public class BossData
+{
+    public float attack2Damage;
+    public float attack3Damage;
+}
+
 public enum EnemyType
 {
     SlimeLike,
     GolblinMeleeLike,
     GoblinRangeLike,
     WaspLike,
-    TrollLike
+    TrollLike,
+    BeetleLike
 }
 

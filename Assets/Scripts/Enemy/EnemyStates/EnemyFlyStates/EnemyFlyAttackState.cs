@@ -3,25 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "EnemyState/EnemyFlyAttackState",fileName = "EnemyFlyAttackState")]
-public class EnemyFlyAttackState : EnemyStateBase
+public class EnemyFlyAttackState : EnemyFlyStateBase
 {
     [SerializeField] private Vector2 attackPointOffset;
-    [SerializeField] private float attackStopDis;
-    
+ 
     public override void OnEnter()
     {
         base.OnEnter();
         
-        enemy.DontCollidePlayer();
+       // enemy.DontCollidePlayer();
 
-        enemy.FlyAttackedPlayer = false;
+        enemyFly.FlyAttackedPlayer = false;
     }
 
     public override void OnGameLogicUpdate()
     {
         base.OnGameLogicUpdate();
 
-        if (enemy.FlyAttackedPlayer)
+        if (enemyFly.FlyAttackedPlayer)
         {
             stateMachine.SwitchState(typeof(EnemyFlyAttackTransitionState));
         }
@@ -31,14 +30,14 @@ public class EnemyFlyAttackState : EnemyStateBase
     {
         base.OnPhysicalLogicUpdate();
 
-        if (enemy.CloseToDestination(enemy.PlayerPos.position,attackStopDis))
+        if (enemy.CloseToPlayer())
         {
            enemy.SetRbVelocity(Vector2.zero);
-           enemy.FlyAttackedPlayer = true;
+           enemyFly.FlyAttackedPlayer = true;
         }
         else
         {
-            enemy.MoveToDestination
+            enemy.MoveToTarget
                 (enemy.ChaseSpeed, new Vector3(enemy.PlayerPos.position.x + attackPointOffset.x  * enemy.transform.localScale.x,
                     enemy.PlayerPos.position.y + attackPointOffset.y));
             
@@ -47,11 +46,10 @@ public class EnemyFlyAttackState : EnemyStateBase
       
     }
 
-    public override void OnExit()
-    {
-        base.OnExit();
-        
-        enemy.RecoverNormalLayer();
-    }
-    
+    // public override void OnExit()
+    // {
+    //     base.OnExit();
+    //     
+    //     enemy.RecoverNormalLayer();
+    // }
 }

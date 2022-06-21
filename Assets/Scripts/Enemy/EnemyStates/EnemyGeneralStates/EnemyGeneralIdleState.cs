@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "EnemyState/EnemyGeneralIdleState",fileName = "EnemyGeneralIdleState")]
-public class EnemyGeneralIdleState : EnemyStateBase
+public class EnemyGeneralIdleState : EnemyGeneralStateBase
 {
     public override void OnEnter()
     {
         base.OnEnter();
+        
+        enemy.SetLocalScale(Vector3.one);//TODO:是否使Scale的转换缓慢过渡？
     }
 
     public override void OnGameLogicUpdate()

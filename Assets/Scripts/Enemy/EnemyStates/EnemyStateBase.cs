@@ -9,13 +9,11 @@ public class EnemyStateBase : ScriptableObject,IState
    
     protected EnemyStateMachine stateMachine;
     
-    private int animNameID;
-
     [SerializeField] private string animName;
+    protected int animNameID;
 
-    private float stateStartTime;
+    protected float stateStartTime;
     protected float stateDuration => Time.time - stateStartTime;
-
     protected bool isAnimOver => stateDuration >= stateMachine.Anim.GetCurrentAnimatorStateInfo(0).length;
     
     public virtual void InitializeState(EnemyController enemyController,EnemyStateMachine enemyStateMachine)

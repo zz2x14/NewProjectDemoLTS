@@ -6,13 +6,12 @@ using UnityEngine;
 public class EnemyShootToIdleState : EnemyShootBaseState
 {
     private float shootTimer;
-    public bool canShoot => (Time.time - shootTimer) >= enemy.AttackInterval;
+    public bool canShoot => (Time.time - shootTimer) >= enemyShoot.ShootInterval;
     
     public override void OnEnter()
     {
         base.OnEnter();
         
-      
         shootTimer = Time.time;
     }
 
@@ -20,7 +19,7 @@ public class EnemyShootToIdleState : EnemyShootBaseState
     {
         base.OnGameLogicUpdate();
 
-        if (enemyShoot.PlayerCloseTo)
+        if (enemyShoot.CloseToPlayer())
         {
             stateMachine.SwitchState(typeof(EnemyShootEscapeState));
             return;

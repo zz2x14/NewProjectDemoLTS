@@ -13,7 +13,7 @@ public class BossMelee2State : BossStateBase
 
         if (isAnimOver)
         {
-            if (boss.bossData.enemyType == EnemyType.TrollLike)
+            if (enemy.enemyData.enemyType == EnemyType.TrollLike)
             {
                 if (!bossThreeMelee.IsPlayerOnGround)
                 {

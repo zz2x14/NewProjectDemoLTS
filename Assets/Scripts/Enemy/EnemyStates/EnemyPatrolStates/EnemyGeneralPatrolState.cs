@@ -4,17 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [CreateAssetMenu(menuName = "EnemyState/EnemyGeneralPatrolState",fileName = "EnemyGeneralPatrolState")]
-public class EnemyGeneralPatrolState : EnemyStateBase
+public class EnemyGeneralPatrolState : EnemyPatrolIdleState
 {
-    private EnemyPatrol enemyPatrol;
-    
-    public override void InitializeState(EnemyController enemyController, EnemyStateMachine enemyStateMachine)
-    {
-        base.InitializeState(enemyController,enemyStateMachine);
-        
-        enemyPatrol = enemyController as EnemyPatrol;
-    }
-
     public override void OnGameLogicUpdate()
     {
         base.OnGameLogicUpdate();
@@ -24,7 +15,7 @@ public class EnemyGeneralPatrolState : EnemyStateBase
             stateMachine.SwitchState(typeof(EnemyGeneralChaseState));
         }
         
-        if (enemyPatrol.ArrivedPatrolPoint())
+        if (enemyPatrol.ArrivedPatrolPoint)
         {
             stateMachine.SwitchState(typeof(EnemyPatrolIdleState));
         }

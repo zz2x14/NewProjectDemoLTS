@@ -11,7 +11,7 @@ public class BossMeleeTransitionalState : BossStateBase
 
         if (isAnimOver)
         {
-            if (boss.bossData.enemyType == EnemyType.TrollLike)
+            if (enemy.enemyData.enemyType == EnemyType.TrollLike)
             {
                 if (bossThreeMelee.AttackCycle >= bossThreeMelee.AttackMaxCycle)
                 {

@@ -3,17 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "EnemyState/EnemyShootIdleState",fileName = "EnemyShootIdleState")]
-public class EnemyShootIdleState : EnemyStateBase
+public class EnemyShootIdleState : EnemyShootBaseState
 {
-    private EnemyShoot enemyShoot;
-    
-    public override void InitializeState(EnemyController enemyController, EnemyStateMachine enemyStateMachine)
-    {
-        base.InitializeState(enemyController, enemyStateMachine);
-        
-        enemyShoot = enemyController as EnemyShoot;
-    }
-
     public override void OnEnter()
     {
         base.OnEnter();

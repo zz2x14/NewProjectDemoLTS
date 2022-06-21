@@ -17,6 +17,10 @@ MonoBehaviour:
     curHealth: 40
     attackDamage: 20
   enemySelfData:
-    enemyID: 2
+    enemyID: 3
     enemyName: GoblinMelee
+  isBoss: 0
+  bossData:
+    attack2Damage: 0
+    attack3Damage: 0
   enemyType: 1

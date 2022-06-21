@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "EnemyState/EnemyPatrolIdleState",fileName = "EnemyPatrolIdleState")]
-public class EnemyPatrolIdleState : EnemyStateBase
+public class EnemyPatrolIdleState : EnemyPatrolStateBase
 {
     [SerializeField] private float waitTime;
     private float startTime;

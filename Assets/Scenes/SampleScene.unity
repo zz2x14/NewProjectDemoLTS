@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 237518137}
   - component: {fileID: 237518140}
   - component: {fileID: 237518139}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: F_GoblinRange
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -357,18 +357,18 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: 6aafaf3c16f744547bc4b34c85fced88, type: 2}
   moveSpeed: 4.5
   chaseSpeed: 0
-  detectorRange: 0
+  detectorRange: 2.5
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  attackInterval: 1.5
-  attackStopDistance: 0
+  stopDistance: 0
   attackRange: 7
   attackPoint: {fileID: 1546314619}
-  detectorPoint: {fileID: 1305036264}
+  shootInterval: 1.5
+  shootRange: 8.5
+  shootDetectorPoint: {fileID: 1305036264}
   bulletPrefab: {fileID: 5541682256346664221, guid: d9468ba9bbb42d54186e42bed8433bd5, type: 3}
   bulletSpeed: 5
-  escapeDis: {x: 5, y: 0.3}
   escapePoints:
   - {fileID: 468161396}
   - {fileID: 1416849747}
@@ -392,7 +392,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c3f0a730d4c140d4ab727a31adaa1191, type: 2}
   - {fileID: 11400000, guid: 6e615cc7d0bbe4a4fa348960a3433da5, type: 2}
   - {fileID: 11400000, guid: e6586ab493b53ec4eba5a8024a86168e, type: 2}
-  - {fileID: 11400000, guid: 237fbbb8634118f4f89ecccd51ba6ca9, type: 2}
   - {fileID: 11400000, guid: 7a5c340a4b326bb4ea3cd2fd38c1eb24, type: 2}
 --- !u!1 &312813137
 GameObject:
@@ -601,7 +600,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 324582667}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -631,7 +630,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 335240811}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Melee3Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -665,7 +664,7 @@ GameObject:
   - component: {fileID: 337460479}
   - component: {fileID: 337460477}
   - component: {fileID: 337460476}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: F_Wolf
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -697,7 +696,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 337460474}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 402116a172264b34ba4228e4cd0ce66a, type: 3}
+  m_Script: {fileID: 11500000, guid: 96e4d96e36908904c80bf8d7188e2a18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: de9dd9a733c80e344a9ea48237ea47fe, type: 2}
@@ -707,9 +706,8 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  attackInterval: 0.75
-  attackStopDistance: 1
-  attackRange: 0.25
+  stopDistance: 1
+  attackRange: 0.3
   attackPoint: {fileID: 1014193366}
 --- !u!114 &337460477
 MonoBehaviour:
@@ -798,7 +796,7 @@ GameObject:
   - component: {fileID: 339288564}
   - component: {fileID: 339288563}
   - component: {fileID: 339288565}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -912,7 +910,8 @@ GameObject:
   - component: {fileID: 370770536}
   - component: {fileID: 370770538}
   - component: {fileID: 370770537}
-  m_Layer: 11
+  - component: {fileID: 370770539}
+  m_Layer: 13
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1003,6 +1002,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &370770539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370770535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9520753097a30be4494a7bb685b19efd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &372915954
 GameObject:
   m_ObjectHideFlags: 0
@@ -1732,7 +1743,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.9133344, y: 4.09, z: -10}
+  m_LocalPosition: {x: -1.3466656, y: 4.09, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1866,7 +1877,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 547261212}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.9133344, y: 4.09, z: -10}
+  m_LocalPosition: {x: -1.3466656, y: 4.09, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1172254974}
@@ -2070,14 +2081,14 @@ GameObject:
   - component: {fileID: 685046276}
   - component: {fileID: 685046275}
   - component: {fileID: 685046274}
-  - component: {fileID: 685046273}
-  m_Layer: 11
+  - component: {fileID: 685046277}
+  m_Layer: 13
   m_Name: F_Wasp
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &685046272
 Transform:
   m_ObjectHideFlags: 0
@@ -2094,29 +2105,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &685046273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 685046271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 402116a172264b34ba4228e4cd0ce66a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: f00bff62a0b1fec459d83b6e0e2cf2de, type: 2}
-  moveSpeed: 4.5
-  chaseSpeed: 8
-  detectorRange: 5
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  attackInterval: 0
-  attackStopDistance: 0
-  attackRange: 1
-  attackPoint: {fileID: 909496410}
 --- !u!114 &685046274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2135,6 +2123,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 273662f4d2c6c32459de5e414fe3e18c, type: 2}
   - {fileID: 11400000, guid: 4c4ff589535d2be48b3405f292734209, type: 2}
   - {fileID: 11400000, guid: 474f31b8bc16b1343b6a1c9aa54df20b, type: 2}
+  - {fileID: 11400000, guid: 2740df49b4f7125488c89b20045026a1, type: 2}
   - {fileID: 11400000, guid: e6586ab493b53ec4eba5a8024a86168e, type: 2}
   - {fileID: 11400000, guid: 7a5c340a4b326bb4ea3cd2fd38c1eb24, type: 2}
 --- !u!58 &685046275
@@ -2174,6 +2163,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &685046277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685046271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63934a815d5eebb49a8049fdb3e541ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyData: {fileID: 11400000, guid: f00bff62a0b1fec459d83b6e0e2cf2de, type: 2}
+  moveSpeed: 4.5
+  chaseSpeed: 6.5
+  detectorRange: 5
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  stopDistance: 1.5
+  attackRange: 1
+  attackPoint: {fileID: 909496410}
 --- !u!1 &688261207
 GameObject:
   m_ObjectHideFlags: 0
@@ -2186,7 +2197,7 @@ GameObject:
   - component: {fileID: 688261210}
   - component: {fileID: 688261209}
   - component: {fileID: 688261211}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2331,7 +2342,7 @@ GameObject:
   - component: {fileID: 744321021}
   - component: {fileID: 744321020}
   - component: {fileID: 744321022}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2714,7 +2725,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 909496410}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2748,7 +2759,7 @@ GameObject:
   - component: {fileID: 941984846}
   - component: {fileID: 941984849}
   - component: {fileID: 941984848}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: F_B_Troll
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -2769,7 +2780,7 @@ Transform:
   - {fileID: 339288562}
   - {fileID: 1621199983}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &941984846
 CapsuleCollider2D:
@@ -2820,21 +2831,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55c82005ef808c24db6afa8c265ca579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossData: {fileID: 11400000, guid: 22af6d80b4b351b429c6bc79e6015da1, type: 2}
+  enemyData: {fileID: 11400000, guid: 858e013085a6c774da2b7719720142f0, type: 2}
   moveSpeed: 4
+  chaseSpeed: 0
+  detectorRange: 0
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  stopDis: 1.75
-  detectorPoint: {fileID: 1710002052}
-  detectorRange: 2
-  melee1Point: {fileID: 1659190530}
-  melee1Stage2Point: {fileID: 1999891929}
-  melee3Point: {fileID: 335240811}
-  melee1Range: 0.5
+  stopDistance: 2
+  attackRange: 0.5
+  attackPoint: {fileID: 1659190530}
+  attackMaxCycle: 2
+  attack2Point: {fileID: 1999891929}
+  attack3Point: {fileID: 335240811}
   pushForce: {x: -6, y: 0}
   pushForce1: {x: 0, y: 8}
-  attackMaxCycle: 2
 --- !u!114 &941984849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2844,7 +2855,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 941984844}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4955b9df170089042ae9bfbfa530c681, type: 3}
+  m_Script: {fileID: 11500000, guid: c55e8de29d1aa6544aa9f2e13ef28d1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   statesList:
@@ -2853,8 +2864,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1c85522e58b01664995a887ff7c77f35, type: 2}
   - {fileID: 11400000, guid: abd3c67c89e5c6c4796e470842b8622a, type: 2}
   - {fileID: 11400000, guid: 88c58df0bda57004ca150b31eef6423a, type: 2}
-  - {fileID: 11400000, guid: e4bec8491b8db1e42b9f609de6d213d1, type: 2}
-  - {fileID: 11400000, guid: aa7a7c931ea4f2e4c9b3eda94360b794, type: 2}
+  - {fileID: 11400000, guid: e6586ab493b53ec4eba5a8024a86168e, type: 2}
+  - {fileID: 11400000, guid: 4c684fe185f68d34590e53a56fa0a729, type: 2}
+  - {fileID: 11400000, guid: 7a5c340a4b326bb4ea3cd2fd38c1eb24, type: 2}
 --- !u!1 &972443995
 GameObject:
   m_ObjectHideFlags: 0
@@ -2867,8 +2879,8 @@ GameObject:
   - component: {fileID: 972443999}
   - component: {fileID: 972444000}
   - component: {fileID: 972443997}
-  - component: {fileID: 972443998}
-  m_Layer: 11
+  - component: {fileID: 972444001}
+  m_Layer: 13
   m_Name: F_Slime
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -2912,29 +2924,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e6586ab493b53ec4eba5a8024a86168e, type: 2}
   - {fileID: 11400000, guid: 4c684fe185f68d34590e53a56fa0a729, type: 2}
   - {fileID: 11400000, guid: 7a5c340a4b326bb4ea3cd2fd38c1eb24, type: 2}
---- !u!114 &972443998
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 972443995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 402116a172264b34ba4228e4cd0ce66a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: a530b7471f605e24cb76eccb975aad11, type: 2}
-  moveSpeed: 2
-  chaseSpeed: 2.5
-  detectorRange: 3
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  attackInterval: 1
-  attackStopDistance: 1.2
-  attackRange: 0.45
-  attackPoint: {fileID: 1754303806}
 --- !u!50 &972443999
 Rigidbody2D:
   serializedVersion: 4
@@ -2972,6 +2961,28 @@ CircleCollider2D:
   m_Offset: {x: -0.021939576, y: 0.16454703}
   serializedVersion: 2
   m_Radius: 0.3573926
+--- !u!114 &972444001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972443995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96e4d96e36908904c80bf8d7188e2a18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyData: {fileID: 11400000, guid: a530b7471f605e24cb76eccb975aad11, type: 2}
+  moveSpeed: 2
+  chaseSpeed: 2.5
+  detectorRange: 3
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  stopDistance: 1.2
+  attackRange: 0.45
+  attackPoint: {fileID: 1754303806}
 --- !u!1 &1014193365
 GameObject:
   m_ObjectHideFlags: 0
@@ -2981,7 +2992,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1014193366}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3269,7 +3280,7 @@ GameObject:
   - component: {fileID: 1112070205}
   - component: {fileID: 1112070208}
   - component: {fileID: 1112070207}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: F_GoblinMelee
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -3348,8 +3359,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  attackInterval: 1
-  attackStopDistance: 1.25
+  stopDistance: 1.25
   attackRange: 0.2
   attackPoint: {fileID: 324582667}
   patrolPoints:
@@ -3422,7 +3432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyBulletPools:
   - prefab: {fileID: 5541682256346664221, guid: d9468ba9bbb42d54186e42bed8433bd5, type: 3}
-    size: 3
+    size: 12
   playerBulletPools:
   - prefab: {fileID: 4067718611587494796, guid: 1bd73e30552e78548a7453fd9c2ecdc1, type: 3}
     size: 3
@@ -3768,7 +3778,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1263274704}
-  m_Layer: 11
+  - component: {fileID: 1263274705}
+  - component: {fileID: 1263274706}
+  - component: {fileID: 1263274708}
+  - component: {fileID: 1263274707}
+  m_Layer: 13
   m_Name: F_B_Rhinoceros-beetle
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -3783,13 +3797,94 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263274703}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.74, y: 0.97, z: 0}
+  m_LocalPosition: {x: 7.8, y: 0.97, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 370770536}
+  - {fileID: 2024067961}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &1263274705
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263274703}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!70 &1263274706
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263274703}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.26121777, y: 0.7064749}
+  m_Size: {x: 2.460453, y: 1.3680893}
+  m_Direction: 1
+--- !u!114 &1263274707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263274703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0db0afa935edb2146811c01723f442b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyData: {fileID: 11400000, guid: 7a0f523fce51f2a4bbe02c8a0e09cc62, type: 2}
+  moveSpeed: 6
+  chaseSpeed: 8
+  detectorRange: 0
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  stopDistance: 2
+  attackRange: 0.5
+  attackPoint: {fileID: 2024067961}
+  attackMaxCycle: 2
+--- !u!114 &1263274708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263274703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c55e8de29d1aa6544aa9f2e13ef28d1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  statesList:
+  - {fileID: 11400000, guid: 0ff987275910e124e8cfc60bcd87324c, type: 2}
+  - {fileID: 11400000, guid: 2561d233cb6d75d48a518b6e9d820f12, type: 2}
+  - {fileID: 11400000, guid: 592276a74fa58d6448a695001dc68e63, type: 2}
+  - {fileID: 11400000, guid: 22be7807619aeeb488204b73eb2043e1, type: 2}
+  - {fileID: 11400000, guid: 833587fae8d086943aad59596ce60200, type: 2}
+  - {fileID: 11400000, guid: e6586ab493b53ec4eba5a8024a86168e, type: 2}
+  - {fileID: 11400000, guid: 7a5c340a4b326bb4ea3cd2fd38c1eb24, type: 2}
 --- !u!1 &1265363924
 GameObject:
   m_ObjectHideFlags: 0
@@ -3881,8 +3976,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1305036264}
-  m_Layer: 11
-  m_Name: DetectorPoint
+  m_Layer: 13
+  m_Name: ShootDetectorPoint
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -3914,7 +4009,7 @@ GameObject:
   - component: {fileID: 1322157301}
   - component: {fileID: 1322157300}
   - component: {fileID: 1322157302}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4220,7 +4315,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1546314619}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
@@ -4280,7 +4375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1621199983}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Points
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4329,7 +4424,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1657185756}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.11, y: 0, z: 0}
+  m_LocalPosition: {x: 0.69, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 237518136}
@@ -4349,7 +4444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1659190530}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Melee1Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4424,7 +4519,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1676657157}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: F_Toad
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -4455,7 +4550,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1710002052}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: DetectorPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4485,7 +4580,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1754303806}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
@@ -4635,7 +4730,7 @@ GameObject:
   - component: {fileID: 1791649538}
   - component: {fileID: 1791649540}
   - component: {fileID: 1791649539}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4738,7 +4833,7 @@ GameObject:
   - component: {fileID: 1831195823}
   - component: {fileID: 1831195822}
   - component: {fileID: 1831195824}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4922,7 +5017,7 @@ Transform:
   m_Children:
   - {fileID: 608751166}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1866902827
 GameObject:
@@ -4954,7 +5049,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1866902827}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.18, y: 1.01, z: 0}
+  m_LocalPosition: {x: -5.08, y: 1.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 312813138}
@@ -5067,7 +5162,7 @@ MonoBehaviour:
   attackRange02: 0.5
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 10240
+    m_Bits: 8192
   shootInterval: 2
   shootPoint: {fileID: 440045160}
   bulletPrefab: {fileID: 4067718611587494796, guid: 1bd73e30552e78548a7453fd9c2ecdc1, type: 3}
@@ -5233,7 +5328,7 @@ GameObject:
   - component: {fileID: 1983826220}
   - component: {fileID: 1983826219}
   - component: {fileID: 1983826221}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5345,8 +5440,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1999891929}
-  m_Layer: 11
-  m_Name: Melee1Stage2Point
+  m_Layer: 13
+  m_Name: Melee2Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5365,6 +5460,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1621199983}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2024067960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2024067961}
+  m_Layer: 13
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2024067961
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024067960}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.5, y: 0.75, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1263274704}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2059318955
 GameObject:

@@ -17,6 +17,10 @@ MonoBehaviour:
     curHealth: 0
     attackDamage: 15
   enemySelfData:
-    enemyID: 3
+    enemyID: 4
     enemyName: GoblinRange
+  isBoss: 0
+  bossData:
+    attack2Damage: 0
+    attack3Damage: 0
   enemyType: 2

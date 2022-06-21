@@ -2,58 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossStateBase : ScriptableObject,IState
+public class BossStateBase : EnemyStateBase
 {
-    protected BossStateMachine stateMachine;
-    
     protected BossController boss;
     protected BossThreeMelee bossThreeMelee;
         
-    private int animNameID;
-
-    [SerializeField] private string animName;
-
-    private float stateStartTime;
-    protected float stateDuration => Time.time - stateStartTime;
-
-    protected bool isAnimOver => stateDuration >= stateMachine.Anim.GetCurrentAnimatorStateInfo(0).length;
-    
-    public void InitializeState(BossController bossController,BossStateMachine bossStateMachine)
+    public override void InitializeState(EnemyController bossController,EnemyStateMachine bossStateMachine)
     {
-        boss = bossController;
-        stateMachine = bossStateMachine;
+        base.InitializeState(bossController,bossStateMachine);
+        
+        boss = enemy as BossController;
 
-        switch (boss.bossData.enemyType)
+        switch (enemy.enemyData.enemyType)
         {
             case EnemyType.TrollLike:
-                bossThreeMelee = bossController as  BossThreeMelee;
+                bossThreeMelee = bossController as BossThreeMelee;
                 break;
         }
     }
     
-    protected virtual void OnEnable()
-    {
-        animNameID = Animator.StringToHash(animName);
-    }
-    
-    public virtual void OnEnter()
+    public override  void OnEnter()
     {
         stateMachine.Anim.CrossFade(animNameID,0.1f);
         stateStartTime = Time.time;
     }
 
-    public virtual void OnGameLogicUpdate()
+    public override void OnGameLogicUpdate()
     {
-        
+        base.OnGameLogicUpdate();
     }
 
-    public virtual void OnPhysicalLogicUpdate()
+    public override void OnPhysicalLogicUpdate()
     {
-        
+        base.OnPhysicalLogicUpdate();
     }
 
-    public virtual void OnExit()
+    public override  void OnExit()
     {
-        
+        base.OnExit();
     }
+    
+    
 }

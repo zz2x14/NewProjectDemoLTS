@@ -17,6 +17,10 @@ MonoBehaviour:
     curHealth: 0
     attackDamage: 10
   enemySelfData:
-    enemyID: 5
+    enemyID: 2
     enemyName: Wasp
+  isBoss: 0
+  bossData:
+    attack2Damage: 0
+    attack3Damage: 0
   enemyType: 3

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "EnemyState/EnemyAttack1State",fileName = "EnemyAttack1State")]
-public class EnemyAttack1State : EnemyStateBase
+public class EnemyAttack1State : EnemyGeneralStateBase
 {
     private float attackStartTime;
     
@@ -20,7 +20,7 @@ public class EnemyAttack1State : EnemyStateBase
 
         if (isAnimOver)
         {
-            stateMachine.SwitchState(typeof(EnemyAttackIdleState));
+            stateMachine.SwitchState(typeof(EnemyAttackTransitionState));
         }
     }
 

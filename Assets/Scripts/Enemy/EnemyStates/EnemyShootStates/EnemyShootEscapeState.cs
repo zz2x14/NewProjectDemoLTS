@@ -11,17 +11,18 @@ public class EnemyShootEscapeState : EnemyShootBaseState
     {
         base.OnEnter();
         
-        enemyShoot.DontCollidePlayer();
+        //enemyShoot.DontCollidePlayer();
         escapePoint = enemyShoot.GetRandomEscapaPoint();
     }
 
     public override void OnGameLogicUpdate()
     {
         base.OnGameLogicUpdate();
+        
+        enemyShoot.FaceToTarget(escapePoint);
 
         if (Vector2.Distance(enemyShoot.transform.position, escapePoint) <= 0.1f)
         {
-            enemyShoot.FaceToPlayer();
             stateMachine.SwitchState(typeof(EnemyShootIdleState));
         }
     }
@@ -37,7 +38,9 @@ public class EnemyShootEscapeState : EnemyShootBaseState
     {
         base.OnExit();
         
-        enemyShoot.RecoverNormalLayer();
+        enemy.FaceToPlayer();
+        
+       // enemyShoot.RecoverNormalLayer();
     }
     
 }

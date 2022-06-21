@@ -11,7 +11,7 @@ public class BossMelee3State : BossStateBase
 
         if (isAnimOver)
         {
-            if (boss.bossData.enemyType == EnemyType.TrollLike)
+            if (enemy.enemyData.enemyType == EnemyType.TrollLike)
             {
                 stateMachine.SwitchState(typeof(BossMeleeTransitionalState));
             }

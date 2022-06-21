@@ -8,15 +8,18 @@ public class BossMelee1State : BossStateBase
     public override void OnEnter()
     {
         base.OnEnter();
-
-        switch (boss.bossData.enemyType)
-        {
-            case EnemyType.TrollLike:
-                bossThreeMelee.AttackCycle += 1;
-                break;
-        }
         
         boss.SetRbVelocity(Vector2.zero);
+
+        switch (enemy.enemyData.enemyType)
+        {
+            case EnemyType.TrollLike:
+                boss.AttackCycle += 1;
+                break;
+            case EnemyType.BeetleLike:
+                boss.AttackCycle += 1;
+                break;
+        }
     }
 
     public override void OnGameLogicUpdate()
@@ -25,8 +28,25 @@ public class BossMelee1State : BossStateBase
 
         if (isAnimOver)
         {
-            stateMachine.SwitchState(typeof(BossMeleeTransitionalState));
+            switch (enemy.enemyData.enemyType)
+            {
+                case EnemyType.TrollLike:
+                    stateMachine.SwitchState(typeof(BossMeleeTransitionalState));
+                    break;
+                case EnemyType.BeetleLike:
+                    stateMachine.SwitchState(typeof(BossMoveAfterAttackState));
+                    break;
+            }
         }
     }
 
+    public override void OnExit()
+    {
+        base.OnExit();
+
+        if (boss.enemyData.enemyType == EnemyType.BeetleLike)
+        {
+            boss.CurPos = boss.transform.position;
+        }
+    }
 }

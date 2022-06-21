@@ -5,21 +5,26 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "EnemyState/EnemyHomingState",fileName = "EnemyHomingState")]
 public class EnemyHomingState : EnemyStateBase
 {
-    public override void OnEnter()
-    {
-        base.OnEnter();
-    }
-
     public override void OnGameLogicUpdate()
     {
         base.OnGameLogicUpdate();
 
         if (enemy.FoundPlayer)
         {
-            stateMachine.SwitchState(typeof(EnemyGeneralChaseState));
+            switch (enemy.enemyData.enemyType)
+            {
+                case EnemyType.WaspLike:
+                    stateMachine.SwitchState(typeof(EnemyFlyToPointState));
+                    break;
+                default:
+                    stateMachine.SwitchState(typeof(EnemyGeneralChaseState));
+                    break;
+            }
+            
+            return;
         }
 
-        if (enemy.CloseToDestination(enemy.OriginalPos,0.1f))
+        if (enemy.CloseToTarget(enemy.OriginalPos,0.1f))
         {
             switch (enemy.enemyData.enemyType)
             {
@@ -29,6 +34,10 @@ public class EnemyHomingState : EnemyStateBase
                 case EnemyType.GolblinMeleeLike:
                     stateMachine.SwitchState(typeof(EnemyGeneralPatrolState));
                     break;
+                case EnemyType.WaspLike:
+                    enemy.SetRbVelocity(Vector2.zero);
+                    stateMachine.SwitchState(typeof(EnemyGeneralIdleState));
+                    break;
             }
         }
     }
@@ -37,11 +46,8 @@ public class EnemyHomingState : EnemyStateBase
     {
         base.OnPhysicalLogicUpdate();
         
-        if (!enemy.CloseToDestination(enemy.OriginalPos,0.1f))
-        {
-            enemy.MoveToDestination(enemy.MoveSpeed,enemy.OriginalPos);
-            enemy.FaceToPlayer();
-        }
+        enemy.MoveToTargetHorizontal(enemy.MoveSpeed,enemy.OriginalPos);
+        enemy.FaceToTarget(enemy.OriginalPos);
     }
 
 }
