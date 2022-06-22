@@ -36,6 +36,8 @@ public enum EnemyType
     GoblinRangeLike,
     WaspLike,
     TrollLike,
-    BeetleLike
+    BeetleLike,
+    ToadKingLike,
+    ToadLike
 }
 

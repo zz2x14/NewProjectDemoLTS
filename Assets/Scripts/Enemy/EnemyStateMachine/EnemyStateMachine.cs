@@ -74,5 +74,4 @@ public class EnemyStateMachine : StateMachine
     {
         SwitchState(typeof(EnemyDeathState));
     }
-
 }

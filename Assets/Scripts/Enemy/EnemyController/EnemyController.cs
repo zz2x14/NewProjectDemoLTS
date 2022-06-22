@@ -29,11 +29,10 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
     
     //Sign:属性也是可以复写的
     public virtual bool FoundPlayer => Physics2D.OverlapCircle(transform.position, detectorRange, playerLayer);
-    //public bool PlayerInAttackRange => Physics2D.OverlapCircle(attackPoint.position, attackRange ,playerLayer);
+    public bool PlayerInAttackRange => Physics2D.OverlapCircle(attackPoint.position, attackRange ,playerLayer);
 
     public Transform PlayerPos { get; private set; }
     public Vector3 OriginalPos { get; private set; }
-    protected Vector2 playerDir;
 
     public float MoveSpeed => moveSpeed;
     public float ChaseSpeed => chaseSpeed;
@@ -102,10 +101,8 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
     public void ChasePlayerHorizontal()
     {
         FaceToPlayer();
-        
-        playerDir = (PlayerPos.position - transform.position).normalized;
       
-        SetRbVelocityOnlyX(playerDir * chaseSpeed);
+        SetRbVelocityOnlyX((PlayerPos.position - transform.position).normalized * chaseSpeed);
     }
     public void MoveToTargetHorizontal(float speed,Vector3 target)
     {

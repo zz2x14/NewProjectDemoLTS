@@ -19,6 +19,9 @@ public class BossMelee1State : BossStateBase
             case EnemyType.BeetleLike:
                 boss.AttackCycle += 1;
                 break;
+            case EnemyType.ToadKingLike:
+                boss.AttackCycle += 1;
+                break;
         }
     }
 
@@ -35,6 +38,9 @@ public class BossMelee1State : BossStateBase
                     break;
                 case EnemyType.BeetleLike:
                     stateMachine.SwitchState(typeof(BossMoveAfterAttackState));
+                    break;
+                case EnemyType.ToadKingLike:
+                    stateMachine.SwitchState(typeof(BossMeleeTransitionalState));
                     break;
             }
         }

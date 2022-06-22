@@ -6,20 +6,29 @@ using UnityEngine;
 public class BossMelee2State : BossStateBase
 {
     [SerializeField] private float trollMoveOffestX;
-    
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
+        
+        boss.FaceToPlayer();
+    }
+
     public override void OnGameLogicUpdate()
     {
         base.OnGameLogicUpdate();
 
         if (isAnimOver)
         {
-            if (enemy.enemyData.enemyType == EnemyType.TrollLike)
+            switch (boss.enemyData.enemyType)
             {
-                if (!bossThreeMelee.IsPlayerOnGround)
-                {
+                case EnemyType.TrollLike:
                     bossThreeMelee.InstantaneousMoveWithOffset(boss.PlayerPos.position,trollMoveOffestX);
                     stateMachine.SwitchState(typeof(BossMelee3State));
-                }
+                    break;
+                case EnemyType.ToadKingLike:
+                    stateMachine.SwitchState(typeof(BossMoveToPlayerState));
+                    break;
             }
           
         }

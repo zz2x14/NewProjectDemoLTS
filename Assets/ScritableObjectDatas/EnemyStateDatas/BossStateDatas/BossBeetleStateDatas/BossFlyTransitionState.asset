@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 213abbd0403cb93418371a7145f9c880, type: 3}
-  m_Name: BossHurtState
+  m_Script: {fileID: 11500000, guid: aa6674b1b01a926409f5fe248ea56b30, type: 3}
+  m_Name: BossFlyTransitionState
   m_EditorClassIdentifier: 
-  animName: Hurt
+  animName: Fly

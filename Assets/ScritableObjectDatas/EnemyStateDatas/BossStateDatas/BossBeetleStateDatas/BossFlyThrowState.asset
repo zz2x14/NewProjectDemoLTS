@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1864b850bed6cbf46b2299372c4ebd7d, type: 3}
-  m_Name: EnemyPatrolIdleState
+  m_Script: {fileID: 11500000, guid: c80e194aaf82c9048889f8a7afee1ca5, type: 3}
+  m_Name: BossFlyThrowState
   m_EditorClassIdentifier: 
-  animName: Idle
-  waitTime: 0.5
+  animName: FlyThrow

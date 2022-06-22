@@ -6,6 +6,8 @@ using UnityEngine;
 public class EnemyFlyAttackState : EnemyFlyStateBase
 {
     [SerializeField] private Vector2 attackPointOffset;
+
+    private Vector3 attackTarget;
  
     public override void OnEnter()
     {
@@ -14,6 +16,9 @@ public class EnemyFlyAttackState : EnemyFlyStateBase
        // enemy.DontCollidePlayer();
 
         enemyFly.FlyAttackedPlayer = false;
+
+        attackTarget = new Vector3(enemy.PlayerPos.position.x + attackPointOffset.x * enemy.transform.localScale.x,
+            enemy.PlayerPos.position.y + attackPointOffset.y);
     }
 
     public override void OnGameLogicUpdate()
@@ -30,26 +35,21 @@ public class EnemyFlyAttackState : EnemyFlyStateBase
     {
         base.OnPhysicalLogicUpdate();
 
-        if (enemy.CloseToPlayer())
-        {
-           enemy.SetRbVelocity(Vector2.zero);
-           enemyFly.FlyAttackedPlayer = true;
-        }
-        else
+        if (!enemyFly.FlyAttackedPlayer)
         {
             enemy.MoveToTarget
-                (enemy.ChaseSpeed, new Vector3(enemy.PlayerPos.position.x + attackPointOffset.x  * enemy.transform.localScale.x,
-                    enemy.PlayerPos.position.y + attackPointOffset.y));
+                (enemy.ChaseSpeed, attackTarget);
             
             enemy.FaceToPlayer();
         }
-      
     }
 
-    // public override void OnExit()
-    // {
-    //     base.OnExit();
-    //     
-    //     enemy.RecoverNormalLayer();
-    // }
+    public override void OnExit()
+    {
+        base.OnExit();
+
+        attackTarget = Vector3.zero;
+        
+        //enemy.RecoverNormalLayer();
+    }
 }

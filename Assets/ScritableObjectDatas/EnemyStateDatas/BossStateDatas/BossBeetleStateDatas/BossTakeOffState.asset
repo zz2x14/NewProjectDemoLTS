@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5aaa1cfdf02ea7845a72a258015a99a2, type: 3}
-  m_Name: BossDeathState
+  m_Script: {fileID: 11500000, guid: c5185a14793a8654d81f94661bfafcb8, type: 3}
+  m_Name: BossTakeOffState
   m_EditorClassIdentifier: 
-  animName: Death
+  animName: TakeOff

@@ -85,7 +85,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.5466667
+  - time: 0.53333336
     functionName: FlyAttackAnimationEvent
     data: 
     objectReferenceParameter: {fileID: 0}

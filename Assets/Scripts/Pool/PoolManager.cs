@@ -10,6 +10,7 @@ public class PoolManager : PersistentSingletonTool<PoolManager>
 
     public Pool[] enemyBulletPools;
     public Pool[] playerBulletPools;
+    public Pool[] enemyPools;
     
     protected override void Awake()
     {
@@ -17,6 +18,7 @@ public class PoolManager : PersistentSingletonTool<PoolManager>
         
         InitializePools(enemyBulletPools);
         InitializePools(playerBulletPools);
+        InitializePools(enemyPools);
     }
     
 #if UNITY_EDITOR
@@ -24,6 +26,7 @@ public class PoolManager : PersistentSingletonTool<PoolManager>
     {
         CheckPoolSize(enemyBulletPools);
         CheckPoolSize(playerBulletPools);
+        CheckPoolSize(enemyPools);
     }
 #endif
 

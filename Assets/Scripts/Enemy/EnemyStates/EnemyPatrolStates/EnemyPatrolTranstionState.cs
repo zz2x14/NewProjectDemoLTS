@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "EnemyState/EnemyPatrolIdleState",fileName = "EnemyPatrolIdleState")]
-public class EnemyPatrolIdleState : EnemyPatrolStateBase
+public class EnemyPatrolTranstionState : EnemyPatrolStateBase
 {
     [SerializeField] private float waitTime;
     private float startTime;
@@ -20,12 +20,19 @@ public class EnemyPatrolIdleState : EnemyPatrolStateBase
     public override void OnGameLogicUpdate()
     {
         base.OnGameLogicUpdate();
-        
+
         if (enemy.FoundPlayer)
         {
-            stateMachine.SwitchState(typeof(EnemyGeneralChaseState));
+            if (enemy.CloseToPlayer())
+            {
+                stateMachine.SwitchState(typeof(EnemyGeneralChaseState));
+            }
+            else
+            {
+                stateMachine.SwitchState(typeof(EnemyGeneralChaseState));
+            }
         }
-
+        
         if (idleOver)
         {
             stateMachine.SwitchState(typeof(EnemyGeneralPatrolState));

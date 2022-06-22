@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: EnemyFlyToPointState
   m_EditorClassIdentifier: 
   animName: Move
-  min: {x: -4, y: 3}
-  max: {x: 5, y: 5}
+  min: {x: -4, y: 4}
+  max: {x: 5, y: 6}

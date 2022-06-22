@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: EnemyFlyAttackState
   m_EditorClassIdentifier: 
   animName: Attack1
-  attackPointOffset: {x: 1, y: 1}
-  attackStopDis: 1.5
+  attackPointOffset: {x: 0.25, y: 0.75}

@@ -11,19 +11,31 @@ public class BossMeleeTransitionalState : BossStateBase
 
         if (isAnimOver)
         {
-            if (enemy.enemyData.enemyType == EnemyType.TrollLike)
+            switch (boss.enemyData.enemyType)
             {
-                if (bossThreeMelee.AttackCycle >= bossThreeMelee.AttackMaxCycle)
-                {
-                    bossThreeMelee.AttackCycle = 0;
-                    stateMachine.SwitchState(typeof(BossMelee2State));
-                }
-                else
-                {
-                    stateMachine.SwitchState(typeof(BossMoveToPlayerState));
-                }
+                case EnemyType.TrollLike:
+                    if (bossThreeMelee.AttackCycle >= bossThreeMelee.AttackMaxCycle)
+                    {
+                        boss.AttackCycle = 0;
+                        stateMachine.SwitchState(typeof(BossMelee2State));
+                    }
+                    else
+                    {
+                        stateMachine.SwitchState(typeof(BossMoveToPlayerState));
+                    }
+                    break;
+                case EnemyType.ToadKingLike:
+                    if (boss.AttackCycle >= boss.AttackMaxCycle)
+                    {
+                        boss.AttackCycle = 0;
+                        stateMachine.SwitchState(typeof(BossMelee2State));
+                    }
+                    else
+                    {
+                        stateMachine.SwitchState(typeof(BossMoveToPlayerState));
+                    }
+                    break;
             }
-          
         }
     }
     

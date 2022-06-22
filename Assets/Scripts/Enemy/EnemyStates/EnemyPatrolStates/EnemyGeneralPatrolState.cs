@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [CreateAssetMenu(menuName = "EnemyState/EnemyGeneralPatrolState",fileName = "EnemyGeneralPatrolState")]
-public class EnemyGeneralPatrolState : EnemyPatrolIdleState
+public class EnemyGeneralPatrolState : EnemyPatrolTranstionState
 {
     public override void OnGameLogicUpdate()
     {
@@ -17,7 +17,7 @@ public class EnemyGeneralPatrolState : EnemyPatrolIdleState
         
         if (enemyPatrol.ArrivedPatrolPoint)
         {
-            stateMachine.SwitchState(typeof(EnemyPatrolIdleState));
+            stateMachine.SwitchState(typeof(EnemyPatrolTranstionState));
         }
     }
 

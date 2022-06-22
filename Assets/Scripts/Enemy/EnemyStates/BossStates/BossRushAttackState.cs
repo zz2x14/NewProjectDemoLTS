@@ -14,7 +14,7 @@ public class BossRushAttackState : BossStateBase
 
         boss.AttackCycle = 0;
         
-       rushDestination = new Vector2(enemy.transform.position.x + rushOffsetX * enemy.transform.localScale.x,
+        rushDestination = new Vector2(enemy.transform.position.x + rushOffsetX * enemy.transform.localScale.x,
             enemy.PlayerPos.position.y);
     }
 
@@ -31,7 +31,7 @@ public class BossRushAttackState : BossStateBase
     public override void OnPhysicalLogicUpdate()
     {
         base.OnPhysicalLogicUpdate();
-
+        
         boss.MoveToTargetHorizontal(boss.ChaseSpeed, rushDestination);
         enemy.FaceToTarget(rushDestination);
     }
@@ -39,6 +39,8 @@ public class BossRushAttackState : BossStateBase
     public override void OnExit()
     {
         base.OnExit();
+        
+        rushDestination = Vector2.zero;
     }
     
 }

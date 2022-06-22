@@ -11,7 +11,7 @@ public class EnemyAttack1State : EnemyGeneralStateBase
     {
         base.OnEnter();
         
-        enemy.SetRbVelocity(new Vector2(0f,0f));
+        enemy.SetRbVelocity(Vector2.zero);
     }
 
     public override void OnGameLogicUpdate()

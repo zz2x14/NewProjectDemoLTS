@@ -58,14 +58,22 @@ public class BossThreeMelee : BossController
             PlayerPos.GetComponent<Rigidbody2D>().AddForce(pushForce1,ForceMode2D.Impulse);
         }
     }
-
     public void Melee3()
     {
-        Collider2D player = Physics2D.OverlapCircle(attack3Point.position, attackRange);
-        
+        Collider2D player = Physics2D.OverlapCircle(attack3Point.position, attackRange,playerLayer);
+
         if (player != null)
         {
-            player.GetComponent<ITakenDamage>().TakenDamage(enemyData.bossData.attack2Damage);
+            player.GetComponent<ITakenDamage>().TakenDamage(enemyData.baseData.attackDamage);
         }
+        
+        //Think:为什么此处用melee1、2中的方法会出现报空情况；使用TryGet是否更省性能
+        //Sign:因为一开始没有添加层级限制
+        
+        
+        // if (playerColl.TryGetComponent(out PlayerController player))
+        // {
+        //     player.TakenDamage(enemyData.bossData.attack3Damage);
+        // }
     }
 }

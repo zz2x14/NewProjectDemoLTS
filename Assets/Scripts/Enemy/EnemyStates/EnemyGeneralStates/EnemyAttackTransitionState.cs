@@ -11,31 +11,35 @@ public class EnemyAttackTransitionState : EnemyGeneralStateBase
     {
         base.OnGameLogicUpdate();
 
+        if (enemy.enemyData.enemyType == EnemyType.ToadLike)
+        {
+            if (readyAttack)
+            {
+                stateMachine.SwitchState(enemy.PlayerInAttackRange
+                    ? typeof(EnemyAttack1State)
+                    : typeof(EnemyGeneralChaseState));
+            }
+            
+            return;
+        }
+        
         if (!enemy.FoundPlayer)
         {
             stateMachine.SwitchState(typeof(EnemyHomingState));
         }
         else
         {
-            if (enemy.CloseToPlayer()) //Sign:enemyGeneral.PlayerInAttackRange && 
+            if (readyAttack)
             {
-                if (readyAttack)
+                if (enemy.PlayerInAttackRange)
                 {
                     stateMachine.SwitchState(typeof(EnemyAttack1State));
                 }
-               
-            }
-            else
-            {
-                stateMachine.SwitchState(typeof(EnemyGeneralChaseState));
+                else
+                {
+                    stateMachine.SwitchState(typeof(EnemyGeneralChaseState));
+                }
             }
         }
     }
-
-    public override void OnExit()
-    {
-        base.OnExit();
-     
-    }
-    
 }

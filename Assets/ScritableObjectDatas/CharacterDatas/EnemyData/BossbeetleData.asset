@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: BossbeetleData
   m_EditorClassIdentifier: 
   baseData:
-    maxHealth: 100
-    curHealth: 0
+    maxHealth: 200
+    curHealth: 200
     attackDamage: 10
   enemySelfData:
-    enemyID: 7
+    enemyID: 8
     enemyName: RhinocerosBeetle
   isBoss: 1
   bossData:

@@ -25,7 +25,14 @@ public class BossMoveTransitionalState : BossStateBase
         {
             if (readyToRush)
             {
-                stateMachine.SwitchState(typeof(BossRushAttackState));
+                if (!boss.BossAngryByHealth)
+                {
+                    stateMachine.SwitchState(typeof(BossRushAttackState));
+                }
+                else
+                {
+                    stateMachine.SwitchState(typeof(BossReadyToTakeOffState));
+                }
             }  
         }
         else
@@ -35,6 +42,7 @@ public class BossMoveTransitionalState : BossStateBase
                 stateMachine.SwitchState(typeof(BossMoveToPlayerState));
             }
         }
-       
     }
+    
+    
 }

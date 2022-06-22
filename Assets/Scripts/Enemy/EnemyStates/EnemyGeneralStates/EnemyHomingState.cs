@@ -29,6 +29,7 @@ public class EnemyHomingState : EnemyStateBase
             switch (enemy.enemyData.enemyType)
             {
                 case EnemyType.SlimeLike:
+                    enemy.SetRbVelocity(Vector2.zero);
                     stateMachine.SwitchState(typeof(EnemyGeneralIdleState));
                     break;
                 case EnemyType.GolblinMeleeLike:

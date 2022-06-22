@@ -6,15 +6,27 @@ using UnityEngine;
 public class EnemyGeneralChaseState : EnemyGeneralStateBase
 {
     [SerializeField] private float waitAttackTime;
-    
+    [SerializeField] private string idleAnimName;
+
+    private int idleAnimID;
+
     private float startTime;
     private bool readyAttack => Time.time - startTime >= waitAttackTime;
-    
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+        idleAnimID = Animator.StringToHash(idleAnimName);
+    }
+
     public override void OnEnter()
     {
         base.OnEnter();
         
         startTime = Time.time;
+        
+        Debug.Log(enemy.gameObject.name);
     }
 
     public override void OnGameLogicUpdate()
@@ -22,14 +34,22 @@ public class EnemyGeneralChaseState : EnemyGeneralStateBase
         base.OnGameLogicUpdate();
        
         //Sign:追击到玩家后等到短暂时间再开始攻击玩家 - 目的是为了避免连续攻击后玩家被击退出攻击范围马上追击到玩家又立刻攻击(不符合攻击频率)
+        //追击到玩家后立即切换到站立动画 - 避免出现仍在移动的视觉效果
         
-        if (enemy.CloseToPlayer() && readyAttack) //Sign:enemyGeneral.PlayerInAttackRange && 
+        if (enemy.CloseToPlayer()) //Sign:enemyGeneral.PlayerInAttackRange && 
         {
-            stateMachine.SwitchState(typeof(EnemyAttack1State));
-            return;
+            stateMachine.Anim.CrossFade(idleAnimID,0.1f);
+            if (readyAttack)
+            {
+                enemy.SetRbVelocity(Vector2.zero);
+                stateMachine.SwitchState(typeof(EnemyAttack1State));
+            }
         }
         
-        if (!enemy.FoundPlayer)
+        if(enemy.enemyData.enemyType == EnemyType.ToadLike)
+            return;
+        
+        if (!enemy.FoundPlayer )
         {
             stateMachine.SwitchState(typeof(EnemyHomingState));
         }
@@ -41,7 +61,7 @@ public class EnemyGeneralChaseState : EnemyGeneralStateBase
 
         if (enemy.CloseToPlayer())
         {
-            enemy.SetRbVelocity(Vector2.zero);//达到既定距离后停止移动
+            enemy.SetRbVelocity(Vector2.zero);
         }
         else
         {
