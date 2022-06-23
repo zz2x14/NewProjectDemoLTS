@@ -38,10 +38,15 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
     public float ChaseSpeed => chaseSpeed;
 
     protected readonly Vector3 flipXScale = new Vector3(-1, 1, 1);
-    
+
+    private EnemyStateMachine enemyStateMachine;
+    private List<EnemyStateBase> enemyStateStock;
+
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+       
+        InitializeEnemy();
     }
 
     protected virtual void OnEnable()
@@ -55,7 +60,7 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
     {
         PlayerPos = FindObjectOfType<PlayerController>().transform;
     }
-  
+
     protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -63,6 +68,33 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
         
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(attackPoint.position,attackRange);
+    }
+
+    private void InitializeEnemy()
+    {
+        enemyStateMachine = GetComponent<EnemyStateMachine>();
+        FillStateStock();
+        
+        enemyData = Instantiate(enemyData);//和状态是同样的道理，敌人不该共用共享一个敌人数据，而是根据提供的数据克隆出自己的数据
+    }
+    private void FillStateStock()
+    {
+        enemyStateStock = new List<EnemyStateBase>(enemyStateMachine.StatesList.Count);
+        
+        foreach (var myState in enemyStateMachine.StatesList)
+        {
+            enemyStateStock.Add(myState);
+        }
+
+        enemyStateMachine.StatesList.Clear();
+        
+        foreach (var state in enemyStateStock)
+        {
+            EnemyStateBase stateCopy = Instantiate(state);
+           enemyStateMachine.StatesList.Add(stateCopy);
+        }
+        
+        //Sign:将状态机中状态列表的状态复制提取出来，再克隆覆盖到状态机状态列表，使每个敌人都使用"自己独有的状态"
     }
 
     public bool CloseToTarget(Vector3 target,float distance)

@@ -10,7 +10,7 @@ public class BossController : EnemyController
 
     [Header("Boss愤怒状态血量阈值")] 
     [SerializeField] private float healthInAngryRate;
-
+    
     public Vector3 CurPos { get; set; }
 
     public int AttackMaxCycle => attackMaxCycle;
@@ -18,11 +18,11 @@ public class BossController : EnemyController
     public int AttackCycle { get; set; }
     
     public int HitTimeNum { get; set; }
+
     
     public bool BossAngryByHealth => enemyData.baseData.CurHealth <= enemyData.baseData.MaxHealth * healthInAngryRate 
                                      && enemyData.baseData.CurHealth > 0f;
   
-
     protected override void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
@@ -37,6 +37,11 @@ public class BossController : EnemyController
     public virtual void Attack2()
     {
        
+    }
+
+    public virtual void EnableDebuff()
+    {
+        
     }
     
 }

@@ -85,7 +85,14 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.53333336
-    functionName: SummonAttack2_Melee
+    functionName: BossAttack2_Melee
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.5466667
+    functionName: Debuff_LimitRoll
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

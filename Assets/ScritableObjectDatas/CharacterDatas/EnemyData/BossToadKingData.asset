@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseData:
     maxHealth: 100
-    curHealth: 0
+    curHealth: 100
     attackDamage: 10
   enemySelfData:
     enemyID: 6
@@ -23,4 +23,5 @@ MonoBehaviour:
   bossData:
     attack2Damage: 10
     attack3Damage: 10
+    spareValue: 3
   enemyType: 6

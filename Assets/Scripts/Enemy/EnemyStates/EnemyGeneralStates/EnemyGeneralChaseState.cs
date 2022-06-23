@@ -25,8 +25,6 @@ public class EnemyGeneralChaseState : EnemyGeneralStateBase
         base.OnEnter();
         
         startTime = Time.time;
-        
-        Debug.Log(enemy.gameObject.name);
     }
 
     public override void OnGameLogicUpdate()

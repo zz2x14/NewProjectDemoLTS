@@ -25,4 +25,14 @@ public class BossSummon : BossController
          player.GetComponent<ITakenDamage>().TakenDamage(enemyData.bossData.attack2Damage);
       }
    }
+
+   public void EnableDebuff_LimitRoll()
+   {
+      Collider2D player = Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);
+
+      if (player != null)
+      {
+         player.GetComponent<IPlayerDebuff>().LimitRoll(enemyData.bossData.spareValue);
+      }
+   }
 }

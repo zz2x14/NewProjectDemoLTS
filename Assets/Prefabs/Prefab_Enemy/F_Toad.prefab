@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4983766040459577311
 Transform:
   m_ObjectHideFlags: 0
@@ -104,8 +104,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 98b29c310637fee4d9e2097b4c39cdb5, type: 2}
-  moveSpeed: 2
-  chaseSpeed: 2.5
+  moveSpeed: 0
+  chaseSpeed: 1.5
   detectorRange: 0
   playerLayer:
     serializedVersion: 2

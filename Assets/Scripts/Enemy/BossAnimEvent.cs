@@ -67,9 +67,14 @@ public class BossAnimEvent : MonoBehaviour
         bossSummon.Summon();
     }
 
-    public void SummonAttack2_Melee()
+    public void BossAttack2_Melee()
     {
-        bossSummon.Attack2();
+        bossController.Attack2();
+    }
+
+    public void Debuff_LimitRoll()
+    {
+        bossSummon.EnableDebuff_LimitRoll();
     }
 
 }

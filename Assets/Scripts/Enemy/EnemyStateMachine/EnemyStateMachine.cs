@@ -8,6 +8,12 @@ public class EnemyStateMachine : StateMachine
 {
     [SerializeField] private List<EnemyStateBase> statesList = new List<EnemyStateBase>();
 
+    public List<EnemyStateBase> StatesList
+    {
+        get => statesList;
+        set => statesList = value;
+    }
+
     private EnemyController enemyController;
 
     private bool debugCurState = false;

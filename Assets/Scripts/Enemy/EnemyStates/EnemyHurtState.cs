@@ -37,6 +37,9 @@ public class EnemyHurtState : EnemyStateBase
                 case EnemyType.TrollLike:
                     stateMachine.SwitchState(typeof(EnemyHurtTransitionState));
                     break;
+                case EnemyType.ToadKingLike:
+                    stateMachine.SwitchState(typeof(BossSummonState));
+                    break;
                 case EnemyType.ToadLike:
                     stateMachine.SwitchState(typeof(EnemyAttackTransitionState));
                     break;

@@ -35,7 +35,7 @@ public class PlayerIdleState : PlayerStateBase
             playerStateMachine.SwitchState(typeof(PlayerRunState));
         }
 
-        if (input.IsRollKeyPressed)
+        if (player.CanRoll && input.IsRollKeyPressed)
         {
             playerStateMachine.SwitchState(typeof(PlayerRollState));
         }

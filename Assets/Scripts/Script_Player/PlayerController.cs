@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
 
-public class PlayerController : CharacterBase
+public class PlayerController : CharacterBase,IPlayerDebuff
 {
     [SerializeField] private PlayerData playerData;
     
@@ -55,7 +55,10 @@ public class PlayerController : CharacterBase
 
     private Coroutine invincibleCor;
     private bool canHurt = true;
-    
+
+    public bool CanRoll { get; set; }
+    private Coroutine litmitRollCor;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -70,6 +73,8 @@ public class PlayerController : CharacterBase
     private void OnEnable()
     {
         playerData.InitializeHealth();
+
+        CanRoll = true;
     }
 
     private void Start()
@@ -193,20 +198,26 @@ public class PlayerController : CharacterBase
 
     public void Attack1()
     {
-        Collider2D enemy = Physics2D.OverlapCircle(attackPoint01.position, attackRange01, enemyLayer);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint01.position, attackRange01, enemyLayer);
 
-        if (enemy != null)
+        if (hitEnemies.Length > 0)
         {
-            enemy.GetComponent<ITakenDamage>().TakenDamage(playerData.baseData.attackDamage);
+            foreach (var enemy in hitEnemies)
+            {
+                enemy.GetComponent<EnemyController>().TakenDamage(playerData.baseData.attackDamage);
+            }
         }
     }
     public void Attack2()
     {
-        Collider2D enemy = Physics2D.OverlapCircle(attackPoint02.position, attackRange02, enemyLayer);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint01.position, attackRange01, enemyLayer);
 
-        if (enemy != null)
+        if (hitEnemies.Length > 0)
         {
-            enemy.GetComponent<ITakenDamage>().TakenDamage(playerData.baseData.attackDamage);
+            foreach (var enemy in hitEnemies)
+            {
+                enemy.GetComponent<ITakenDamage>().TakenDamage(playerData.baseData.attackDamage);
+            }
         }
     }
     public void Shoot()
@@ -219,5 +230,23 @@ public class PlayerController : CharacterBase
         playerBullet.FlySpeed = bulletSpeed;
         playerBullet.Damage = playerData.selfData.shootDamage;
     }
- 
+
+    public void LimitRoll(float limitDuration)
+    {
+        if (litmitRollCor != null)
+        {
+            StopCoroutine(litmitRollCor);
+        }
+
+        litmitRollCor = StartCoroutine(LimitRollCor(limitDuration));
+    }
+
+    IEnumerator LimitRollCor(float duration)
+    {
+        CanRoll = false;
+
+        yield return new WaitForSeconds(duration);
+
+        CanRoll = true;
+    }
 }

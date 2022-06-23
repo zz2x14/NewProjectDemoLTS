@@ -27,6 +27,7 @@ public class BossData
 {
     public float attack2Damage;
     public float attack3Damage;
+    public float spareValue;
 }
 
 public enum EnemyType
