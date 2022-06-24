@@ -46,8 +46,11 @@ TagManager:
   - name: BackGround
     uniqueID: 1025438737
     locked: 0
-  - name: FrontGround
+  - name: EnvironmentItemBehind
     uniqueID: 835346097
+    locked: 0
+  - name: Ground
+    uniqueID: 1262472357
     locked: 0
   - name: EnvironmentItem
     uniqueID: 2536673119

@@ -1,13 +1,65 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class PlayerInput : MonoBehaviour
+public enum InputType
+{
+    Move,
+    Jump
+}
+public class PlayerInput : MonoBehaviour,PlayerInputActions.IGameplayActions//Sign:更新模式会影响到按键判定！
 {
     private PlayerInputActions playerInputActions;
+    
+    public Dictionary<InputType,Action> inputRespondTable;
+    
+    public List<GuideUIRespondInput> guideUIList;
+
+    public event Action OnPlayerMove = delegate {  };
+    public event Action OnPlayerJump = delegate {  };
+    
+    public void OnAxisXMove(InputAction.CallbackContext context)
+    {
+        if (Mathf.Abs(context.ReadValue<Vector2>().x) > 0f)
+        {
+            OnPlayerMove.Invoke();
+        }
+    }
+    
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            OnPlayerJump.Invoke();
+        }
+    }
+    
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+       
+    }
+    
+    public void OnRoll(InputAction.CallbackContext context)
+    {
+        
+    }
+    
+    public void OnClimb(InputAction.CallbackContext context)
+    {
+        
+    }
+    
+    public void OnFall(InputAction.CallbackContext context)
+    {
+        
+    }
+    
+    public void OnShoot(InputAction.CallbackContext context)
+    {
+       
+    }
 
     private Vector2 moveXInput => playerInputActions.Gameplay.AxisXMove.ReadValue<Vector2>();
     public float MoveXInputX => moveXInput.x;
@@ -24,20 +76,80 @@ public class PlayerInput : MonoBehaviour
     public bool IsClimbKeyPressed => playerInputActions.Gameplay.Climb.WasPressedThisFrame();
     public bool IsClimbKey => playerInputActions.Gameplay.Climb.WasPerformedThisFrame();
     public bool IsClimbKeyReleased => playerInputActions.Gameplay.Climb.WasReleasedThisFrame();
-    
-   private void Awake()
+
+    private void OnEnable()
    {
        playerInputActions = new PlayerInputActions();//是要初始化的
+       
+       playerInputActions.Gameplay.SetCallbacks(this);//Sign：使用接口注册事件是要登记的
+
+       InitializeInputTable();
    }
 
-   public void EnableGameplayInput()
+    private void OnDisable()
    {
-        playerInputActions.Gameplay.Enable(); 
+       DisableAllInput();
+       
+       inputRespondTable.Clear();
+       guideUIList.Clear();
    }
 
-   public void DisableGamePlayeInput()
-   {
-       playerInputActions.Gameplay.Disable();
-   }
+     private void InitializeInputTable()
+    {
+        if (FindObjectsOfType<GuideUIRespondInput>().Length > 0)
+        {
+            inputRespondTable = new Dictionary<InputType, Action>();//初始化字典
+            inputRespondTable.Add(InputType.Move,OnPlayerMove);
+            inputRespondTable.Add(InputType.Jump,OnPlayerJump);
+            
+            guideUIList = new List<GuideUIRespondInput>();
+            foreach (var guideUI in FindObjectsOfType<GuideUIRespondInput>())
+            {
+                guideUIList.Add(guideUI);//获取所有的引导UI，添加进列表中
+            }
+        }
+      
+        if (guideUIList.Count > 0)
+        {
+            foreach (var guideType in guideUIList)
+            {
+                switch (guideType.respondInput)//让所有引导UI依次订阅相对应的事件
+                {
+                    case InputType.Move:
+                        OnPlayerMove += guideType.DisableSelf;//Sign:原本的想法 - 根据类型自动匹配订阅事件，最后采用直接进行判断分别对应订阅的方法
+                        break;
+                    case InputType.Jump:
+                        OnPlayerJump += guideType.DisableSelf;
+                        break;
+                }
+            }
+        }
+    }
+
+     public void DisableAllInput()
+     {
+         playerInputActions.Disable();
+     }
+
+     public void EnableGameplayInput()
+     {
+         playerInputActions.Gameplay.Enable(); 
+     }
+     public void DisableGamePlayInput()
+     {
+         playerInputActions.Gameplay.Disable();
+     }
+
+     public void EnableOneInput(InputAction inputAction) => inputAction.Enable();
+     public void DisableOneInput(InputAction inputAction) => inputAction.Disable();
     
+     public void EnableJumpInput() => EnableOneInput(playerInputActions.Gameplay.Jump);
+     public void DisableJumpInput() => DisableOneInput(playerInputActions.Gameplay.Jump);
+
+     public void EnableOnlyMoveInput()
+     {
+         DisableAllInput();
+         playerInputActions.Gameplay.AxisXMove.Enable();
+     }
+     
 }

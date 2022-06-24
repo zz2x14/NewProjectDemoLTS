@@ -1,57 +1,32 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
+//Sign:字典的key是没有setter的 即便key的类的实例本身可以更改 当它作为key时是不能更改的
+//Sign：禁用输入方法在初始化方法中无法正确生效，判断时间过短；在轨道中不能生效的原因是在途中禁用了单项操作又在结尾恢复了所有操作
 public class GuideUIRespondInput : MonoBehaviour
 {
     private PlayerInput playerInput;
     
-    [SerializeField]private InputType respondInput;
+    public InputType respondInput;
 
-   // private Dictionary<InputType, bool> inputRespondTable;
-    
     private void Awake()
     {
         playerInput = FindObjectOfType<PlayerInput>();
     }
-
-
-    private void OnEnable()
-    {
-        StartCoroutine(nameof(EnableWhenPlayerMoveCor));
-    }
-
+    
     private void OnDisable()
     {
-        StopAllCoroutines();
+        playerInput.inputRespondTable[respondInput] -= DisableSelf;
+        playerInput.guideUIList.Remove(this);
     }
-
-    // private void Start()
-    // {
-    //     InitializeInputTable();
-    // }
-    //
-    // private void InitializeInputTable()
-    // {
-    //     inputRespondTable = new Dictionary<InputType, bool>();
-    //     
-    //     inputRespondTable.Add(respondInput,playerInput.IsRunning);
-    // }
-
-    IEnumerator EnableWhenPlayerMoveCor()
+    
+    public void DisableSelf()
     {
-        while (!playerInput.IsRunning)
-        {
-            gameObject.SetActive(true);
-
-            yield return null;
-        }
+        gameObject.SetActive(false);
     }
 }
 
-public enum InputType
-{
-    Move,
-    Jump
-}
+

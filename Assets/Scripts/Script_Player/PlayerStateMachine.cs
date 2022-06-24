@@ -11,6 +11,8 @@ public class PlayerStateMachine : StateMachine
     
     [SerializeField] private List<PlayerStateBase> playerStates = new List<PlayerStateBase>();
 
+    private bool debugCurState;
+
     protected override void Awake()
     {
         base.Awake();//NOTE:使用继承关系的获取组件 复写生命周期函数才能生效
@@ -38,12 +40,20 @@ public class PlayerStateMachine : StateMachine
         SwitchOn(stateTable[typeof(PlayerIdleState)]);
     }
 
-    // protected override void Update()
-    // {
-    //     base.Update();
-    //     
-    //     Debug.Log(curState);
-    // }
+    protected override void Update()
+    {
+        base.Update();
+
+        if (Keyboard.current.tabKey.wasPressedThisFrame)
+        {
+            debugCurState = !debugCurState;
+        }
+
+        if (debugCurState)
+        {
+            Debug.Log(curState);
+        }
+    }
 
 
     private void InitializePlayerStates()
