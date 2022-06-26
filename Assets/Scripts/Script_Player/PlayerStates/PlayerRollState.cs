@@ -10,14 +10,19 @@ public class PlayerRollState : PlayerStateBase
     public override void OnEnter()
     {
         base.OnEnter();
-        
-        player.CollEndRoll();
+
+        player.CollStartRoll();
         player.SetRbVelocityX(rollSpeed * player.transform.localScale.x);
     }
 
     public override void OnGameLogicUpdate()
     {
         base.OnGameLogicUpdate();
+
+        if (!player.IsGrounded)
+        {
+            playerStateMachine.SwitchState(typeof(PlayerFallState));
+        }
 
         if (isAnimFinished)
         {
@@ -33,9 +38,8 @@ public class PlayerRollState : PlayerStateBase
     public override void OnExit()
     {
         base.OnExit();
-        
-        player.CollStartRoll();
-        player.SetRbVelocityX(0f);
+
+        player.CollEndRoll();
     }
     
 }

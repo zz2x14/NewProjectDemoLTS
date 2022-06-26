@@ -12,7 +12,7 @@ public class PlayerHangState : PlayerStateBase
         player.JumpCount = 2;
         
         player.SetGravity(0f);
-        player.SetRbVelocityY(0f);
+        player.SetRbVelocity(Vector2.zero);
     }
 
     public override void OnGameLogicUpdate()

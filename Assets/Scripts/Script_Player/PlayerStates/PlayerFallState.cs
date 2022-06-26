@@ -13,11 +13,12 @@ public class PlayerFallState : PlayerStateBase
     public override void OnEnter()
     {
         base.OnEnter();
-
+        
         if (player.IsInStairs)
         {
             player.SetRbVelocity(Vector2.down * climbFallForce); 
         }
+        
         else
         {
             if (playerStateMachine.LastState.GetType() == typeof(PlayerRunState) || 
@@ -41,17 +42,15 @@ public class PlayerFallState : PlayerStateBase
             playerStateMachine.SwitchState(typeof(PlayerHangState));
         }
 
-        if (player.JumpCount == 2)
+        if (input.IsJumpKeyPressed)
         {
-            if (input.IsJumpKeyPressed)
+            if (player.JumpCount == 2)
             {
-                
+                //Sign:使用return避免按键判断时间过短平地落下等跳跃会进入到二段跳状态
                 playerStateMachine.SwitchState(typeof(PlayerJumpState));
+                return;
             }
-        }
-        if (player.JumpCount == 1)
-        {
-            if (input.IsJumpKeyPressed)
+            if (player.JumpCount == 1)
             {
                 playerStateMachine.SwitchState(typeof(PlayerDoubleJumpState));
             }

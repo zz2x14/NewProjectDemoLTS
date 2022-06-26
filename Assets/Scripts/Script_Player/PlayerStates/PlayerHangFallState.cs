@@ -18,6 +18,12 @@ public class PlayerHangFallState : PlayerStateBase
     public override void OnGameLogicUpdate()
     {
         base.OnGameLogicUpdate();
+        
+        if (input.IsJumpKeyPressed)
+        {
+            playerStateMachine.SwitchState(typeof(PlayerJumpState));
+          
+        }
 
         if (player.IsGrounded)
         {

@@ -59,6 +59,9 @@ public class PlayerController : CharacterBase,IPlayerDebuff
     public bool CanRoll { get; set; }
     private Coroutine litmitRollCor;
 
+    public Vector2 ForcedForce { get; set; }
+    public event Action OnForced = delegate {  };
+    
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -68,6 +71,8 @@ public class PlayerController : CharacterBase,IPlayerDebuff
         stairsDetector = GetComponentInChildren<PlayerOnStairsDetector>();
 
         lastShootTime = Time.time - shootInterval;
+        
+        DontDestroyOnLoad(gameObject);
     }
 
     private void OnEnable()
@@ -81,7 +86,7 @@ public class PlayerController : CharacterBase,IPlayerDebuff
     {
         playerInput.EnableGameplayInput();
     }
-
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -156,13 +161,15 @@ public class PlayerController : CharacterBase,IPlayerDebuff
 
     public void CollStartRoll()
     {
-        normalColl.isTrigger = false;
-        SetGravity(1f);
+        gameObject.layer = 19;
+        //normalColl.isTrigger = false;
+        //SetGravity(1f);
     }
     public void CollEndRoll()
     {
-        normalColl.isTrigger = true;
-        SetGravity(0f);
+        gameObject.layer = 6;
+        // normalColl.isTrigger = true;
+        //SetGravity(0f);
     }
 
     #endregion
@@ -248,5 +255,25 @@ public class PlayerController : CharacterBase,IPlayerDebuff
         yield return new WaitForSeconds(duration);
 
         CanRoll = true;
+    }
+
+    public void Forced(Vector2 force)
+    {
+        ForcedForce = force;
+        OnForced.Invoke();
+    }
+
+    public void LoadPlayerData()
+    {
+        var baseData = SaveCenter.GetPlayerBaseData();
+        var selfData = SaveCenter.GetPlayerSelfData();
+        
+        playerData.baseData = baseData;
+        playerData.selfData = selfData;
+    }
+
+    public void SavePlayerData()
+    {
+        SaveCenter.SavePlayerData(playerData);
     }
 }

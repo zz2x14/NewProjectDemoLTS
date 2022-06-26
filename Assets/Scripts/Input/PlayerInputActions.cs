@@ -192,6 +192,34 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""SceneTeleport"",
+            ""id"": ""188658b1-e431-4c23-8fe1-5d8d0b47dfea"",
+            ""actions"": [
+                {
+                    ""name"": ""Confirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""fa086871-8a32-489c-9782-dacf24d898f3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""dfeded95-6030-471e-863b-9c6e74885868"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -222,6 +250,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Gameplay_Climb = m_Gameplay.FindAction("Climb", throwIfNotFound: true);
         m_Gameplay_Fall = m_Gameplay.FindAction("Fall", throwIfNotFound: true);
         m_Gameplay_Shoot = m_Gameplay.FindAction("Shoot", throwIfNotFound: true);
+        // SceneTeleport
+        m_SceneTeleport = asset.FindActionMap("SceneTeleport", throwIfNotFound: true);
+        m_SceneTeleport_Confirm = m_SceneTeleport.FindAction("Confirm", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -358,6 +389,39 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // SceneTeleport
+    private readonly InputActionMap m_SceneTeleport;
+    private ISceneTeleportActions m_SceneTeleportActionsCallbackInterface;
+    private readonly InputAction m_SceneTeleport_Confirm;
+    public struct SceneTeleportActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public SceneTeleportActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Confirm => m_Wrapper.m_SceneTeleport_Confirm;
+        public InputActionMap Get() { return m_Wrapper.m_SceneTeleport; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(SceneTeleportActions set) { return set.Get(); }
+        public void SetCallbacks(ISceneTeleportActions instance)
+        {
+            if (m_Wrapper.m_SceneTeleportActionsCallbackInterface != null)
+            {
+                @Confirm.started -= m_Wrapper.m_SceneTeleportActionsCallbackInterface.OnConfirm;
+                @Confirm.performed -= m_Wrapper.m_SceneTeleportActionsCallbackInterface.OnConfirm;
+                @Confirm.canceled -= m_Wrapper.m_SceneTeleportActionsCallbackInterface.OnConfirm;
+            }
+            m_Wrapper.m_SceneTeleportActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Confirm.started += instance.OnConfirm;
+                @Confirm.performed += instance.OnConfirm;
+                @Confirm.canceled += instance.OnConfirm;
+            }
+        }
+    }
+    public SceneTeleportActions @SceneTeleport => new SceneTeleportActions(this);
     private int m_PCSchemeIndex = -1;
     public InputControlScheme PCScheme
     {
@@ -376,5 +440,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnClimb(InputAction.CallbackContext context);
         void OnFall(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+    }
+    public interface ISceneTeleportActions
+    {
+        void OnConfirm(InputAction.CallbackContext context);
     }
 }

@@ -77,6 +77,9 @@ public class PlayerInput : MonoBehaviour,PlayerInputActions.IGameplayActions//Si
     public bool IsClimbKey => playerInputActions.Gameplay.Climb.WasPerformedThisFrame();
     public bool IsClimbKeyReleased => playerInputActions.Gameplay.Climb.WasReleasedThisFrame();
 
+
+    public bool IsSceneTeleportConfirmKeyPressed => playerInputActions.SceneTeleport.Confirm.WasPressedThisFrame();
+
     private void OnEnable()
    {
        playerInputActions = new PlayerInputActions();//是要初始化的
@@ -138,6 +141,17 @@ public class PlayerInput : MonoBehaviour,PlayerInputActions.IGameplayActions//Si
      public void DisableGamePlayInput()
      {
          playerInputActions.Gameplay.Disable();
+     }
+
+     public void EnableSceneTeleportInput()
+     {
+         playerInputActions.Disable();
+         playerInputActions.SceneTeleport.Enable();
+     }
+
+     public void DisableSceneTeleportInput()
+     {
+         playerInputActions.SceneTeleport.Disable();
      }
 
      public void EnableOneInput(InputAction inputAction) => inputAction.Enable();

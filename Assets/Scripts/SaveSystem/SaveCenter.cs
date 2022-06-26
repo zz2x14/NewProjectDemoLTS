@@ -2,22 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SaveCenter
+public static class SaveCenter
 {
-    public const string FILE_PLAYERDATA = "PlayerData.txt";
+    private const string FILE_PLAYERBASEDATA = "PlayerBaseData.txt";
+    private const string FILE_PLAYERSELFDATA = "PlayerSelfData.txt";
     
-    public static void SavePlayerData(CharacterBaseData baseData,string fileName)
+    public static void SavePlayerData(PlayerData playerData)
     {
-        SaveSystemByJson.SaveDataByJson(baseData,fileName);
+        SaveSystemByJson.SaveDataByJson(playerData.baseData,FILE_PLAYERBASEDATA);
+        SaveSystemByJson.SaveDataByJson(playerData.selfData,FILE_PLAYERSELFDATA);
     }
 
-    public static void LoadPlayerData(CharacterBaseData baseData, string fileName)
+    public static CharacterBaseData GetPlayerBaseData()
     {
-        CharacterBaseData data = SaveSystemByJson.LoadDataFromJson<CharacterBaseData>(fileName);
-        
-        baseData.CurHealth = data.CurHealth;
-        baseData.MaxHealth = data.MaxHealth;
-        baseData.attackDamage = data.attackDamage;
+        CharacterBaseData baseData = SaveSystemByJson.LoadDataFromJson<CharacterBaseData>(FILE_PLAYERBASEDATA);
+        return baseData;
     }
+    public static PlayerSelfData GetPlayerSelfData()
+    {
+        PlayerSelfData selfData = SaveSystemByJson.LoadDataFromJson<PlayerSelfData>(FILE_PLAYERSELFDATA);
+        return selfData;
+    }
+
+   
+
+
     
 }

@@ -170,6 +170,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "SceneTeleport",
+            "id": "188658b1-e431-4c23-8fe1-5d8d0b47dfea",
+            "actions": [
+                {
+                    "name": "Confirm",
+                    "type": "Button",
+                    "id": "fa086871-8a32-489c-9782-dacf24d898f3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "dfeded95-6030-471e-863b-9c6e74885868",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Confirm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

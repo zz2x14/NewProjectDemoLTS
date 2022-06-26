@@ -24,9 +24,9 @@ TagManager:
   - EnemyBullet
   - PlayerBullet
   - VCAM
-  - 
-  - 
-  - 
+  - Boundary
+  - Portal
+  - PlayerInvincible
   - 
   - 
   - 

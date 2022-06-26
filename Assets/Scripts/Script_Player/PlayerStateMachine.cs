@@ -25,12 +25,14 @@ public class PlayerStateMachine : StateMachine
     {
         playerController.OnHurt += ToHurtState;
         playerController.OnDeath += ToDeathState;
+        playerController.OnForced += ToForcedState;
     }
 
     private void OnDisable()
     {
         playerController.OnHurt -= ToHurtState;
         playerController.OnDeath -= ToDeathState;
+        playerController.OnForced -= ToForcedState;
     }
 
     private void Start()
@@ -65,6 +67,11 @@ public class PlayerStateMachine : StateMachine
             playerStates[i].InitializeState(this,playerController,playerInput);
             stateTable.Add(playerStates[i].GetType(),playerStates[i]);
         }
+    }
+
+    private void ToForcedState()
+    {
+        SwitchState(typeof(PlayerForcedState));
     }
 
     private void ToHurtState()
