@@ -27,12 +27,12 @@ public class PlayerRunState : PlayerStateBase
             playerStateMachine.SwitchState(typeof(PlayerAttackState));
         }
         
-        if (player.CanShoot && input.IsShootKeyPressed)
+        if (player.CanShoot && input.IsShootKeyPressed && playerAblity.ShootUnloced)
         {
             playerStateMachine.SwitchState(typeof(PlayerShootState));
         }
         
-        if (player.CanRoll &&input.IsRollKeyPressed)
+        if (player.CanRoll && input.IsRollKeyPressed && playerAblity.RollUnlocked)
         {
             playerStateMachine.SwitchState(typeof(PlayerRollState));
         }

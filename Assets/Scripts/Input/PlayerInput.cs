@@ -7,7 +7,10 @@ using UnityEngine.InputSystem;
 public enum InputType
 {
     Move,
-    Jump
+    Jump,
+    ClimbUp,
+    ClimbDown,
+    Attack
 }
 public class PlayerInput : MonoBehaviour,PlayerInputActions.IGameplayActions//Sign:更新模式会影响到按键判定！
 {
@@ -19,6 +22,9 @@ public class PlayerInput : MonoBehaviour,PlayerInputActions.IGameplayActions//Si
 
     public event Action OnPlayerMove = delegate {  };
     public event Action OnPlayerJump = delegate {  };
+    public event Action OnPlayerClimbUp = delegate {  };
+    public event Action OnPlayerClimbDown = delegate {  };
+    public event Action OnPlayerAttack = delegate {  };
     
     public void OnAxisXMove(InputAction.CallbackContext context)
     {
@@ -38,7 +44,7 @@ public class PlayerInput : MonoBehaviour,PlayerInputActions.IGameplayActions//Si
     
     public void OnAttack(InputAction.CallbackContext context)
     {
-       
+       OnPlayerAttack.Invoke();
     }
     
     public void OnRoll(InputAction.CallbackContext context)
@@ -48,12 +54,12 @@ public class PlayerInput : MonoBehaviour,PlayerInputActions.IGameplayActions//Si
     
     public void OnClimb(InputAction.CallbackContext context)
     {
-        
+        OnPlayerClimbUp.Invoke();
     }
     
     public void OnFall(InputAction.CallbackContext context)
     {
-        
+        OnPlayerClimbDown.Invoke();
     }
     
     public void OnShoot(InputAction.CallbackContext context)
@@ -77,8 +83,10 @@ public class PlayerInput : MonoBehaviour,PlayerInputActions.IGameplayActions//Si
     public bool IsClimbKey => playerInputActions.Gameplay.Climb.WasPerformedThisFrame();
     public bool IsClimbKeyReleased => playerInputActions.Gameplay.Climb.WasReleasedThisFrame();
 
-
+    //SystemKeys
     public bool IsSceneTeleportConfirmKeyPressed => playerInputActions.SceneTeleport.Confirm.WasPressedThisFrame();
+
+    public bool InStartScene { get; set; } = true;
 
     private void OnEnable()
    {
@@ -86,6 +94,7 @@ public class PlayerInput : MonoBehaviour,PlayerInputActions.IGameplayActions//Si
        
        playerInputActions.Gameplay.SetCallbacks(this);//Sign：使用接口注册事件是要登记的
 
+       if (!InStartScene) return;
        InitializeInputTable();
    }
 
@@ -93,8 +102,8 @@ public class PlayerInput : MonoBehaviour,PlayerInputActions.IGameplayActions//Si
    {
        DisableAllInput();
        
-       inputRespondTable.Clear();
-       guideUIList.Clear();
+       // inputRespondTable.Clear();
+       // guideUIList.Clear();
    }
 
      private void InitializeInputTable()
@@ -104,6 +113,9 @@ public class PlayerInput : MonoBehaviour,PlayerInputActions.IGameplayActions//Si
             inputRespondTable = new Dictionary<InputType, Action>();//初始化字典
             inputRespondTable.Add(InputType.Move,OnPlayerMove);
             inputRespondTable.Add(InputType.Jump,OnPlayerJump);
+            inputRespondTable.Add(InputType.ClimbUp,OnPlayerClimbUp);
+            inputRespondTable.Add(InputType.ClimbDown,OnPlayerClimbDown);
+            inputRespondTable.Add(InputType.Attack,OnPlayerAttack);
             
             guideUIList = new List<GuideUIRespondInput>();
             foreach (var guideUI in FindObjectsOfType<GuideUIRespondInput>())
@@ -123,6 +135,15 @@ public class PlayerInput : MonoBehaviour,PlayerInputActions.IGameplayActions//Si
                         break;
                     case InputType.Jump:
                         OnPlayerJump += guideType.DisableSelf;
+                        break;
+                    case InputType.ClimbUp:
+                        OnPlayerClimbUp += guideType.DisableSelf;
+                        break;
+                    case InputType.ClimbDown:
+                        OnPlayerClimbDown += guideType.DisableSelf;
+                        break;
+                    case InputType.Attack:
+                        OnPlayerAttack += guideType.DisableSelf;
                         break;
                 }
             }
@@ -158,7 +179,9 @@ public class PlayerInput : MonoBehaviour,PlayerInputActions.IGameplayActions//Si
      public void DisableOneInput(InputAction inputAction) => inputAction.Disable();
     
      public void EnableJumpInput() => EnableOneInput(playerInputActions.Gameplay.Jump);
-     public void DisableJumpInput() => DisableOneInput(playerInputActions.Gameplay.Jump);
+     public void EnableClimbUpInput() => EnableOneInput(playerInputActions.Gameplay.Climb);
+     public void EnableFallInput() => EnableOneInput(playerInputActions.Gameplay.Fall);
+     public void EnableAttackInput() => EnableOneInput(playerInputActions.Gameplay.Attack);
 
      public void EnableOnlyMoveInput()
      {

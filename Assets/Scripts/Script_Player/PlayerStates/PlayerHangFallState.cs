@@ -11,6 +11,8 @@ public class PlayerHangFallState : PlayerStateBase
     {
         base.OnEnter();
         
+        player.ReturnHangDetectorDefault();
+        
         player.SetGravity(1f);
         player.SetRbVelocityY(fallForce);
     }

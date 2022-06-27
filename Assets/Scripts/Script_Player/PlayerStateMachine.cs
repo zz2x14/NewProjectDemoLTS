@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerStateMachine : StateMachine
 {
     private PlayerController playerController;
+    private PlayerAblityManager playerAblityManager;
     private PlayerInput playerInput;
     
     [SerializeField] private List<PlayerStateBase> playerStates = new List<PlayerStateBase>();
@@ -18,6 +19,7 @@ public class PlayerStateMachine : StateMachine
         base.Awake();//NOTE:使用继承关系的获取组件 复写生命周期函数才能生效
 
         playerController = GetComponent<PlayerController>();
+        playerAblityManager = GetComponent<PlayerAblityManager>();
         playerInput = GetComponent<PlayerInput>();
     }
 
@@ -64,7 +66,7 @@ public class PlayerStateMachine : StateMachine
         
         for (int i = 0; i < playerStates.Count; i++)
         {
-            playerStates[i].InitializeState(this,playerController,playerInput);
+            playerStates[i].InitializeState(this,playerController,playerAblityManager,playerInput);
             stateTable.Add(playerStates[i].GetType(),playerStates[i]);
         }
     }

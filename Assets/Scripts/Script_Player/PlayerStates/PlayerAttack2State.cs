@@ -25,7 +25,7 @@ public class PlayerAttack2State : PlayerStateBase
         {
             player.SetRbVelocity(new Vector2(0,0));
             
-            if (input.IsAttackKeyPressed)
+            if (input.IsAttackKeyPressed && playerAblity.ThirdAttackUnlocked)
             {
                 playerStateMachine.SwitchState(typeof(PlayerAttack3State));
             }

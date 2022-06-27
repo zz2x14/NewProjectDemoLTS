@@ -33,7 +33,7 @@ public class PlayerJumpState : PlayerStateBase
     {
         base.OnGameLogicUpdate();
         
-        if (player.CanShoot && input.IsShootKeyPressed)
+        if (player.CanShoot && input.IsShootKeyPressed && playerAblity.ShootUnloced)
         {
             playerStateMachine.SwitchState(typeof(PlayerShootState));
         }
@@ -44,7 +44,7 @@ public class PlayerJumpState : PlayerStateBase
             return;
         }
 
-        if (player.JumpCount == 1 && input.IsJumpKeyPressed)
+        if (player.JumpCount == 1 && input.IsJumpKeyPressed && playerAblity.DoubleJumpUnlocked)
         {
             playerStateMachine.SwitchState(typeof(PlayerDoubleJumpState));
             return;

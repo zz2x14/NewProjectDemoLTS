@@ -52,11 +52,14 @@ TagManager:
   - name: Ground
     uniqueID: 1262472357
     locked: 0
+  - name: Building
+    uniqueID: 367166713
+    locked: 0
   - name: EnvironmentItem
     uniqueID: 2536673119
     locked: 0
-  - name: Building
-    uniqueID: 367166713
+  - name: EnvironmentItemLight
+    uniqueID: 2316160629
     locked: 0
   - name: UI
     uniqueID: 1879631455

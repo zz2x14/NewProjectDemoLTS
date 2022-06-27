@@ -21,6 +21,20 @@ public class GuideUIRespondInput : MonoBehaviour
     {
         playerInput.inputRespondTable[respondInput] -= DisableSelf;
         playerInput.guideUIList.Remove(this);
+
+        switch (respondInput)
+        {
+            case InputType.Move:
+                playerInput.EnableJumpInput();
+                break;
+            case InputType.Jump:
+                playerInput.EnableAttackInput();
+                playerInput.EnableClimbUpInput();
+                break;
+            case InputType.ClimbUp:
+                playerInput.EnableFallInput();
+                break;
+        }
     }
     
     public void DisableSelf()

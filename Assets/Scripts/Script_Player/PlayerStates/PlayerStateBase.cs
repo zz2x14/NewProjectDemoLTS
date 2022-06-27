@@ -7,6 +7,7 @@ public abstract class PlayerStateBase : ScriptableObject,IState
 {
     protected PlayerStateMachine playerStateMachine;
     protected PlayerController player;
+    protected PlayerAblityManager playerAblity;
     protected PlayerInput input;
 
     protected Animator animator => playerStateMachine.Anim;
@@ -24,10 +25,11 @@ public abstract class PlayerStateBase : ScriptableObject,IState
         animID = Animator.StringToHash(animName);
     }
 
-    public void InitializeState(PlayerStateMachine pSM,PlayerController playerController,PlayerInput playerInput)
+    public void InitializeState(PlayerStateMachine pSM,PlayerController playerController,PlayerAblityManager playerAblityManager,PlayerInput playerInput)
     {
         playerStateMachine = pSM;
         player = playerController;
+        playerAblity = playerAblityManager;
         input = playerInput;
     }
     

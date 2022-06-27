@@ -16,7 +16,6 @@ public class PlayerHangDetector : MonoBehaviour
   
    public bool CanHang => HangCondition();
 
-
    public void ReturnDefaultDis()
    {
       horizontalDetectorDis = 0.47f;
@@ -28,11 +27,6 @@ public class PlayerHangDetector : MonoBehaviour
       horizontalDetectorDis = 0f;
       verticalDetectorDis = 0f;
    }
-
-   // private void Update()
-   // {
-   //    Debug.Log(HangCondition());
-   // }
 
    private bool HangCondition()
    {
@@ -50,6 +44,8 @@ public class PlayerHangDetector : MonoBehaviour
 #if UNITY_EDITOR
    private void OnDrawGizmos()
    {
+      Gizmos.color = Color.blue;
+      
       Gizmos.DrawRay(transform.position,transform.right * parentTransform.transform.localScale.x  * horizontalDetectorDis);
       
       Gizmos.DrawRay(secondaryDetectorPoint.position,transform.right * parentTransform.transform.localScale.x * horizontalDetectorDis);

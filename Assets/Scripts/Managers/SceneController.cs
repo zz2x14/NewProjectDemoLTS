@@ -13,7 +13,7 @@ using UnityEngine;
      
      [SerializeField] private Canvas bgCanvas;
      [SerializeField] private Canvas progressCanvas;
-     [SerializeField] private Slider progressSlider;
+     [SerializeField] private Image progressBar;
      [SerializeField] private TextMeshProUGUI progressText;
      [SerializeField] private TextMeshProUGUI saveTipText;
      [SerializeField] private GameObject saveTipIcon;
@@ -44,8 +44,10 @@ using UnityEngine;
          progressValue = 0f;
          
          saveTipIcon.SetActive(false);
+         saveTipText.gameObject.SetActive(false);
          saveTipText.text = "";
-         saveTipText.text = "";
+         progressText.text = "";
+         progressBar.fillAmount = 0;
          
          bgCanvas.enabled = true;
          progressCanvas.enabled = true;
@@ -53,19 +55,21 @@ using UnityEngine;
          AsyncOperation async = SceneManager.LoadSceneAsync(sceneID);
  
          async.allowSceneActivation = false;
+         
+       
  
          while (!async.isDone)
          {
              if (async.progress < 0.9f)
              {
                  progressValue = async.progress;
-                 progressSlider.value = progressValue;
+                 progressBar.fillAmount = progressValue;
                  progressText.text = progressValue.ToString("P0");
              }
              else
              {
                  progressValue = 1f;
-                 progressSlider.value = progressValue;
+                 progressBar.fillAmount = progressValue;
                  progressText.text = progressValue.ToString("P0");
              }
              
@@ -74,10 +78,12 @@ using UnityEngine;
                  progressText.text = "按任意键继续...";
                  saveTipText.text = "/自动保存成功/";
                  saveTipIcon.SetActive(true);
-                 
+                 saveTipText.gameObject.SetActive(true);
+               
                  if (playerInput.IsSceneTeleportConfirmKeyPressed)
                  {
                      SetPlayerPos();
+                     
                      playerController.LoadPlayerData();
                      
                      bgCanvas.enabled = false;
@@ -101,6 +107,7 @@ using UnityEngine;
              
              yield return null;
          }
+
      }
 
      public void SetPlayerPos()

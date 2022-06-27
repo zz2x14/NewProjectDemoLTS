@@ -31,6 +31,8 @@ public class PlayerFallState : PlayerStateBase
                 player.SetRbVelocityY(fallForce);
             }
         }
+        
+        player.ReturnHangDetectorDefault();
     }
 
     public override void OnGameLogicUpdate()
@@ -50,7 +52,7 @@ public class PlayerFallState : PlayerStateBase
                 playerStateMachine.SwitchState(typeof(PlayerJumpState));
                 return;
             }
-            if (player.JumpCount == 1)
+            if (player.JumpCount == 1 && playerAblity.DoubleJumpUnlocked)
             {
                 playerStateMachine.SwitchState(typeof(PlayerDoubleJumpState));
             }
