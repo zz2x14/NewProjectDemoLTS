@@ -56,7 +56,6 @@ using UnityEngine;
  
          async.allowSceneActivation = false;
          
-       
  
          while (!async.isDone)
          {

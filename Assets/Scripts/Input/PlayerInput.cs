@@ -85,6 +85,11 @@ public class PlayerInput : MonoBehaviour,PlayerInputActions.IGameplayActions//Si
 
     //SystemKeys
     public bool IsSceneTeleportConfirmKeyPressed => playerInputActions.SceneTeleport.Confirm.WasPressedThisFrame();
+    
+    //Talk
+    public bool IsSkipTalkKeyPressed => playerInputActions.Talk.Skip.WasPressedThisFrame();
+    public bool IsSpeedUpKeyPerformed => playerInputActions.Talk.SpeedUp.WasPerformedThisFrame();
+    public bool IsSpeedUpKeyReleased => playerInputActions.Talk.SpeedUp.WasReleasedThisFrame();
 
     public bool InStartScene { get; set; } = true;
 

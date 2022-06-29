@@ -10,7 +10,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Build
   - Water
   - UI
   - Player
@@ -27,7 +27,7 @@ TagManager:
   - Boundary
   - Portal
   - PlayerInvincible
-  - 
+  - UI2
   - 
   - 
   - 
@@ -52,6 +52,9 @@ TagManager:
   - name: Ground
     uniqueID: 1262472357
     locked: 0
+  - name: CharacterBehindBuild
+    uniqueID: 1345948505
+    locked: 0
   - name: Building
     uniqueID: 367166713
     locked: 0
@@ -61,8 +64,8 @@ TagManager:
   - name: EnvironmentItemLight
     uniqueID: 2316160629
     locked: 0
-  - name: UI
-    uniqueID: 1879631455
+  - name: Npc
+    uniqueID: 896089519
     locked: 0
   - name: Player
     uniqueID: 1536639037
@@ -75,4 +78,7 @@ TagManager:
     locked: 0
   - name: Bullet
     uniqueID: 4271364975
+    locked: 0
+  - name: UI
+    uniqueID: 1879631455
     locked: 0

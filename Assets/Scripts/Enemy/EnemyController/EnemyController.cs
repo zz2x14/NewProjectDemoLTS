@@ -91,7 +91,7 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
         foreach (var state in enemyStateStock)
         {
             EnemyStateBase stateCopy = Instantiate(state);
-           enemyStateMachine.StatesList.Add(stateCopy);
+            enemyStateMachine.StatesList.Add(stateCopy);
         }
         
         //Sign:将状态机中状态列表的状态复制提取出来，再克隆覆盖到状态机状态列表，使每个敌人都使用"自己独有的状态"

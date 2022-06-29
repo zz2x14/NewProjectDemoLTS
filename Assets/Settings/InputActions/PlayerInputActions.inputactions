@@ -198,6 +198,54 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Talk",
+            "id": "8bb7be3e-8947-4917-ba8a-27835b75e7ae",
+            "actions": [
+                {
+                    "name": "Skip",
+                    "type": "Button",
+                    "id": "f1505a0c-1d6d-4358-97e7-41c6b0365e27",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SpeedUp",
+                    "type": "Button",
+                    "id": "094ba4ce-a6fb-4702-86b3-c6b1af4536f6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9a411835-b624-4489-840f-0981d4423c2f",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Skip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83eaff0b-c783-4461-802d-760d39d275f3",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "SpeedUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

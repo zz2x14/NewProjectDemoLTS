@@ -62,6 +62,8 @@ public class PlayerController : CharacterBase,IPlayerDebuff
     public Vector2 ForcedForce { get; set; }
     public event Action OnForced = delegate {  };
     
+    public event Action OnTalk = delegate {  };
+    
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -233,6 +235,7 @@ public class PlayerController : CharacterBase,IPlayerDebuff
         
         var playerBullet = 
             PoolManager.Instance.Release(bulletPrefab, shootPoint.position,shootPoint.rotation).GetComponent<PlayerBullet>();
+        
         playerBullet.FlyDir = transform.localScale.x;
         playerBullet.FlySpeed = bulletSpeed;
         playerBullet.Damage = playerData.selfData.shootDamage;

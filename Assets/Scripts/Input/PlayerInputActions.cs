@@ -220,6 +220,54 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Talk"",
+            ""id"": ""8bb7be3e-8947-4917-ba8a-27835b75e7ae"",
+            ""actions"": [
+                {
+                    ""name"": ""Skip"",
+                    ""type"": ""Button"",
+                    ""id"": ""f1505a0c-1d6d-4358-97e7-41c6b0365e27"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpeedUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""094ba4ce-a6fb-4702-86b3-c6b1af4536f6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""9a411835-b624-4489-840f-0981d4423c2f"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Skip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""83eaff0b-c783-4461-802d-760d39d275f3"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""SpeedUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -253,6 +301,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         // SceneTeleport
         m_SceneTeleport = asset.FindActionMap("SceneTeleport", throwIfNotFound: true);
         m_SceneTeleport_Confirm = m_SceneTeleport.FindAction("Confirm", throwIfNotFound: true);
+        // Talk
+        m_Talk = asset.FindActionMap("Talk", throwIfNotFound: true);
+        m_Talk_Skip = m_Talk.FindAction("Skip", throwIfNotFound: true);
+        m_Talk_SpeedUp = m_Talk.FindAction("SpeedUp", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -422,6 +474,47 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         }
     }
     public SceneTeleportActions @SceneTeleport => new SceneTeleportActions(this);
+
+    // Talk
+    private readonly InputActionMap m_Talk;
+    private ITalkActions m_TalkActionsCallbackInterface;
+    private readonly InputAction m_Talk_Skip;
+    private readonly InputAction m_Talk_SpeedUp;
+    public struct TalkActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public TalkActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Skip => m_Wrapper.m_Talk_Skip;
+        public InputAction @SpeedUp => m_Wrapper.m_Talk_SpeedUp;
+        public InputActionMap Get() { return m_Wrapper.m_Talk; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TalkActions set) { return set.Get(); }
+        public void SetCallbacks(ITalkActions instance)
+        {
+            if (m_Wrapper.m_TalkActionsCallbackInterface != null)
+            {
+                @Skip.started -= m_Wrapper.m_TalkActionsCallbackInterface.OnSkip;
+                @Skip.performed -= m_Wrapper.m_TalkActionsCallbackInterface.OnSkip;
+                @Skip.canceled -= m_Wrapper.m_TalkActionsCallbackInterface.OnSkip;
+                @SpeedUp.started -= m_Wrapper.m_TalkActionsCallbackInterface.OnSpeedUp;
+                @SpeedUp.performed -= m_Wrapper.m_TalkActionsCallbackInterface.OnSpeedUp;
+                @SpeedUp.canceled -= m_Wrapper.m_TalkActionsCallbackInterface.OnSpeedUp;
+            }
+            m_Wrapper.m_TalkActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Skip.started += instance.OnSkip;
+                @Skip.performed += instance.OnSkip;
+                @Skip.canceled += instance.OnSkip;
+                @SpeedUp.started += instance.OnSpeedUp;
+                @SpeedUp.performed += instance.OnSpeedUp;
+                @SpeedUp.canceled += instance.OnSpeedUp;
+            }
+        }
+    }
+    public TalkActions @Talk => new TalkActions(this);
     private int m_PCSchemeIndex = -1;
     public InputControlScheme PCScheme
     {
@@ -444,5 +537,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     public interface ISceneTeleportActions
     {
         void OnConfirm(InputAction.CallbackContext context);
+    }
+    public interface ITalkActions
+    {
+        void OnSkip(InputAction.CallbackContext context);
+        void OnSpeedUp(InputAction.CallbackContext context);
     }
 }

@@ -23,4 +23,5 @@ MonoBehaviour:
   bossData:
     attack2Damage: 10
     attack3Damage: 10
-  enemyType: 6
+    spareValue: 0
+  enemyType: 4
