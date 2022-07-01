@@ -16,18 +16,14 @@ public class NpcWalkWaitState : NpcStateBase
         startTime = Time.time;
 
         move.SetRbVelocity(Vector2.zero);
-        
-       
     }
 
     public override void OnGameLogicUpdate()
     {
         base.OnGameLogicUpdate();
         
-
         if (waitOver)
         {
-            
             stateMachine.SwitchState(typeof(NpcWalkState));
         }
     }

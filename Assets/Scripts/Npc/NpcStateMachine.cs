@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class NpcStateMachine : StateMachine
+public class NpcStateMachine : StateMachine,ITalk
 {
    [SerializeField] private List<NpcStateBase> npcStatesList = new List<NpcStateBase>();
 
@@ -38,13 +39,6 @@ public class NpcStateMachine : StateMachine
       }
    }
 
-   // protected override void Update()
-   // {
-   //    base.Update();
-   //    
-   //    Debug.Log(curState);
-   // }
-
    private void CopyStates()
    {
       statesStock = new List<NpcStateBase>(npcStatesList.Count);
@@ -57,6 +51,15 @@ public class NpcStateMachine : StateMachine
       
       npcStatesList.Clear();
    }
-   
-   
+
+
+   public void GoToTalk()
+   {
+      SwitchState(typeof(NpcTalkState));
+   }
+
+   public void TalkOver()
+   {
+      SwitchState(npcController.IsMover ? typeof(NpcWalkWaitState) : typeof(NpcIdleState));
+   }
 }

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c61feba6a6a84134399b25486af69a4e, type: 3}
   m_Name: NpcTalkState
   m_EditorClassIdentifier: 
-  animName: Talk
+  animName: NpcIdle

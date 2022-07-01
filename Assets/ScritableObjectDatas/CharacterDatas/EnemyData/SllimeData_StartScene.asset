@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SllimeData_StartScene
   m_EditorClassIdentifier: 
   baseData:
-    maxHealth: 20
+    maxHealth: 10
     curHealth: 0
     attackDamage: 10
   enemySelfData:

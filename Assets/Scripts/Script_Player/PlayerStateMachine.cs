@@ -92,5 +92,6 @@ public class PlayerStateMachine : StateMachine
     {
         SwitchState(typeof(PlayerDeathState));
     }
-    
+
+   
 }

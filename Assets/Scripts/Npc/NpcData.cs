@@ -7,8 +7,7 @@ using UnityEngine;
 public class NpcData : ScriptableObject
 {
     public NpcBaseData npcBaseData;
-    public NpcTalkData[] npcTalkData;
-
+    public List<NpcTalkData> npcTalkDatas = new List<NpcTalkData>();
 }
 
 [System.Serializable]
@@ -24,7 +23,8 @@ public class NpcTalkData
 {
     public bool isForecedTalk;
     public bool isTalked;
+    public int talkID;
 
     public GameChapter matchingChapter;
-    [TextArea] public List<string> talkContentList;
+    [TextArea] public List<string> talkContentList = new List<string>();
 }

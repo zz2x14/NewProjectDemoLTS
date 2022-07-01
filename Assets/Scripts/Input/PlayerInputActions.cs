@@ -89,6 +89,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GameConfirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""01231787-22ad-4d15-8a53-cb85105df4fb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -188,6 +197,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""PC"",
                     ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72214afe-3e36-4b56-bbc4-2b0c26117258"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""GameConfirm"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -298,6 +318,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Gameplay_Climb = m_Gameplay.FindAction("Climb", throwIfNotFound: true);
         m_Gameplay_Fall = m_Gameplay.FindAction("Fall", throwIfNotFound: true);
         m_Gameplay_Shoot = m_Gameplay.FindAction("Shoot", throwIfNotFound: true);
+        m_Gameplay_GameConfirm = m_Gameplay.FindAction("GameConfirm", throwIfNotFound: true);
         // SceneTeleport
         m_SceneTeleport = asset.FindActionMap("SceneTeleport", throwIfNotFound: true);
         m_SceneTeleport_Confirm = m_SceneTeleport.FindAction("Confirm", throwIfNotFound: true);
@@ -371,6 +392,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Climb;
     private readonly InputAction m_Gameplay_Fall;
     private readonly InputAction m_Gameplay_Shoot;
+    private readonly InputAction m_Gameplay_GameConfirm;
     public struct GameplayActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -382,6 +404,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Climb => m_Wrapper.m_Gameplay_Climb;
         public InputAction @Fall => m_Wrapper.m_Gameplay_Fall;
         public InputAction @Shoot => m_Wrapper.m_Gameplay_Shoot;
+        public InputAction @GameConfirm => m_Wrapper.m_Gameplay_GameConfirm;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -412,6 +435,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Shoot.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnShoot;
+                @GameConfirm.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnGameConfirm;
+                @GameConfirm.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnGameConfirm;
+                @GameConfirm.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnGameConfirm;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -437,6 +463,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @GameConfirm.started += instance.OnGameConfirm;
+                @GameConfirm.performed += instance.OnGameConfirm;
+                @GameConfirm.canceled += instance.OnGameConfirm;
             }
         }
     }
@@ -533,6 +562,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnClimb(InputAction.CallbackContext context);
         void OnFall(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnGameConfirm(InputAction.CallbackContext context);
     }
     public interface ISceneTeleportActions
     {

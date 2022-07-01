@@ -22,14 +22,12 @@ public class PlayerTalkState : PlayerStateBase
         }
     }
 
-    public override void OnPhysicalLogicUpdate()
-    {
-        base.OnPhysicalLogicUpdate();
-    }
-
+  
     public override void OnExit()
     {
         base.OnExit();
+        
+        player.TalkOver();
     }
     
 }

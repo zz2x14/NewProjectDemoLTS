@@ -9,8 +9,7 @@ public class NpcControllerMove : NpcController
 
     [SerializeField] private float walkWaitTime;
     [SerializeField] private Transform[] walkPoints;
-
-    [SerializeField] private float defaultScaleX;
+    [SerializeField] private float moveSpeed;
 
     public bool CloseToTargetPoint => Vector3.Distance(transform.position, walkPoints[WalkIndex].position) <= 0.1f;
     
@@ -19,7 +18,8 @@ public class NpcControllerMove : NpcController
     public float WalkWaitTime => walkWaitTime;
 
     private Vector3 moveDir;
-    
+
+    private float defaultScaleX = -1;
     private Vector3 defaultScale;
     private Vector3 flipScale;
 
@@ -33,10 +33,33 @@ public class NpcControllerMove : NpcController
         flipScale = new Vector3(-defaultScaleX, transform.localScale.y, transform.localScale.z);
     }
 
-    public void MoveToNextPoint(float moveSpeed)
+    private void OnEnable()
+    {
+        if (needName)
+        {
+            StartCoroutine(nameof(NameTextScaleFollowNpcCor));
+        }
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
+    IEnumerator NameTextScaleFollowNpcCor()
+    {
+        while (gameObject.activeSelf)
+        {
+            nameText.rectTransform.localScale = transform.localScale;
+
+            yield return null;
+        }
+    }
+
+    public void MoveToNextPoint()
     {
         moveDir = (walkPoints[WalkIndex].position - transform.position).normalized;
-        rb.velocity = new Vector2(  moveSpeed, rb.velocity.y) * moveDir;
+        rb.velocity = new Vector2( moveSpeed, rb.velocity.y) * moveDir;
     }
 
     public void FaceToTarget()

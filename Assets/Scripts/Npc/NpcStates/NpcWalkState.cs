@@ -5,8 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "NpcState/NpcWalkState",fileName = "NewNpcWalkState")]
 public class NpcWalkState : NpcStateBase
 {
-    [SerializeField] private float walkSpeed;
-
     public override void OnEnter()
     {
         base.OnEnter();
@@ -28,7 +26,7 @@ public class NpcWalkState : NpcStateBase
     {
         base.OnPhysicalLogicUpdate();
         
-        move.MoveToNextPoint(walkSpeed);
+        move.MoveToNextPoint();
     }
 
     public override void OnExit()

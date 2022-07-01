@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
 
-public class PlayerController : CharacterBase,IPlayerDebuff
+public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
 {
     [SerializeField] private PlayerData playerData;
     
@@ -31,6 +31,8 @@ public class PlayerController : CharacterBase,IPlayerDebuff
     [SerializeField] private Transform shootPoint;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float bulletSpeed;
+
+    private Canvas talkingCanvas;
 
     private float lastShootTime;
     public bool CanShoot => lastShootTime <= Time.time - shootInterval;
@@ -61,7 +63,6 @@ public class PlayerController : CharacterBase,IPlayerDebuff
 
     public Vector2 ForcedForce { get; set; }
     public event Action OnForced = delegate {  };
-    
     public event Action OnTalk = delegate {  };
     
     private void Awake()
@@ -75,10 +76,15 @@ public class PlayerController : CharacterBase,IPlayerDebuff
         lastShootTime = Time.time - shootInterval;
         
         DontDestroyOnLoad(gameObject);
+        
+        playerData = Instantiate(playerData);
+        //TODO:现在是为了方便调试 - 后期取消！！！
     }
 
     private void OnEnable()
     {
+       
+        
         playerData.InitializeHealth();
 
         CanRoll = true;
@@ -87,6 +93,9 @@ public class PlayerController : CharacterBase,IPlayerDebuff
     private void Start()
     {
         playerInput.EnableGameplayInput();
+
+        talkingCanvas = FindObjectOfType<TalkCenter>().GetComponent<Canvas>();
+
     }
     
     private void OnDrawGizmos()
@@ -279,4 +288,50 @@ public class PlayerController : CharacterBase,IPlayerDebuff
     {
         SaveCenter.SavePlayerData(playerData);
     }
+
+    public void GoToTalk()
+    {
+        talkingCanvas.enabled = true;
+        
+        playerInput.EnbaleOnlyTalkInput();
+        
+        OnTalk.Invoke();
+    }
+
+    public void TalkOver()
+    {
+        talkingCanvas.enabled = false;
+        
+        playerInput.DisableTalkInput();
+        
+        RemoveHasTalkedContent();
+    }
+
+    
+    public List<string> GetCurPlayerTalkingContents(int matchingID)
+    {
+        for (int i = 0; i < playerData.playerTalkDatas.Count; i++)
+        {
+            if (playerData.playerTalkDatas[i].talkID == matchingID)
+            {
+                playerData.playerTalkDatas[i].isTalked = true;//匹配上后标记为已经触发过的对话，并设置该对话player对应的肖像
+                TalkCenter.Instance.SetPlayerTalkingPortrait(playerData.playerTalkDatas[i].playerTalkingPortrait);
+                    
+                return playerData.playerTalkDatas[i].talkList;
+            }
+        }
+        return null;
+    }
+
+    public void RemoveHasTalkedContent()
+    {
+        for (int i = 0; i < playerData.playerTalkDatas.Count; i++)
+        {
+            if (playerData.playerTalkDatas[i].isTalked)
+            {
+                playerData.playerTalkDatas.Remove(playerData.playerTalkDatas[i]);
+            }
+        }
+    }
+    
 }
