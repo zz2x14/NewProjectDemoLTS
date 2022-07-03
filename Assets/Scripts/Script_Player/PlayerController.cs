@@ -83,8 +83,6 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
 
     private void OnEnable()
     {
-       
-        
         playerData.InitializeHealth();
 
         CanRoll = true;
@@ -95,7 +93,6 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
         playerInput.EnableGameplayInput();
 
         talkingCanvas = FindObjectOfType<TalkCenter>().GetComponent<Canvas>();
-
     }
     
     private void OnDrawGizmos()

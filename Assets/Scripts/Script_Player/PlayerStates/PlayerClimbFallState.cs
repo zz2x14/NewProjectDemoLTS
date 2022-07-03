@@ -6,10 +6,15 @@ using UnityEngine;
 public class PlayerClimbFallState : PlayerStateBase
 {
     [SerializeField] private float fallForce;
+    [SerializeField] private Vector3 climbFallFallDistance;
     
     public override void OnEnter()
     {
         base.OnEnter();
+        
+        player.SetPosWithStairs(climbFallFallDistance);
+        //Sign:因使用的是Composite碰撞体，若Tilemap完整一格为单位1的正方形，所以下楼梯的瞬下移距离应略大于1
+        //TODO:↑感觉还可以优化...
         
         Physics2D.IgnoreLayerCollision(6,9,true);
     }
@@ -18,11 +23,6 @@ public class PlayerClimbFallState : PlayerStateBase
     {
         base.OnGameLogicUpdate();
 
-        if (player.IsGrounded)
-        {
-            playerStateMachine.SwitchState(typeof(PlayerIdleState));
-        }
-        
         if (input.IsClimbKey)
         {
             playerStateMachine.SwitchState(typeof(PlayerClimbUpState));
@@ -33,7 +33,10 @@ public class PlayerClimbFallState : PlayerStateBase
             playerStateMachine.SwitchState(typeof(PlayerClimbState));
         }
 
-        
+        if (player.IsGrounded)
+        {
+            playerStateMachine.SwitchState(typeof(PlayerIdleState));
+        }
     }
 
     public override void OnPhysicalLogicUpdate()
@@ -42,7 +45,6 @@ public class PlayerClimbFallState : PlayerStateBase
         
         player.SetRbVelocityY(fallForce);
     }
-
 
     public override void OnExit()
     {

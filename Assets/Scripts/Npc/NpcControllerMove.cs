@@ -7,6 +7,7 @@ public class NpcControllerMove : NpcController
 {
     private Rigidbody2D rb;
 
+    [Header("移动")]
     [SerializeField] private float walkWaitTime;
     [SerializeField] private Transform[] walkPoints;
     [SerializeField] private float moveSpeed;

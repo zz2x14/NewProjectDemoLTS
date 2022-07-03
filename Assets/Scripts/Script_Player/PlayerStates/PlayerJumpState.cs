@@ -50,7 +50,7 @@ public class PlayerJumpState : PlayerStateBase
             return;
         }
         
-        if (!player.IsGrounded && player.IsFalling)
+        if (player.IsFalling)
         {
             playerStateMachine.SwitchState(typeof(PlayerFallState));
         }

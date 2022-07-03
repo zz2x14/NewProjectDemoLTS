@@ -8,7 +8,7 @@ public class PlayerAttackState : PlayerStateBase
     [SerializeField] private float attackWaitTime;
 
     private bool canSwitchIdleState => 
-        animDuration >= animator.GetCurrentAnimatorStateInfo(0).length + attackWaitTime;
+        stateDuration >= animator.GetCurrentAnimatorStateInfo(0).length + attackWaitTime;
     
     public override void OnEnter()
     {

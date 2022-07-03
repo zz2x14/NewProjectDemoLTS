@@ -1948,7 +1948,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1307628065200457682, guid: 7ea4912b06a9f94409f38e5dadf31d51, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 50.15
+      value: 4.62
       objectReference: {fileID: 0}
     - target: {fileID: 1307628065200457682, guid: 7ea4912b06a9f94409f38e5dadf31d51, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1989,10 +1989,6 @@ PrefabInstance:
     - target: {fileID: 1307628065200457685, guid: 7ea4912b06a9f94409f38e5dadf31d51, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1307628065200457685, guid: 7ea4912b06a9f94409f38e5dadf31d51, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ea4912b06a9f94409f38e5dadf31d51, type: 3}
@@ -2200,6 +2196,7 @@ GameObject:
   - component: {fileID: 449700036}
   - component: {fileID: 449700035}
   - component: {fileID: 449700034}
+  - component: {fileID: 449700038}
   - component: {fileID: 449700033}
   m_Layer: 21
   m_Name: Npc_Woman01_Huazi_Idle
@@ -2238,8 +2235,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcData: {fileID: 11400000, guid: f6e6570be46d4024a9d61f1dd8474b4b, type: 2}
   needName: 1
-  willTalk: 1
   isMover: 0
+  willTalk: 1
 --- !u!114 &449700034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2304,6 +2301,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 6
+--- !u!114 &449700038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449700031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60e02403b7a10c241ad43d275ad2c1ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  managedPortal: {fileID: 1485404230}
 --- !u!1 &454257039
 GameObject:
   m_ObjectHideFlags: 0
@@ -2929,7 +2939,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 1536639037
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!1001 &538804839
 PrefabInstance:
@@ -4701,8 +4711,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcData: {fileID: 11400000, guid: 62b471e261c7e134b96353cdd0f2eb5c, type: 2}
   needName: 1
-  willTalk: 1
   isMover: 1
+  willTalk: 1
   walkWaitTime: 1
   walkPoints:
   - {fileID: 1857772640}
@@ -4720,6 +4730,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 985c9d8530a527042a10ed923e489d78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1137769028
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1137769029}
+  - component: {fileID: 1137769030}
+  - component: {fileID: 1137769031}
+  m_Layer: 18
+  m_Name: TownWestPortal
+  m_TagString: Untagged
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1137769029
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137769028}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.75, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1485404229}
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1137769030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137769028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d65e6b00b248964194bb7f051f25d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!70 &1137769031
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1137769028}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.030684352, y: 0.24547434}
+  m_Size: {x: 1.3591602, y: 1.4909487}
+  m_Direction: 0
 --- !u!1 &1168416809
 GameObject:
   m_ObjectHideFlags: 0
@@ -8261,6 +8332,51 @@ Transform:
   m_Father: {fileID: 1765261168}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1485404228
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1485404229}
+  - component: {fileID: 1485404230}
+  m_Layer: 18
+  m_Name: PortalCaller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1485404229
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485404228}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1137769029}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1485404230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485404228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1c58c3098d9ce8488f7fb0dd5e8f03a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetSceneID: 0
+  isLocked: 1
 --- !u!1 &1560845390
 GameObject:
   m_ObjectHideFlags: 0
@@ -11404,7 +11520,7 @@ MonoBehaviour:
   m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e728c5cc2eb6a204082aa1e1f867d54d, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: b3be70515747c8a4ca72825baa53bf39, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 9a787d9d00b24024488fe8e5ac295fdc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12310,8 +12426,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcData: {fileID: 11400000, guid: 4153ccc2ade1ff64487c165cc66b48da, type: 2}
   needName: 0
-  willTalk: 0
   isMover: 1
+  willTalk: 0
   walkWaitTime: 2
   walkPoints:
   - {fileID: 71661243}
@@ -14445,7 +14561,7 @@ MonoBehaviour:
   m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e728c5cc2eb6a204082aa1e1f867d54d, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: b3be70515747c8a4ca72825baa53bf39, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 9a787d9d00b24024488fe8e5ac295fdc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

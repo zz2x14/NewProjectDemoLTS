@@ -9,4 +9,9 @@ public class PortalTrigger : MonoBehaviour
     {
         transform.GetChild(0).gameObject.SetActive(true);
     }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        transform.GetChild(0).gameObject.SetActive(false);
+    }
 }

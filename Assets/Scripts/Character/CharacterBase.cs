@@ -18,6 +18,8 @@ public class CharacterBase : MonoBehaviour,ITakenDamage
     {
         OnDeath.Invoke();
     }
+    
+    //public void 
 
    
 }

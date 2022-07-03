@@ -18,8 +18,8 @@ public class PlayerHangDetector : MonoBehaviour
 
    public void ReturnDefaultDis()
    {
-      horizontalDetectorDis = 0.47f;
-      verticalDetectorDis = 0.15f;
+      horizontalDetectorDis = 0.4f;
+      verticalDetectorDis = 0.15f;//TODO:后续优化Hang
    }
 
    public void DisableDis()

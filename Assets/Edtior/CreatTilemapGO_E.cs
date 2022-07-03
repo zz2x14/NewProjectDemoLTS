@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 
 public class CreatTilemapGO_E
 {
-    private const string NAME_FRONTSORTINGLAYER = "FrontGround";
+    private const string NAME_FRONTSORTINGLAYER = "Ground";
     private const string NAME_ENVIRONMENTITEMSORTINGLAYER = "EnvironmentItem";
     
     [MenuItem("GameObject/CreatMyTilemapGo/GroundTilemap",false,-1)]

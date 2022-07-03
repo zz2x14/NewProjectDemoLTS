@@ -6,31 +6,13 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(menuName = "PlayerState/PlayerFallState",fileName = "PlayerFallState")]
 public class PlayerFallState : PlayerStateBase
 {
-    [SerializeField] private float fallForce;
-    [SerializeField] private float moveFallForce;
-    [SerializeField] private float climbFallForce;
+    [SerializeField] private AnimationCurve fallCurve;
+    [SerializeField] private AnimationCurve moveFallCurve;
+    [SerializeField] private AnimationCurve climbFallCurve;
     
     public override void OnEnter()
     {
         base.OnEnter();
-        
-        if (player.IsInStairs)
-        {
-            player.SetRbVelocity(Vector2.down * climbFallForce); 
-        }
-        
-        else
-        {
-            if (playerStateMachine.LastState.GetType() == typeof(PlayerRunState) || 
-                playerStateMachine.LastState.GetType() == typeof(PlayerIdleState) )
-            {
-                player.SetRbVelocity(Vector2.down * moveFallForce); 
-            }
-            else
-            {
-                player.SetRbVelocityY(fallForce);
-            }
-        }
         
         player.ReturnHangDetectorDefault();
     }
@@ -76,6 +58,26 @@ public class PlayerFallState : PlayerStateBase
                 playerStateMachine.SwitchState(typeof(PlayerClimbState));
             }
         }
+    }
+
+    public override void OnPhysicalLogicUpdate()
+    {
+        base.OnPhysicalLogicUpdate();
+
+        if (player.IsInStairs)
+        {
+            player.SetRbVelocityY(climbFallCurve.Evaluate(stateDuration));
+        }
+        if (playerStateMachine.LastState.GetType() == typeof(PlayerRunState) || 
+                playerStateMachine.LastState.GetType() == typeof(PlayerIdleState) )
+        {
+            player.SetRbVelocityY(moveFallCurve.Evaluate(stateDuration));
+        }
+        else
+        {
+            player.SetRbVelocityY(fallCurve.Evaluate(stateDuration));
+        }
+            
     }
 
 

@@ -16,8 +16,8 @@ public abstract class PlayerStateBase : ScriptableObject,IState
 
     protected float curSpeed;
 
-    protected bool isAnimFinished => animDuration >= animator.GetCurrentAnimatorStateInfo(0).length;
-    protected float animDuration => Time.time - animStartTime;
+    protected bool isAnimFinished => stateDuration >= animator.GetCurrentAnimatorStateInfo(0).length;
+    protected float stateDuration => Time.time - animStartTime;
     private float animStartTime;
     
     private void OnEnable()//SO是可以使用生命周期函数的

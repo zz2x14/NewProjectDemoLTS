@@ -20,10 +20,10 @@ public class TalkCenter : PersistentSingletonTool<TalkCenter>
     [SerializeField] private float charSpeedUpInterval;
     [SerializeField] private float talkInterval;
 
-    [Header("当前对话对象")]
-    [SerializeField] private TalkTarget talkTarget;
+    // [Header("当前对话对象")]
+    // [SerializeField] private TalkTarget talkTarget;
     
-    public bool IsTalking { get; set; } = false;
+    public bool IsTalking { get; set; }
 
     //前者为接收传入的当前对话内容，后者对text直接赋值
     private StringBuilder curTalkContent = new StringBuilder();
@@ -46,6 +46,7 @@ public class TalkCenter : PersistentSingletonTool<TalkCenter>
     private bool isSpeedUp = false;
     private bool isSkip = false;
 
+
     protected override void Awake()
     {
         base.Awake();
@@ -59,10 +60,11 @@ public class TalkCenter : PersistentSingletonTool<TalkCenter>
         playerInput = FindObjectOfType<PlayerInput>();
     }
     
-
     private void OnDisable()
     {
         StopAllCoroutines();
+        
+      
     }
 
     public void GetTalkingTargetInfo(string targetName,Sprite targetPortrait)
@@ -89,11 +91,11 @@ public class TalkCenter : PersistentSingletonTool<TalkCenter>
         playerPortrait.sprite = playerMathcingPortrait;
     }
 
-    public void StartTalk(List<string> playerTalkingContents,List<string> talkingContents,TalkTarget curTalkTarget)
+    public void StartTalk(List<string> playerTalkingContents,List<string> talkingContents,NpcController npc)
     {
         IsTalking = true;
         
-        StartCoroutine(TalkCor(playerTalkingContents,talkingContents,curTalkTarget));
+        StartCoroutine(TalkCor(playerTalkingContents,talkingContents,npc));
     }
 
     private void Update()
@@ -113,7 +115,8 @@ public class TalkCenter : PersistentSingletonTool<TalkCenter>
         }
     }
 
-    IEnumerator TalkCor(List<string> playerTalkingContents,List<string> npcTalkingContents,TalkTarget curTalkTarget)
+    //后续考虑以TalkTarget作为参数（敌人和Npc）
+    IEnumerator TalkCor(List<string> playerTalkingContents,List<string> npcTalkingContents,NpcController npc)
     {
         talkingTargetPortrait01.color = Color.white;
         playerPortrait.color = Color.white;
@@ -121,7 +124,7 @@ public class TalkCenter : PersistentSingletonTool<TalkCenter>
         npcTalkIndex = 0;
         playerTalkIndex = 1;
         wordsNum = 0;
-        talkTarget = curTalkTarget;
+        //talkTarget = curTalkTarget;//TODO:暂时没有实际意义
         
         while (totalTalkIndex < npcTalkingContents.Count + playerTalkingContents.Count)
         {
@@ -177,12 +180,16 @@ public class TalkCenter : PersistentSingletonTool<TalkCenter>
         }
 
         IsTalking = false;
-        curTalkTarget.GetComponent<ITalk>().TalkOver();
-        curTalkTarget.GetComponent<NpcController>().RemoveHasTalkedContent();
+        npc.GetComponent<ITalk>().TalkOver();
+        npc.UnlockTalk();
+        npc.UnlockScene();
+        npc.PushForwardGameChapter();
+        npc.RemoveHasTalkedContent();
         
-        talkingContentText = null;
+        talkingContentText.text = null;
         talkingTargetPortrait01.sprite = null;
         playerPortrait.sprite = null;
+        totalTalkIndex = 0;
         
         StopAllCoroutines();
     }

@@ -14,9 +14,9 @@ public class NpcControllerIdle : NpcController
         eTipGO = transform.GetChild(1).GetChild(1).gameObject;
     }
 
-    protected override void OnTriggerEnter2D(Collider2D col)
+    protected override void OnTriggerStay2D(Collider2D other)
     {
-        base.OnTriggerEnter2D(col);
+        base.OnTriggerStay2D(other);
         
         eTipGO.SetActive(true);
     }
@@ -24,5 +24,6 @@ public class NpcControllerIdle : NpcController
     private void OnTriggerExit2D(Collider2D other)
     {
         eTipGO.SetActive(false);
+        
     }
 }

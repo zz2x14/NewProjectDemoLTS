@@ -8,7 +8,7 @@ public class PlayerShootState : PlayerStateBase
     [SerializeField] private float animWaitTime;
 
     public bool isReadyToShoot =>
-        animDuration >= playerStateMachine.Anim.GetCurrentAnimatorStateInfo(0).length + animWaitTime;
+        stateDuration >= playerStateMachine.Anim.GetCurrentAnimatorStateInfo(0).length + animWaitTime;
     
     public override void OnEnter()
     {

@@ -7,22 +7,26 @@ using UnityEngine;
 public class NpcController : MonoBehaviour
 {
     protected TextMeshProUGUI nameText;
+    
     [SerializeField] private NpcData npcData;
     [SerializeField] protected bool needName;
     
-    [SerializeField] private bool willTalk;
-    
+    [Header("是否移动")]
     [SerializeField] private bool isMover;
     
+    [Header("是否产生对话")]
+    [SerializeField] private bool willTalk;
+
     public bool IsMover => isMover;
 
     private List<string> curTalkList = new List<string>();
+    private NpcTalkDataContainer curTalkContainer;
 
     private PlayerController player;
     private PlayerInput playerInput;
     public Transform playerPos { get; set; }
     
-    private int machingID;
+    private int matchingID;
 
     protected virtual void Awake()
     {
@@ -31,7 +35,7 @@ public class NpcController : MonoBehaviour
         playerInput = playerPos.GetComponent<PlayerInput>();
 
         npcData = Instantiate(npcData);
-        //TODO:现在是为了方便调试 - 后期取消！！！
+        //TODO:现在是为了方便调试 - 后期取消！！！ => 已改用新的对话data方式  => 将两种做法结合后暂定为现在的模式 再次启用调试
 
         if (needName)
         {
@@ -39,94 +43,118 @@ public class NpcController : MonoBehaviour
             nameText.text = npcData.npcBaseData.npcName;
         }
     }
-   
+    
     protected virtual void OnTriggerEnter2D(Collider2D col)
     {
         if (!willTalk) return;
-        if (npcData.npcTalkDatas.Count == 0) return;
- 
+        if (npcData.containers.Count == 0) return;
+    
         if (MatchCurChapterForcedTalk())//玩家被强制触发的对话
         {
             player.GoToTalk();
             transform.GetComponent<ITalk>().GoToTalk();
             
             TalkCenter.Instance.GetTalkingTargetInfo(npcData.npcBaseData.npcName,npcData.npcBaseData.npcPortrait);
-            TalkCenter.Instance.StartTalk(player.GetCurPlayerTalkingContents(machingID),
-                curTalkList,GetComponent<TalkTarget>());
+            
+            TalkCenter.Instance.StartTalk(player.GetCurPlayerTalkingContents(matchingID),
+                curTalkList,this);
         }
     }
-
-    public  void OnTriggerStay2D(Collider2D other)
+    
+    protected virtual void OnTriggerStay2D(Collider2D other)
     {
+        if (!willTalk) return;
+        if (npcData.containers.Count == 0) return;
+        
         if (playerInput.IsGameConfirmKeyPressed && MatchCurChapterTalk())//玩家主动触发的对话
         {
             player.GoToTalk();
             transform.GetComponent<ITalk>().GoToTalk();
             
             TalkCenter.Instance.GetTalkingTargetInfo(npcData.npcBaseData.npcName,npcData.npcBaseData.npcPortrait);
-            TalkCenter.Instance.StartTalk(player.GetCurPlayerTalkingContents(machingID),
-                curTalkList,GetComponent<TalkTarget>());
+            
+            TalkCenter.Instance.StartTalk(player.GetCurPlayerTalkingContents(matchingID),
+                curTalkList,this);
         }
     }
     
     public bool MatchCurChapterForcedTalk()
     {
-        foreach (var npcTalk in npcData.npcTalkDatas)
+        foreach (var container in npcData.containers)
         {
-            if (npcTalk.matchingChapter == GameManager.Instance._GameChapter && npcTalk.isForecedTalk)
+            if (container.matchingChapter == GameManager.Instance._GameChapter && container.isForcedTalk && !container.isTalked 
+                && !container.thisTalkData.locked)
             {
-                curTalkList = npcTalk.talkContentList;
-
-                if (!npcTalk.isTalked)
-                {
-                    machingID = npcTalk.talkID;
-                    npcTalk.isTalked = true;
-                    return true;
-                }
+                
+                curTalkContainer = container;
+                
+                matchingID = container.talkID;
+                    
+                curTalkList = container.thisTalkData.talkContentList;
+                
+                container.isTalked = true;
+                    
+                return true;
             }
         }
         return false;
     }
-
     public bool MatchCurChapterTalk()
     {
-        foreach (var npcTalk in npcData.npcTalkDatas)
+        foreach (var container in npcData.containers)
         {
-            if (npcTalk.matchingChapter == GameManager.Instance._GameChapter && !npcTalk.isForecedTalk)
+            if (container.matchingChapter == GameManager.Instance._GameChapter && !container.isForcedTalk && !container.isTalked 
+                && !container.thisTalkData.locked)
             {
-                curTalkList = npcTalk.talkContentList;
+                curTalkContainer = container;
 
-                if (!npcTalk.isTalked)
-                {
-                    machingID = npcTalk.talkID;
-                    npcTalk.isTalked = true;
-                    return true;
-                }
+                matchingID = container.talkID;
+                    
+                curTalkList = container.thisTalkData.talkContentList;
+                
+                container.isTalked = true;
+                    
+                return true;
             }
         }
         return false;
     }
-
+    
     public void RemoveHasTalkedContent()
     {
         //Sign:在foreach中尽量避免使用Remove - （使用的情况下）可以使用break马上跳出 - 最好是只在移除单个目标的情况下使用
         //需要大量删除移除时直接使用for循环 （单个也是推荐使用for循环的）
+    
+        curTalkList = null;
+        curTalkContainer = null;
         
-        for (int i = 0; i < npcData.npcTalkDatas.Count; i++)
+        for (int i = 0; i < npcData.containers.Count; i++)
         {
-            if (npcData.npcTalkDatas[i].isTalked)
+            if (npcData.containers[i].isTalked)
             {
-                npcData.npcTalkDatas.Remove(npcData.npcTalkDatas[i]);
+                npcData.containers.Remove(npcData.containers[i]);
             }
         }
+    }
+    
+    public void UnlockTalk()
+    {
+        if (!curTalkContainer.isTalkPrecondition) return;
         
-        // foreach (var npcTalk in npcData.npcTalkDatas)
-        // {
-        //     if (npcTalk.isTalked)
-        //     {
-        //         npcData.npcTalkDatas.Remove(npcTalk);
-        //         break;
-        //     }
-        // }
+        curTalkContainer.UnlockTargetTalk();
+    }
+
+    public void UnlockScene()
+    {
+        if (!curTalkContainer.isScenePrecondtion) return;
+        
+        curTalkContainer.UnlockTargerScene(GetComponent<UnlockSceneByTalk>());
+    }
+
+    public void PushForwardGameChapter()
+    {
+        if(!curTalkContainer.willPushForwardGameChapter) return;
+        
+        curTalkContainer.PushForwardChapter();
     }
 }

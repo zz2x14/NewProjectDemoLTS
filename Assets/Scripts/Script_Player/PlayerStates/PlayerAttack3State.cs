@@ -8,7 +8,7 @@ public class PlayerAttack3State : PlayerStateBase
 {
      [SerializeField] private float attackMoveDis;
      [SerializeField] private float attackWaitTime;
-     private bool isAnimLoopTwice => animDuration >= animator.GetCurrentAnimatorStateInfo(0).length * 2 + attackWaitTime;
+     private bool isAnimLoopTwice => stateDuration >= animator.GetCurrentAnimatorStateInfo(0).length * 2 + attackWaitTime;
 
     public override void OnEnter()
     {
