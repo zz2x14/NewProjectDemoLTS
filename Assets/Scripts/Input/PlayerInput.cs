@@ -4,14 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-// public enum InputType
-// {
-//     Move,
-//     Jump,
-//     ClimbUp,
-//     ClimbDown,
-//     Attack
-// }
 public class PlayerInput : MonoBehaviour//Sign:更新模式会影响到按键判定！
 {
     private PlayerInputActions playerInputActions;
@@ -104,17 +96,16 @@ public class PlayerInput : MonoBehaviour//Sign:更新模式会影响到按键判
     public bool IsSkipTalkKeyPressed => playerInputActions.Talk.Skip.WasPressedThisFrame();
     public bool IsSpeedUpKeyPerformed => playerInputActions.Talk.SpeedUp.WasPerformedThisFrame();
     public bool IsSpeedUpKeyReleased => playerInputActions.Talk.SpeedUp.WasReleasedThisFrame();
-
-    //public bool InStartScene { get; set; } = true;
+    
+    //PlayerMenu
+    public bool IsMenuSwitchKeyPressed => playerInputActions.PlayerMenu.Switch.WasPressedThisFrame();
+    public bool IsRightMousePressed => playerInputActions.PlayerMenu.RightMouse.WasPressedThisFrame();
 
     private void OnEnable()
    {
        playerInputActions = new PlayerInputActions();//是要初始化的
-       
-       //playerInputActions.Gameplay.SetCallbacks(this);//Sign：使用接口注册事件是要登记的
 
-       // if (!InStartScene) return;
-       // InitializeInputTable();
+       //playerInputActions.Gameplay.SetCallbacks(this);//Sign：使用接口注册事件是要登记的
    }
 
     private void OnDisable()
@@ -125,49 +116,6 @@ public class PlayerInput : MonoBehaviour//Sign:更新模式会影响到按键判
        // guideUIList.Clear();
    }
 
-    //  private void InitializeInputTable()
-    // {
-    //     if (FindObjectsOfType<GuideUIRespondInput>().Length > 0)
-    //     {
-    //         inputRespondTable = new Dictionary<InputType, Action>();//初始化字典
-    //         inputRespondTable.Add(InputType.Move,OnPlayerMove);
-    //         inputRespondTable.Add(InputType.Jump,OnPlayerJump);
-    //         inputRespondTable.Add(InputType.ClimbUp,OnPlayerClimbUp);
-    //         inputRespondTable.Add(InputType.ClimbDown,OnPlayerClimbDown);
-    //         inputRespondTable.Add(InputType.Attack,OnPlayerAttack);
-    //         
-    //         guideUIList = new List<GuideUIRespondInput>();
-    //         foreach (var guideUI in FindObjectsOfType<GuideUIRespondInput>())
-    //         {
-    //             guideUIList.Add(guideUI);//获取所有的引导UI，添加进列表中
-    //         }
-    //     }
-    //   
-    //     if (guideUIList.Count > 0)
-    //     {
-    //         foreach (var guideType in guideUIList)
-    //         {
-    //             switch (guideType.respondInput)//让所有引导UI依次订阅相对应的事件
-    //             {
-    //                 case InputType.Move:
-    //                     OnPlayerMove += guideType.DestorySelf;//Sign:原本的想法 - 根据类型自动匹配订阅事件，最后采用直接进行判断分别对应订阅的方法
-    //                     break;
-    //                 case InputType.Jump:
-    //                     OnPlayerJump += guideType.DestorySelf;
-    //                     break;
-    //                 case InputType.ClimbUp:
-    //                     OnPlayerClimbUp += guideType.DestorySelf;
-    //                     break;
-    //                 case InputType.ClimbDown:
-    //                     OnPlayerClimbDown += guideType.DestorySelf;
-    //                     break;
-    //                 case InputType.Attack:
-    //                     OnPlayerAttack += guideType.DestorySelf;
-    //                     break;
-    //             }
-    //         }
-    //     }
-    // }
      
      public void EnableOneInput(InputAction inputAction) => inputAction.Enable();
      public void DisableOneInput(InputAction inputAction) => inputAction.Disable();

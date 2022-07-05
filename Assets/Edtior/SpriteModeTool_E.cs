@@ -70,7 +70,7 @@ public class SpriteModeTool_E : AssetPostprocessor
     {
         TextureImporter textureImporter = (TextureImporter)assetImporter;
 
-        if (textureImporter.assetPath.Contains("Images"))
+        if (textureImporter.assetPath.Contains("Images") && !textureImporter.assetPath.Contains("I_Items"))
         {
             if (textureImporter.assetPath.Contains("Tilesets") || textureImporter.assetPath.Contains("Objects"))
             {

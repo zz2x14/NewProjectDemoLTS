@@ -9,27 +9,27 @@ public class CharacterData:ScriptableObject
 
     public void InitializeHealth()
     {
-        baseData.CurHealth = baseData.MaxHealth;
+        baseData.curHealth = baseData.maxHealth;
     }
 }
 
 [System.Serializable]
 public class CharacterBaseData
 {
-    [SerializeField] private float maxHealth;
-    [SerializeField] private float curHealth;
-
-    public float CurHealth
-    {
-        get => curHealth;
-        set => curHealth = Mathf.Max(value, 0);
-    }
-
-    public float MaxHealth
-    {
-        get => maxHealth;
-        set => maxHealth = value;
-    }
+    public float maxHealth;
+    public float curHealth;
     public float attackDamage;
+
+    // public float CurHealth
+    // {
+    //     get => curHealth;
+    //     set => curHealth = Mathf.Max(value, 0);
+    // }
+    //
+    // public float MaxHealth
+    // {
+    //     get => maxHealth;
+    //     set => maxHealth = value;
+    // }
 
 }

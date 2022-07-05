@@ -20,8 +20,8 @@ public class BossController : EnemyController
     public int HitTimeNum { get; set; }
 
     
-    public bool BossAngryByHealth => enemyData.baseData.CurHealth <= enemyData.baseData.MaxHealth * healthInAngryRate 
-                                     && enemyData.baseData.CurHealth > 0f;
+    public bool BossAngryByHealth => enemyData.baseData.curHealth <= enemyData.baseData.maxHealth * healthInAngryRate 
+                                     && enemyData.baseData.curHealth > 0f;
   
     protected override void OnDrawGizmos()
     {

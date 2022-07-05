@@ -50,7 +50,7 @@ public class PlayerStateMachine : StateMachine
     {
         base.Update();
 
-        if (Keyboard.current.tabKey.wasPressedThisFrame)
+        if (Keyboard.current.endKey.wasPressedThisFrame)
         {
             debugCurState = !debugCurState;
         }

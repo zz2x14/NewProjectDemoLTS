@@ -49,7 +49,7 @@ public class EnemyStateMachine : StateMachine
         base.Update();
 
 #if UNITY_EDITOR
-        if (Keyboard.current.tabKey.wasPressedThisFrame)
+        if (Keyboard.current.homeKey.wasPressedThisFrame)
         {
             debugCurState = !debugCurState;
         }

@@ -64,6 +64,10 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
     public Vector2 ForcedForce { get; set; }
     public event Action OnForced = delegate {  };
     public event Action OnTalk = delegate {  };
+
+    public float CurHealth => playerData.baseData.curHealth;
+    public float MaxHealth => playerData.baseData.maxHealth;
+    
     
     private void Awake()
     {
@@ -90,11 +94,19 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
 
     private void Start()
     {
-        playerInput.EnableGameplayInput();
+        playerInput.EnableAllInput();
 
         talkingCanvas = FindObjectOfType<TalkCenter>().GetComponent<Canvas>();
     }
-    
+
+    private void Update()
+    {
+        if (Keyboard.current.qKey.wasPressedThisFrame)
+        {
+            TakenDamage(10f);
+        }
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -193,7 +205,7 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
     
     public override void TakenDamage(float value)
     {
-        if(playerData.baseData.CurHealth <= 0 || !canHurt) return;
+        if(playerData.baseData.curHealth <= 0 || !canHurt) return;
 
         if (invincibleCor != null)
         {
@@ -201,14 +213,14 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
         }
         invincibleCor = StartCoroutine(nameof(InvincibleFrameCor));
         
-        base.TakenDamage(value);
+        playerData.baseData.curHealth = Mathf.Max(playerData.baseData.curHealth - value, 0f);
         
-        playerData.baseData.CurHealth = Mathf.Max(playerData.baseData.CurHealth - value, 0f);
-        
-        if (playerData.baseData.CurHealth == 0)
+        if (playerData.baseData.curHealth == 0)
         {
             Death();
         }
+        
+        base.TakenDamage(value);
     }
 
     public void Attack1()

@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c6392f9ca649ad4b9715bfa2bc0be6a, type: 3}
+  m_Name: PlayerBackpack
+  m_EditorClassIdentifier: 
+  backpack:
+    backpackCapacity: 10
+    maxCapacity: 30
+    itemSlotsInBackpack:
+    - itemHeld: {fileID: 0}
+      heldCount: 0
+    - itemHeld: {fileID: 11400000, guid: 5f6f08073fb0dbc4680fea19a04b6bd7, type: 2}
+      heldCount: 1
+    - itemHeld: {fileID: 0}
+      heldCount: 0
+    - itemHeld: {fileID: 0}
+      heldCount: 0
+    - itemHeld: {fileID: 0}
+      heldCount: 0
+    - itemHeld: {fileID: 0}
+      heldCount: 0
+    - itemHeld: {fileID: 0}
+      heldCount: 0
+    - itemHeld: {fileID: 0}
+      heldCount: 0
+    - itemHeld: {fileID: 0}
+      heldCount: 0
+    - itemHeld: {fileID: 11400000, guid: 726878d39b0e6044eb276311a520138e, type: 2}
+      heldCount: 1
+    itemsInBackpack:
+    - {fileID: 11400000, guid: 726878d39b0e6044eb276311a520138e, type: 2}
+    - {fileID: 11400000, guid: 5f6f08073fb0dbc4680fea19a04b6bd7, type: 2}

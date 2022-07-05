@@ -58,6 +58,8 @@ public class TalkCenter : PersistentSingletonTool<TalkCenter>
         curTalkContentOver = new WaitUntil(() => talkingContentText.text == talkContent.ToString()); 
         
         playerInput = FindObjectOfType<PlayerInput>();
+        
+        DontDestroyOnLoad(gameObject);
     }
     
     private void OnDisable()

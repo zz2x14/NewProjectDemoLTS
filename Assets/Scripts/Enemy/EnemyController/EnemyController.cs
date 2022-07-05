@@ -173,13 +173,13 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
 
     public override void TakenDamage(float value)
     {
-        if(enemyData.baseData.CurHealth <= 0) return;
+        if(enemyData.baseData.curHealth <= 0) return;
         
         base.TakenDamage(value);
 
-        enemyData.baseData.CurHealth = Mathf.Max(enemyData.baseData.CurHealth - value, 0f);
+        enemyData.baseData.curHealth = Mathf.Max(enemyData.baseData.curHealth - value, 0f);
         
-        if (enemyData.baseData.CurHealth == 0)
+        if (enemyData.baseData.curHealth == 0)
         {
             Death();
         }

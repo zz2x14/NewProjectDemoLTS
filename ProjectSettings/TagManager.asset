@@ -29,7 +29,7 @@ TagManager:
   - PlayerInvincible
   - TimelineTrigger
   - Npc
-  - 
+  - ItemInWorld
   - 
   - 
   - 
@@ -69,6 +69,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 1536639037
+    locked: 0
+  - name: Item
+    uniqueID: 313851189
     locked: 0
   - name: Enemy
     uniqueID: 953473915

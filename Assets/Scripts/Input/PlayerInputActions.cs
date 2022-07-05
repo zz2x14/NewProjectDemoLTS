@@ -288,6 +288,54 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PlayerMenu"",
+            ""id"": ""ef351b74-2b47-4021-8b17-fb04119cd922"",
+            ""actions"": [
+                {
+                    ""name"": ""Switch"",
+                    ""type"": ""Button"",
+                    ""id"": ""613c57dd-91ca-41ad-9656-b17ef859198f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightMouse"",
+                    ""type"": ""Button"",
+                    ""id"": ""2d3d7f27-6e67-48f0-bb16-6e8c1d017903"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""30d849e3-7e32-4b8f-b5ba-a54ea9351112"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Switch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43328212-261a-41ea-b5d5-feaa3b3aad57"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""RightMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -326,6 +374,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Talk = asset.FindActionMap("Talk", throwIfNotFound: true);
         m_Talk_Skip = m_Talk.FindAction("Skip", throwIfNotFound: true);
         m_Talk_SpeedUp = m_Talk.FindAction("SpeedUp", throwIfNotFound: true);
+        // PlayerMenu
+        m_PlayerMenu = asset.FindActionMap("PlayerMenu", throwIfNotFound: true);
+        m_PlayerMenu_Switch = m_PlayerMenu.FindAction("Switch", throwIfNotFound: true);
+        m_PlayerMenu_RightMouse = m_PlayerMenu.FindAction("RightMouse", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -544,6 +596,47 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         }
     }
     public TalkActions @Talk => new TalkActions(this);
+
+    // PlayerMenu
+    private readonly InputActionMap m_PlayerMenu;
+    private IPlayerMenuActions m_PlayerMenuActionsCallbackInterface;
+    private readonly InputAction m_PlayerMenu_Switch;
+    private readonly InputAction m_PlayerMenu_RightMouse;
+    public struct PlayerMenuActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public PlayerMenuActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Switch => m_Wrapper.m_PlayerMenu_Switch;
+        public InputAction @RightMouse => m_Wrapper.m_PlayerMenu_RightMouse;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerMenu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerMenuActions set) { return set.Get(); }
+        public void SetCallbacks(IPlayerMenuActions instance)
+        {
+            if (m_Wrapper.m_PlayerMenuActionsCallbackInterface != null)
+            {
+                @Switch.started -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitch;
+                @Switch.performed -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitch;
+                @Switch.canceled -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitch;
+                @RightMouse.started -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnRightMouse;
+                @RightMouse.performed -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnRightMouse;
+                @RightMouse.canceled -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnRightMouse;
+            }
+            m_Wrapper.m_PlayerMenuActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Switch.started += instance.OnSwitch;
+                @Switch.performed += instance.OnSwitch;
+                @Switch.canceled += instance.OnSwitch;
+                @RightMouse.started += instance.OnRightMouse;
+                @RightMouse.performed += instance.OnRightMouse;
+                @RightMouse.canceled += instance.OnRightMouse;
+            }
+        }
+    }
+    public PlayerMenuActions @PlayerMenu => new PlayerMenuActions(this);
     private int m_PCSchemeIndex = -1;
     public InputControlScheme PCScheme
     {
@@ -572,5 +665,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     {
         void OnSkip(InputAction.CallbackContext context);
         void OnSpeedUp(InputAction.CallbackContext context);
+    }
+    public interface IPlayerMenuActions
+    {
+        void OnSwitch(InputAction.CallbackContext context);
+        void OnRightMouse(InputAction.CallbackContext context);
     }
 }
