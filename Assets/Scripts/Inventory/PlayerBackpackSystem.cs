@@ -13,13 +13,15 @@ using UnityEngine.UI;
 public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem>
 {
     private Canvas playerMenuCanvas;
+    private Canvas itemDesCanvas;
     private Scrollbar backpackScrollBar;
-    private Canvas dropButtonCanvas;
-    private Image dropButtonImage;
-
+    
+    [Header("Player背包")]
     [SerializeField] private PlayerBackpack playerBackpack;
     [SerializeField] private List<GameObject> itemSlotGOList;
-    [SerializeField] private LayerMask uiLayer;
+    
+    [Header("ItemDes出现位置偏差")]
+    [SerializeField] private Vector2 itemDesOffset;
     
     private bool isOpen;
     private bool buttonClick;
@@ -32,6 +34,14 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
 
     public int BackpackCapacity => playerBackpack.Capacity;
 
+    public bool IsDropKeyPressed => playerInput.IsDropItemKeyPressed;
+
+    public float OffsetX => itemDesOffset.x;
+    public float OffsetY => itemDesOffset.y;
+    
+    public int coinGotCount { get; set; }
+    
+
     protected override void Awake()
     {
         base.Awake();
@@ -39,9 +49,8 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
         playerInput = GetComponent<PlayerInput>();
         
         playerMenuCanvas = GameObject.Find("PlayerMenuCanvas").GetComponent<Canvas>();
+        itemDesCanvas = GameObject.Find("ItemDescriptionDynamicCanvas").GetComponent<Canvas>();
         backpackScrollBar = playerMenuCanvas.transform.GetComponentInChildren<Scrollbar>();
-        dropButtonCanvas = GameObject.Find("ItemToolButton").GetComponent<Canvas>();
-        dropButtonImage = GameObject.Find("DropItemButton").GetComponent<Image>();
 
         havedColor = Color.white;
         nullColor = new Color(1, 1, 1, 0);
@@ -58,21 +67,8 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
         {
             OpenAndCloseBackpack();
         }
-
-        
-        // if (isOpen && EventSystem.current.IsPointerOverGameObject())
-        // {
-        //     Debug.Log(EventSystem.current.gameObject);
-        //     if (playerInput.IsRightMousePressed)
-        //     {
-        //         dropButtonImage.rectTransform.position = EventSystem.current.GetComponent<RectTransform>().position;
-        //         buttonClick = !buttonClick;
-        //         dropButtonCanvas.enabled = buttonClick;
-        //     }
-        // }
-       
     }
-    
+
     private void InitializeSlotItemsGO()
     {
         itemSlotGOList = new List<GameObject>(GameObject.Find("BackpackGrid").transform.childCount);
@@ -87,7 +83,9 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
         isOpen = !isOpen;
         playerMenuCanvas.enabled = isOpen;
         
-        ItemDescriptionUI.Instance.ShowTopItemDes(GetTopItemInBackpack());
+        //TODO:暂时不直接显示第一个物品的信息
+        //ItemDescriptionUI.Instance.ShowTopItemDes(GetTopItemInBackpack());
+        ItemDescriptionUI.Instance.ClearItemDes();
         
         if (isOpen)
         {
@@ -145,6 +143,7 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
     {
         if (playerBackpack.curCapacity > playerBackpack.Capacity)
         {
+            //Pseudocode：
             //当背包容量已经满了时
             //提醒背包已满
         }
@@ -179,6 +178,14 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
         UpdatePlayerBackpack();
         playerBackpack.UpdateItemList();
         playerBackpack.UpdateCapacity();
+    }
+
+    public void GetItemMultiple(Item item)
+    {
+        for (int i = 0; i < coinGotCount; i++)
+        {
+            AddItemIntoBackPack(item);
+        }
     }
 
     public void RemoveItemFromBackpack(Item itemGot)
@@ -227,10 +234,8 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
         Item temp = playerBackpack.SlotList[curIndex].ItemHeld;
         int tempNum = playerBackpack.SlotList[curIndex].HeldCount;
         
-        Debug.Log(targetIndex);
         if (playerBackpack.SlotList[targetIndex].ItemHeld == null)
         {
-            Debug.Log("NoItemInSlot");
             playerBackpack.SlotList[curIndex].ItemHeld = null;
             playerBackpack.SlotList[curIndex].HeldCount = 0;
             
@@ -249,5 +254,20 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
         UpdatePlayerBackpack();
         playerBackpack.UpdateItemList();
         
+    }
+
+    public void EnableItemDesImage()
+    {
+        itemDesCanvas.enabled = true;
+    }
+    
+    public void DisableItemDesImage()
+    {
+        itemDesCanvas.enabled = false;
+    }
+
+    public void SetItemDesImagePos(Vector3 targetPos)
+    {
+        itemDesCanvas.transform.position = targetPos;//Sign:是可以直接让transform转为RectTransform的
     }
 }

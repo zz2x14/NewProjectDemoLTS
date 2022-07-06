@@ -38,9 +38,17 @@ public class ItemDescriptionUI : PersistentSingletonTool<ItemDescriptionUI>
         }
     }
 
-    public void ShowTopItemDes(Item topItemInBackpack)
+    // public void ShowTopItemDes(Item topItemInBackpack)
+    // {
+    //     ShowCurItemDescription(topItemInBackpack);
+    // }
+
+    public void ClearItemDes()
     {
-        ShowCurItemDescription(topItemInBackpack);
+        curItemNameText.text = null;
+        curItemDesText.text = null;
+        curItemPriceText.text = null;
+        curItemChannelText.text = null;
     }
 
 }

@@ -99,7 +99,7 @@ public class PlayerInput : MonoBehaviour//Sign:更新模式会影响到按键判
     
     //PlayerMenu
     public bool IsMenuSwitchKeyPressed => playerInputActions.PlayerMenu.Switch.WasPressedThisFrame();
-    public bool IsRightMousePressed => playerInputActions.PlayerMenu.RightMouse.WasPressedThisFrame();
+    public bool IsDropItemKeyPressed => playerInputActions.PlayerMenu.DropItem.WasPressedThisFrame();
 
     private void OnEnable()
    {

@@ -281,7 +281,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RightMouse",
+                    "name": "DropItem",
                     "type": "Button",
                     "id": "2d3d7f27-6e67-48f0-bb16-6e8c1d017903",
                     "expectedControlType": "Button",
@@ -305,11 +305,11 @@
                 {
                     "name": "",
                     "id": "43328212-261a-41ea-b5d5-feaa3b3aad57",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "RightMouse",
+                    "action": "DropItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

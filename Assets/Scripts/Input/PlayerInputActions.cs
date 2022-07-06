@@ -303,7 +303,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""RightMouse"",
+                    ""name"": ""DropItem"",
                     ""type"": ""Button"",
                     ""id"": ""2d3d7f27-6e67-48f0-bb16-6e8c1d017903"",
                     ""expectedControlType"": ""Button"",
@@ -327,11 +327,11 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""43328212-261a-41ea-b5d5-feaa3b3aad57"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
-                    ""action"": ""RightMouse"",
+                    ""action"": ""DropItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -377,7 +377,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         // PlayerMenu
         m_PlayerMenu = asset.FindActionMap("PlayerMenu", throwIfNotFound: true);
         m_PlayerMenu_Switch = m_PlayerMenu.FindAction("Switch", throwIfNotFound: true);
-        m_PlayerMenu_RightMouse = m_PlayerMenu.FindAction("RightMouse", throwIfNotFound: true);
+        m_PlayerMenu_DropItem = m_PlayerMenu.FindAction("DropItem", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -601,13 +601,13 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerMenu;
     private IPlayerMenuActions m_PlayerMenuActionsCallbackInterface;
     private readonly InputAction m_PlayerMenu_Switch;
-    private readonly InputAction m_PlayerMenu_RightMouse;
+    private readonly InputAction m_PlayerMenu_DropItem;
     public struct PlayerMenuActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerMenuActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Switch => m_Wrapper.m_PlayerMenu_Switch;
-        public InputAction @RightMouse => m_Wrapper.m_PlayerMenu_RightMouse;
+        public InputAction @DropItem => m_Wrapper.m_PlayerMenu_DropItem;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMenu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -620,9 +620,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Switch.started -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitch;
                 @Switch.performed -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitch;
                 @Switch.canceled -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitch;
-                @RightMouse.started -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnRightMouse;
-                @RightMouse.performed -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnRightMouse;
-                @RightMouse.canceled -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnRightMouse;
+                @DropItem.started -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnDropItem;
+                @DropItem.performed -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnDropItem;
+                @DropItem.canceled -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnDropItem;
             }
             m_Wrapper.m_PlayerMenuActionsCallbackInterface = instance;
             if (instance != null)
@@ -630,9 +630,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Switch.started += instance.OnSwitch;
                 @Switch.performed += instance.OnSwitch;
                 @Switch.canceled += instance.OnSwitch;
-                @RightMouse.started += instance.OnRightMouse;
-                @RightMouse.performed += instance.OnRightMouse;
-                @RightMouse.canceled += instance.OnRightMouse;
+                @DropItem.started += instance.OnDropItem;
+                @DropItem.performed += instance.OnDropItem;
+                @DropItem.canceled += instance.OnDropItem;
             }
         }
     }
@@ -669,6 +669,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     public interface IPlayerMenuActions
     {
         void OnSwitch(InputAction.CallbackContext context);
-        void OnRightMouse(InputAction.CallbackContext context);
+        void OnDropItem(InputAction.CallbackContext context);
     }
 }

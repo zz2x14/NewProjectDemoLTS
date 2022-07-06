@@ -2,23 +2,55 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ItemInWorld : MonoBehaviour
 {
     [SerializeField] private Item thisItem;
     [SerializeField] private bool testReduce;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    [SerializeField] private Vector2 itemMinForce;
+    [SerializeField] private Vector2 itemMaxForce;
+
+    private float randomForceX;
+    private float randomForceY;
+
+    private Rigidbody2D rb;
+
+    private void OnEnable()
     {
-        if (!testReduce)
-        {
-            PlayerBackpackSystem.Instance.AddItemIntoBackPack(thisItem);
-        }
-        else
-        {
-            PlayerBackpackSystem.Instance.RemoveItemFromBackpack(thisItem);
-        }
+        rb = GetComponent<Rigidbody2D>();
+
+        randomForceX = Random.Range(itemMinForce.x, itemMaxForce.x);
+        randomForceY = Random.Range(itemMinForce.y, itemMaxForce.y);
         
-        Destroy(gameObject);
+        rb.AddForce(new Vector2(randomForceX,randomForceY),ForceMode2D.Force);
     }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            if (!testReduce)
+            {
+                if (thisItem.ItemID == 0)
+                {
+                    PlayerBackpackSystem.Instance.GetItemMultiple(thisItem);
+                }
+                else
+                {
+                    PlayerBackpackSystem.Instance.AddItemIntoBackPack(thisItem);
+                }
+            
+            }
+            else
+            {
+                PlayerBackpackSystem.Instance.RemoveItemFromBackpack(thisItem);
+            }
+            
+            gameObject.SetActive(false);
+        }
+    }
+    
+    
 }

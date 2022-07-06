@@ -206,7 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBackpack: {fileID: 11400000, guid: 0938f9e07540bc6489dbd0bda77d41b8, type: 2}
   itemSlotGOList: []
-  dropButtonCanvas: {fileID: 0}
+  itemDesOffset: {x: 200, y: -175}
 --- !u!114 &1307628065200457677
 MonoBehaviour:
   m_ObjectHideFlags: 0

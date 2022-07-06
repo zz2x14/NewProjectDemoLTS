@@ -18,8 +18,6 @@ MonoBehaviour:
     itemSlotsInBackpack:
     - itemHeld: {fileID: 0}
       heldCount: 0
-    - itemHeld: {fileID: 11400000, guid: 5f6f08073fb0dbc4680fea19a04b6bd7, type: 2}
-      heldCount: 1
     - itemHeld: {fileID: 0}
       heldCount: 0
     - itemHeld: {fileID: 0}
@@ -34,8 +32,10 @@ MonoBehaviour:
       heldCount: 0
     - itemHeld: {fileID: 0}
       heldCount: 0
-    - itemHeld: {fileID: 11400000, guid: 726878d39b0e6044eb276311a520138e, type: 2}
-      heldCount: 1
+    - itemHeld: {fileID: 0}
+      heldCount: 0
+    - itemHeld: {fileID: 0}
+      heldCount: 0
     itemsInBackpack:
-    - {fileID: 11400000, guid: 726878d39b0e6044eb276311a520138e, type: 2}
     - {fileID: 11400000, guid: 5f6f08073fb0dbc4680fea19a04b6bd7, type: 2}
+    - {fileID: 11400000, guid: 726878d39b0e6044eb276311a520138e, type: 2}
