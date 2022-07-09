@@ -10,6 +10,8 @@ public class PlayerRollState : PlayerStateBase
     public override void OnEnter()
     {
         base.OnEnter();
+        
+        player.StartRollCDCor();
 
         player.CollStartRoll();
         player.SetRbVelocityX(rollSpeed * player.transform.localScale.x);
@@ -30,10 +32,6 @@ public class PlayerRollState : PlayerStateBase
         }
     }
 
-    public override void OnPhysicalLogicUpdate()
-    {
-        base.OnPhysicalLogicUpdate();
-    }
 
     public override void OnExit()
     {

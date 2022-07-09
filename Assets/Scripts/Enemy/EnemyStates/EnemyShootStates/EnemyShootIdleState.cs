@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "EnemyState/EnemyShootIdleState",fileName = "EnemyShootIdleState")]
@@ -10,6 +9,8 @@ public class EnemyShootIdleState : EnemyShootBaseState
         base.OnEnter();
         
         enemy.SetRbVelocity(Vector2.zero);
+        
+        GameManager.Instance.DepartFromBattleList(enemy,EventArgs.Empty);
     }
 
     public override void OnGameLogicUpdate()

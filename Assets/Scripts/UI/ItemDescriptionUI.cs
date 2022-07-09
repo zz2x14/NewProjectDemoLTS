@@ -4,7 +4,7 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 
-public class ItemDescriptionUI : PersistentSingletonTool<ItemDescriptionUI>
+public class ItemDescriptionUI : SingletonTool<ItemDescriptionUI>
 {
     [SerializeField] private TextMeshProUGUI curItemNameText;
     [SerializeField] private TextMeshProUGUI curItemDesText;

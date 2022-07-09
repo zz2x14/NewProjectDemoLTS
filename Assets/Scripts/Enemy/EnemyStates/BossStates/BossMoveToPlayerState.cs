@@ -12,6 +12,8 @@ public class BossMoveToPlayerState : BossStateBase
         base.OnEnter();
 
         destination = enemy.PlayerPos.position;
+        
+        GameManager.Instance.AddIntoBattleList(enemy);
     }
 
     public override void OnGameLogicUpdate()

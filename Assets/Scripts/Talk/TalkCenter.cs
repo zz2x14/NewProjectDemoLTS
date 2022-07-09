@@ -65,8 +65,6 @@ public class TalkCenter : PersistentSingletonTool<TalkCenter>
     private void OnDisable()
     {
         StopAllCoroutines();
-        
-      
     }
 
     public void GetTalkingTargetInfo(string targetName,Sprite targetPortrait)
@@ -186,6 +184,7 @@ public class TalkCenter : PersistentSingletonTool<TalkCenter>
         npc.UnlockTalk();
         npc.UnlockScene();
         npc.PushForwardGameChapter();
+        npc.UpdateChapterContent();
         npc.RemoveHasTalkedContent();
         
         talkingContentText.text = null;

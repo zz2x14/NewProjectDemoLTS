@@ -18,8 +18,6 @@ public class ItemSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     private Color clickColor;
     
     public int SiblingIndex { get; private set; }
-
-    private bool isClilked;
     
     private void Awake()
     {
@@ -56,8 +54,6 @@ public class ItemSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(isClilked) return;
-        
         thisItem = PlayerBackpackSystem.Instance.GetItemInBackpack(transform.GetSiblingIndex());
         
         if (thisItem !=null)

@@ -1,11 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MyEventSpace;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
-using Object = UnityEngine.Object;
-
 
 public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
 {
@@ -13,6 +10,9 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
     
     [Header("无敌时间")]
     [SerializeField] private float invincibleInterval;
+    
+    [Header("翻滚CD")]
+    [SerializeField] private float rollInterval;
     
     [Header("碰撞体")]
     [SerializeField] private Collider2D normalColl;
@@ -56,10 +56,13 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
     public bool IsOnStairs => stairsDetector.IsOnStairs;
 
     private Coroutine invincibleCor;
+    private WaitForSeconds invincibleCDWFS;
     private bool canHurt = true;
 
     public bool CanRoll { get; set; }
+    public bool RollCDOver { get; private set; }
     private Coroutine litmitRollCor;
+    private WaitForSeconds rollCDWFS;
 
     public Vector2 ForcedForce { get; set; }
     public event Action OnForced = delegate {  };
@@ -67,22 +70,28 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
 
     public float CurHealth => playerData.baseData.curHealth;
     public float MaxHealth => playerData.baseData.maxHealth;
-    
+
+    private PlayerHealthBar healthBar;
     
     private void Awake()
     {
+        lastShootTime = Time.time - shootInterval;
+        
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
         groundDetector = GetComponentInChildren<PlayerGroundDetector>();
         hangDetector = GetComponentInChildren<PlayerHangDetector>();
         stairsDetector = GetComponentInChildren<PlayerOnStairsDetector>();
 
-        lastShootTime = Time.time - shootInterval;
-        
-        DontDestroyOnLoad(gameObject);
-        
+        healthBar = GetComponentInChildren<PlayerHealthBar>();
+
         playerData = Instantiate(playerData);
         //TODO:现在是为了方便调试 - 后期取消！！！
+
+        rollCDWFS = new WaitForSeconds(rollInterval);
+        invincibleCDWFS = new WaitForSeconds(invincibleInterval);
+        
+        DontDestroyOnLoad(gameObject);
     }
 
     private void OnEnable()
@@ -90,6 +99,7 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
         playerData.InitializeHealth();
 
         CanRoll = true;
+        RollCDOver = true;
     }
 
     private void Start()
@@ -99,14 +109,12 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
         talkingCanvas = FindObjectOfType<TalkCenter>().GetComponent<Canvas>();
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        if (Keyboard.current.qKey.wasPressedThisFrame)
-        {
-            TakenDamage(10f);
-        }
+        GameManager.Instance.ClearBattleList();
     }
 
+   
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -194,11 +202,27 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
 
     #endregion
 
+    public void StartRollCDCor()
+    {
+        StartCoroutine(nameof(RollIntervalCor));
+    }
+    
+    IEnumerator RollIntervalCor()
+    {
+        RollCDOver = false;
+
+        yield return rollCDWFS;
+
+        RollCDOver = true;
+        
+        StopCoroutine(nameof(RollIntervalCor));
+    }
+
     IEnumerator InvincibleFrameCor()
     {
         canHurt = false;
 
-        yield return new WaitForSeconds(invincibleInterval);
+        yield return invincibleCDWFS;
 
         canHurt = true;
     }
@@ -217,7 +241,7 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
         
         if (playerData.baseData.curHealth == 0)
         {
-            Death();
+            EventManager.Instance.EventHandlerTrigger(EventName.OnPlayerDeath,this);
         }
         
         base.TakenDamage(value);
@@ -232,6 +256,7 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
             foreach (var enemy in hitEnemies)
             {
                 enemy.GetComponent<EnemyController>().TakenDamage(playerData.baseData.attackDamage);
+                UIManager.Instance.ShowDamageValue(enemy.transform.position,playerData.baseData.attackDamage);
             }
         }
     }
@@ -244,6 +269,7 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
             foreach (var enemy in hitEnemies)
             {
                 enemy.GetComponent<ITakenDamage>().TakenDamage(playerData.baseData.attackDamage);
+                UIManager.Instance.ShowDamageValue(enemy.transform.position,playerData.baseData.attackDamage);
             }
         }
     }
@@ -315,7 +341,6 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
         
         RemoveHasTalkedContent();
     }
-
     
     public List<string> GetCurPlayerTalkingContents(int matchingID)
     {
@@ -342,5 +367,15 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
             }
         }
     }
+
+    public void EnableHealthBar()
+    {
+        healthBar.EnableHealthHUDCanvas();
+    }
+    public void DisableHealthBar()
+    {
+        healthBar.DisableHeatlthHUDCanvas();
+    }
+
     
 }

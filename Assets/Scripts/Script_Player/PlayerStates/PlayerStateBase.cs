@@ -17,10 +17,10 @@ public abstract class PlayerStateBase : ScriptableObject,IState
     protected float curSpeed;
 
     protected bool isAnimFinished => stateDuration >= animator.GetCurrentAnimatorStateInfo(0).length;
-    protected float stateDuration => Time.time - animStartTime;
-    private float animStartTime;
+    protected float stateDuration => Time.time - stateStarTime;
+    protected float stateStarTime;
     
-    private void OnEnable()//SO是可以使用生命周期函数的
+    protected virtual void OnEnable()//SO是可以使用生命周期函数的
     {
         animID = Animator.StringToHash(animName);
     }
@@ -38,7 +38,7 @@ public abstract class PlayerStateBase : ScriptableObject,IState
         //使用crossFade播放动画 过渡到另一个动画更平滑 第二个参数即为动画跳转中的transitionDuration 0~1的百分比
         animator.CrossFade(animID,0.1f);
 
-        animStartTime = Time.time;
+        stateStarTime = Time.time;
     }
 
     public virtual void OnGameLogicUpdate()

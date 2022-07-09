@@ -310,6 +310,24 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchNext"",
+                    ""type"": ""Button"",
+                    ""id"": ""3f09657d-b77c-45dc-8952-197945ced154"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchLast"",
+                    ""type"": ""Button"",
+                    ""id"": ""38cbe177-6a01-48e9-b024-82345fd538fb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -332,6 +350,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""PC"",
                     ""action"": ""DropItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0f5a0493-6ada-46d5-9793-8f0043ce1bcf"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""SwitchNext"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eae79e96-330c-45ea-a66f-95226ffe10a4"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""SwitchLast"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -378,6 +418,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_PlayerMenu = asset.FindActionMap("PlayerMenu", throwIfNotFound: true);
         m_PlayerMenu_Switch = m_PlayerMenu.FindAction("Switch", throwIfNotFound: true);
         m_PlayerMenu_DropItem = m_PlayerMenu.FindAction("DropItem", throwIfNotFound: true);
+        m_PlayerMenu_SwitchNext = m_PlayerMenu.FindAction("SwitchNext", throwIfNotFound: true);
+        m_PlayerMenu_SwitchLast = m_PlayerMenu.FindAction("SwitchLast", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -602,12 +644,16 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private IPlayerMenuActions m_PlayerMenuActionsCallbackInterface;
     private readonly InputAction m_PlayerMenu_Switch;
     private readonly InputAction m_PlayerMenu_DropItem;
+    private readonly InputAction m_PlayerMenu_SwitchNext;
+    private readonly InputAction m_PlayerMenu_SwitchLast;
     public struct PlayerMenuActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerMenuActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Switch => m_Wrapper.m_PlayerMenu_Switch;
         public InputAction @DropItem => m_Wrapper.m_PlayerMenu_DropItem;
+        public InputAction @SwitchNext => m_Wrapper.m_PlayerMenu_SwitchNext;
+        public InputAction @SwitchLast => m_Wrapper.m_PlayerMenu_SwitchLast;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMenu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -623,6 +669,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @DropItem.started -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnDropItem;
                 @DropItem.performed -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnDropItem;
                 @DropItem.canceled -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnDropItem;
+                @SwitchNext.started -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitchNext;
+                @SwitchNext.performed -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitchNext;
+                @SwitchNext.canceled -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitchNext;
+                @SwitchLast.started -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitchLast;
+                @SwitchLast.performed -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitchLast;
+                @SwitchLast.canceled -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitchLast;
             }
             m_Wrapper.m_PlayerMenuActionsCallbackInterface = instance;
             if (instance != null)
@@ -633,6 +685,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @DropItem.started += instance.OnDropItem;
                 @DropItem.performed += instance.OnDropItem;
                 @DropItem.canceled += instance.OnDropItem;
+                @SwitchNext.started += instance.OnSwitchNext;
+                @SwitchNext.performed += instance.OnSwitchNext;
+                @SwitchNext.canceled += instance.OnSwitchNext;
+                @SwitchLast.started += instance.OnSwitchLast;
+                @SwitchLast.performed += instance.OnSwitchLast;
+                @SwitchLast.canceled += instance.OnSwitchLast;
             }
         }
     }
@@ -670,5 +728,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     {
         void OnSwitch(InputAction.CallbackContext context);
         void OnDropItem(InputAction.CallbackContext context);
+        void OnSwitchNext(InputAction.CallbackContext context);
+        void OnSwitchLast(InputAction.CallbackContext context);
     }
 }

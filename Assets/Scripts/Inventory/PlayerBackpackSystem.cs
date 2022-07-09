@@ -12,9 +12,11 @@ using UnityEngine.UI;
 
 public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem>
 {
-    private Canvas playerMenuCanvas;
     private Canvas itemDesCanvas;
     private Scrollbar backpackScrollBar;
+    private Button packButton;
+    
+    private GameObject backpackFullTipGO;
     
     [Header("Player背包")]
     [SerializeField] private PlayerBackpack playerBackpack;
@@ -24,9 +26,7 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
     [SerializeField] private Vector2 itemDesOffset;
     
     private bool isOpen;
-    private bool buttonClick;
 
-    private PlayerInput playerInput;
     private bool sortOver;
 
     private Color havedColor;
@@ -34,23 +34,22 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
 
     public int BackpackCapacity => playerBackpack.Capacity;
 
-    public bool IsDropKeyPressed => playerInput.IsDropItemKeyPressed;
+    public bool IsDropKeyPressed => ComponentProvider.Instance.PlayerInputAvatar.IsDropItemKeyPressed;
 
     public float OffsetX => itemDesOffset.x;
     public float OffsetY => itemDesOffset.y;
     
     public int coinGotCount { get; set; }
-    
 
     protected override void Awake()
     {
         base.Awake();
         
-        playerInput = GetComponent<PlayerInput>();
-        
-        playerMenuCanvas = GameObject.Find("PlayerMenuCanvas").GetComponent<Canvas>();
         itemDesCanvas = GameObject.Find("ItemDescriptionDynamicCanvas").GetComponent<Canvas>();
-        backpackScrollBar = playerMenuCanvas.transform.GetComponentInChildren<Scrollbar>();
+        backpackScrollBar = GameObject.Find("ScrollbarVertical").GetComponentInChildren<Scrollbar>();
+        packButton = GameObject.Find("PackButton").GetComponent<Button>();
+        
+        backpackFullTipGO = GameObject.Find("BackpackFullTipContainer");
 
         havedColor = Color.white;
         nullColor = new Color(1, 1, 1, 0);
@@ -61,9 +60,19 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
         playerBackpack.UpdateCapacity();
     }
 
+    private void OnEnable()
+    {
+        packButton.onClick.AddListener(PackPlayerBackpack);
+    }
+
+    private void OnDisable()
+    {
+        packButton.onClick.RemoveAllListeners();
+    }
+
     private void Update()
     {
-        if (playerInput.IsMenuSwitchKeyPressed)
+        if (ComponentProvider.Instance.PlayerInputAvatar.IsMenuSwitchKeyPressed && GameManager.Instance._GameChapter != GameChapter.ZeroChapter) 
         {
             OpenAndCloseBackpack();
         }
@@ -81,7 +90,8 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
     public void OpenAndCloseBackpack()
     {
         isOpen = !isOpen;
-        playerMenuCanvas.enabled = isOpen;
+        PlayerMenuSystem.Instance.SwitchPlayerMenu(isOpen);
+        PlayerMenuSystem.Instance.EnableTargetCanvas(0);
         
         //TODO:暂时不直接显示第一个物品的信息
         //ItemDescriptionUI.Instance.ShowTopItemDes(GetTopItemInBackpack());
@@ -91,14 +101,14 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
         {
             backpackScrollBar.value = 1;
             
-            playerInput.DisableGamePlayInput();
+            ComponentProvider.Instance.PlayerInputAvatar.DisableGamePlayInput();
             
             Time.timeScale = 0;
             GameManager.Instance._GameState = GameState.Paused;
         }
         else
         {
-            playerInput.EnableGameplayInput();
+            ComponentProvider.Instance.PlayerInputAvatar.EnableGameplayInput();
 
             Time.timeScale = 1;
             GameManager.Instance._GameState = GameState.Playing;
@@ -137,15 +147,13 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
                 itemSlotGOList[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = nullColor;
             }
         }
-    }
+    }   
 
     public void AddItemIntoBackPack(Item itemGot)
     {
-        if (playerBackpack.curCapacity > playerBackpack.Capacity)
+        if (IsFull())
         {
-            //Pseudocode：
-            //当背包容量已经满了时
-            //提醒背包已满
+            backpackFullTipGO.GetComponent<AutomaticDisableCanvasTool>().StartAutomaticCor();
         }
         else
         {
@@ -155,6 +163,11 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
                 {
                     if (playerBackpack.SlotList[i].ItemHeld == itemGot)
                     {
+                        if (playerBackpack.SlotList[i].ItemHeld.ItemID == 0)
+                        {
+                            AchievementSystem.Instance.TotalCoinCountIncrease();
+                        }
+                        
                         playerBackpack.SlotList[i].HeldCount++;
                     }
                 }
@@ -173,7 +186,6 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
                 }
             }
         }
-       
       
         UpdatePlayerBackpack();
         playerBackpack.UpdateItemList();
@@ -229,6 +241,24 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
         return null;
     }
 
+    public bool IsFull()
+    {
+        playerBackpack.CurCapacity = 0;
+        
+        for (int i = 0; i < playerBackpack.SlotList.Count; i++)
+        {
+            if (playerBackpack.SlotList[i].ItemHeld != null && playerBackpack.SlotList[i].HeldCount > 0)
+            {
+                playerBackpack.CurCapacity++;
+            }
+        }
+
+        if (playerBackpack.CurCapacity < playerBackpack.Capacity)
+            return false;
+        
+        return true;
+    }
+
     public void SwitchItem(int curIndex,int targetIndex)
     {
         Item temp = playerBackpack.SlotList[curIndex].ItemHeld;
@@ -269,5 +299,25 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
     public void SetItemDesImagePos(Vector3 targetPos)
     {
         itemDesCanvas.transform.position = targetPos;//Sign:是可以直接让transform转为RectTransform的
+    }
+
+    bool packover;
+    
+    public void PackPlayerBackpack()
+    {
+        do
+        {
+            packover = true;
+            
+            for (int i = 0; i < playerBackpack.SlotList.Count - 1; i++)
+            {
+                if (playerBackpack.SlotList[i].HeldCount < playerBackpack.SlotList[i + 1].HeldCount)
+                {
+                    SwitchItem(i,i + 1);
+                    packover = false;
+                }
+            }
+            
+        } while (!packover);
     }
 }

@@ -59,3 +59,6 @@ MonoBehaviour:
     size: 5
   - prefab: {fileID: 3828906882153069683, guid: 6a774aba3d736864b984d80bbe247b78, type: 3}
     size: 5
+  UIPools:
+  - prefab: {fileID: 7698972617598193268, guid: 03969d69b28907145a413984fcd593ce, type: 3}
+    size: 5

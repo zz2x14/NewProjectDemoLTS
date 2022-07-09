@@ -267,6 +267,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 47943f0232b28e5449842887ea2302ae, type: 2}
   invincibleInterval: 0.5
+  rollInterval: 1
   normalColl: {fileID: 1307628065200457680}
   hangColl: {fileID: 1307628065200457676}
   attackPoint01: {fileID: 1307628066568912537}
@@ -888,6 +889,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerHUDCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 7532436390942806047, guid: 9d062cc736be67748b86274041b052f9, type: 3}
+      propertyPath: thisCanvas
+      value: 
+      objectReference: {fileID: 1026518220}
     - target: {fileID: 7532436391674756936, guid: 9d062cc736be67748b86274041b052f9, type: 3}
       propertyPath: m_Name
       value: PlayerHealthBarBg
@@ -897,5 +902,10 @@ PrefabInstance:
 --- !u!224 &1026518221 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7532436390942806016, guid: 9d062cc736be67748b86274041b052f9, type: 3}
+  m_PrefabInstance: {fileID: 7532436390457408717}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &1026518220 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 7532436390942806017, guid: 9d062cc736be67748b86274041b052f9, type: 3}
   m_PrefabInstance: {fileID: 7532436390457408717}
   m_PrefabAsset: {fileID: 0}

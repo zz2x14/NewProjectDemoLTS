@@ -25,7 +25,7 @@ public class Pool
     {
         queue = new Queue<GameObject>();
         
-        for (int i = 0; i < queue.Count; i++)
+        for (int i = 0; i < size; i++)
         {
             queue.Enqueue(Copy());
         }
@@ -33,7 +33,7 @@ public class Pool
 
     private GameObject Copy()
     {
-        GameObject copy = GameObject.Instantiate(prefab, parentTransform);
+        GameObject copy = Object.Instantiate(prefab, parentTransform);
         copy.SetActive(false);
         return copy;
     }

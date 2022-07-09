@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "EnemyState/EnemyHomingState",fileName = "EnemyHomingState")]
 public class EnemyHomingState : EnemyStateBase
 {
+    public override void OnEnter()
+    {
+        base.OnEnter();
+        
+        GameManager.Instance.DepartFromBattleList(enemy,EventArgs.Empty);
+    }
+
     public override void OnGameLogicUpdate()
     {
         base.OnGameLogicUpdate();

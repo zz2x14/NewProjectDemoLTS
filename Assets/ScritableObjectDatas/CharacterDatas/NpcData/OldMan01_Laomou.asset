@@ -23,5 +23,12 @@ MonoBehaviour:
     isForcedTalk: 1
     thisTalkData: {fileID: 11400000, guid: 4dfc7905c83e14b4ba02fe59fce6e698, type: 2}
     matchingChapter: 1
-    isPrecondition: 1
+    isTalkPrecondition: 1
     lockedTalkData: {fileID: 11400000, guid: 4f9d288b8127a144bb53aaac39aa8221, type: 2}
+    isScenePrecondtion: 0
+    caller: {fileID: 0}
+    targetSceneID: 0
+    willPushForwardGameChapter: 0
+    targetChapter: 0
+    willUpdateChapterGuide: 1
+    updatedChapterGuideContent: "\u6751\u91CC\u7684\u6ED1\u5B50\u6709\u4E8B\u60C5\u627E\u6211\uFF0C\u4E0D\u77E5\u9053\u662F\u4EC0\u4E48\u4E8B...\n(\u6ED1\u5B50\u5728\u6751\u5B50\u6700\u4E1C\u4FA7\uFF0C\u6751\u4E1C\u9760\u8FD1\u53F3\u8FB9)"

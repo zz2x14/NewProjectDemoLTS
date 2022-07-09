@@ -47,6 +47,8 @@ public class ItemInWorld : MonoBehaviour
             {
                 PlayerBackpackSystem.Instance.RemoveItemFromBackpack(thisItem);
             }
+
+            if (PlayerBackpackSystem.Instance.IsFull()) return;
             
             gameObject.SetActive(false);
         }

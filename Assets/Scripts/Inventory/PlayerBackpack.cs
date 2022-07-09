@@ -6,8 +6,8 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(menuName = "Inventory/NewPlayerBackpack",fileName = "NewPlayerBackpack")]
 public class PlayerBackpack : ScriptableObject
 {
-    public BackpackData backpack;
-    public int curCapacity { get; set; } = 0;
+    [SerializeField] private BackpackData backpack;
+    public int CurCapacity { get; set; } = 0;
     
     public int Capacity
     {
@@ -31,13 +31,13 @@ public class PlayerBackpack : ScriptableObject
 
     public void UpdateCapacity()
     {
-        curCapacity = 0;
+        CurCapacity = 0;
         
         for (int i = 0; i < backpack.itemSlotsInBackpack.Count; i++)
         {
             if (backpack.itemSlotsInBackpack[i].ItemHeld != null)
             {
-                curCapacity++;
+                CurCapacity++;
             }
         }
     }

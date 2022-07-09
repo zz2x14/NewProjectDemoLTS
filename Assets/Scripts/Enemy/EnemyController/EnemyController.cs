@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
+using MyEventSpace;
 
 public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动画冲突问题 以及动画被打断问题
 {
@@ -181,7 +181,7 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
         
         if (enemyData.baseData.curHealth == 0)
         {
-            Death();
+            EventManager.Instance.EventHandlerTrigger(EventName.OnEnemyDeath,this);
         }
     }
    

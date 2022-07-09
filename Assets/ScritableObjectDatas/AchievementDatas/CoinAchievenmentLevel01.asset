@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf2a93eb2d26714fa88f4a448dbcd81, type: 3}
+  m_Name: CoinAchievenmentLevel01
+  m_EditorClassIdentifier: 
+  baseInfo:
+    achievementID: 1
+    achievementName: "\u7B2C\u4E00\u6876\u91D1"
+    achievementDescription: "\u7B2C\u4E00\u6B21\u83B7\u5F97\u91D1\u5E01\uFF0C\u81F4\u5BCC\u4E4B\u8DEF\uFF01"
+    achievementIcon: {fileID: 21300000, guid: 8723dc84264ab07489dbf543df62b2a5, type: 3}
+    achievementIconBgColor: {r: 1, g: 0.9490196, b: 0, a: 0.8}
+    achievementType: 0
+    isUnlocked: 0
+  countData:
+    targetCount: 1

@@ -10,6 +10,7 @@ public class EnemyHurtState : EnemyStateBase
         base.OnEnter();
         
         //enemy.DontCollidePlayer();
+        GameManager.Instance.AddIntoBattleList(enemy);
         
         enemy.SetRbVelocity(Vector2.zero);
     }

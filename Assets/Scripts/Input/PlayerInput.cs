@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
@@ -100,6 +101,8 @@ public class PlayerInput : MonoBehaviour//Sign:更新模式会影响到按键判
     //PlayerMenu
     public bool IsMenuSwitchKeyPressed => playerInputActions.PlayerMenu.Switch.WasPressedThisFrame();
     public bool IsDropItemKeyPressed => playerInputActions.PlayerMenu.DropItem.WasPressedThisFrame();
+    public bool IsSwitchNextKeyPressed => playerInputActions.PlayerMenu.SwitchNext.WasPressedThisFrame();
+    public bool IsSwitchLastKeyPressed => playerInputActions.PlayerMenu.SwitchLast.WasPressedThisFrame();
 
     private void OnEnable()
    {
@@ -116,25 +119,25 @@ public class PlayerInput : MonoBehaviour//Sign:更新模式会影响到按键判
        // guideUIList.Clear();
    }
 
+    public void DisableAllInput()
+    {
+        playerInputActions.Disable();
+    }
+    public void EnableAllInput()
+    {
+        playerInputActions.Enable();
+    }
      
      public void EnableOneInput(InputAction inputAction) => inputAction.Enable();
      public void DisableOneInput(InputAction inputAction) => inputAction.Disable();
     
+     //TimelineSignal
+     public void EnableMoveInput() => EnableOneInput(playerInputActions.Gameplay.AxisXMove);
      public void EnableJumpInput() => EnableOneInput(playerInputActions.Gameplay.Jump);
      public void EnableClimbUpInput() => EnableOneInput(playerInputActions.Gameplay.Climb);
      public void EnableFallInput() => EnableOneInput(playerInputActions.Gameplay.Fall);
      public void EnableAttackInput() => EnableOneInput(playerInputActions.Gameplay.Attack);
 
-
-     public void DisableAllInput()
-     {
-         playerInputActions.Disable();
-     }
-
-     public void EnableAllInput()
-     {
-         playerInputActions.Enable();
-     }
 
      public void EnableGameplayInput()
      {
@@ -152,25 +155,20 @@ public class PlayerInput : MonoBehaviour//Sign:更新模式会影响到按键判
      }
      public void DisableSceneTeleportInput()
      {
+         EnableAllInput();
          playerInputActions.SceneTeleport.Disable();
      }
      
-     public void EnableOnlyMoveInput()
-     {
-         DisableAllInput();
-         playerInputActions.Gameplay.AxisXMove.Enable();
-     }
 
      public void EnbaleOnlyTalkInput()
      {
          DisableAllInput();
          playerInputActions.Talk.Enable();
      }
-
      public void DisableTalkInput()
      {
+         EnableAllInput();
          playerInputActions.Talk.Disable();
-         EnableGameplayInput();
      }
 
 

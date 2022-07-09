@@ -24,6 +24,8 @@ public class EnemyGeneralChaseState : EnemyGeneralStateBase
     {
         base.OnEnter();
         
+        GameManager.Instance.AddIntoBattleList(enemy);
+        
         startTime = Time.time;
     }
 

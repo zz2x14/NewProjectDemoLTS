@@ -10,6 +10,8 @@ public class EnemyGeneralShootState : EnemyShootBaseState
         base.OnEnter();
         
         enemyShoot.FaceToPlayer();
+        
+        GameManager.Instance.AddIntoBattleList(enemy);
     }
 
     public override void OnGameLogicUpdate()

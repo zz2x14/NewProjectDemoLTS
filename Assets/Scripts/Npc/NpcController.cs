@@ -151,6 +151,13 @@ public class NpcController : MonoBehaviour
         curTalkContainer.UnlockTargerScene(GetComponent<UnlockSceneByTalk>());
     }
 
+    public void UpdateChapterContent()
+    {
+        if (!curTalkContainer.willUpdateChapterGuide) return;
+        
+         ChapterGuideContentUI.Instance.UpdateChapterGuideContent(curTalkContainer.updatedChapterGuideContent);
+    }
+
     public void PushForwardGameChapter()
     {
         if(!curTalkContainer.willPushForwardGameChapter) return;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.InputSystem;
+using MyEventSpace;
 
 public class EnemyStateMachine : StateMachine
 {
@@ -28,13 +29,13 @@ public class EnemyStateMachine : StateMachine
     private void OnEnable()
     {
         enemyController.OnHurt += ToHurtState;
-        enemyController.OnDeath += ToDeathState;
+        EventManager.Instance.AddEventHandlerListener(EventName.OnEnemyDeath,ToDeathState);
     }
 
     private void OnDisable()
     {
         enemyController.OnHurt -= ToHurtState;
-        enemyController.OnDeath -= ToDeathState;
+        EventManager.Instance.RemoveEventHandlerListener(EventName.OnEnemyDeath,ToDeathState);
     }
 
     private void Start()
@@ -76,7 +77,7 @@ public class EnemyStateMachine : StateMachine
         SwitchState(typeof(EnemyHurtState));
     }
 
-    private void ToDeathState()
+    private void ToDeathState(object sender,EventArgs e)
     {
         SwitchState(typeof(EnemyDeathState));
     }

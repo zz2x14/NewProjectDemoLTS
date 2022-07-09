@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EnemyGeneral : EnemyController
 {
-    
-    
     protected override void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;

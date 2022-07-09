@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3783766657752792885}
   - component: {fileID: 6570509373761649873}
   - component: {fileID: 3783766657752792887}
+  - component: {fileID: -7429334918864756552}
   m_Layer: 22
   m_Name: CoinInWorld
   m_TagString: Untagged
@@ -158,3 +159,17 @@ MonoBehaviour:
   testReduce: 0
   itemMinForce: {x: -200, y: 100}
   itemMaxForce: {x: 200, y: 200}
+--- !u!114 &-7429334918864756552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3783766657752792890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2946eb10bc5ccc40b1a60745f1642ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTime: 5
+  needDestroy: 0

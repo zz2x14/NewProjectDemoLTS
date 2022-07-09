@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerHealthBar : MonoBehaviour
 {
+    [SerializeField] private Canvas thisCanvas;
     [SerializeField] private Image healthBar;
     [SerializeField] private Image healthBarEffect;
     [SerializeField] private float decreaseSpeed;
@@ -72,6 +73,16 @@ public class PlayerHealthBar : MonoBehaviour
             
             yield return null;
         }
+    }
+
+    public void EnableHealthHUDCanvas()
+    {
+        thisCanvas.enabled = true;
+    }
+
+    public void DisableHeatlthHUDCanvas()
+    {
+        thisCanvas.enabled = false;
     }
     
 }

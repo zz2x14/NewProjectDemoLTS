@@ -1,17 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(menuName = "PlayerState/PlayerRunState",fileName = "PlayerRunState")]
 public class PlayerRunState : PlayerStateBase
 {
-    [SerializeField] private float runSpeed;
+    [SerializeField] private string battleRunAnimName;
+    [SerializeField] private float noBattleRunSpeed;
+    [SerializeField] private float battleRunSpeed;
     [SerializeField] private float acceleration;
+
+    private float runSpeed;
+    private int battleRunAnimID;
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+        battleRunAnimID = Animator.StringToHash(battleRunAnimName);
+    }
 
     public override void OnEnter()
     {
-        base.OnEnter();
-
+        stateStarTime = Time.time;
+        
+        if (GameManager.Instance._BattleState == PlayerBattleState.InBattle)
+        {
+            runSpeed = battleRunSpeed;
+            animator.CrossFade(battleRunAnimID,0.1f);
+        }
+        else
+        {
+            runSpeed = noBattleRunSpeed;
+            animator.CrossFade(animID,0.1f);
+        }
+        
         player.JumpCount = 2;
 
         curSpeed = 0f;
@@ -32,7 +56,7 @@ public class PlayerRunState : PlayerStateBase
             playerStateMachine.SwitchState(typeof(PlayerShootState));
         }
         
-        if (player.CanRoll && input.IsRollKeyPressed && playerAblity.RollUnlocked)
+        if (player.CanRoll && player.RollCDOver && input.IsRollKeyPressed && playerAblity.RollUnlocked)
         {
             playerStateMachine.SwitchState(typeof(PlayerRollState));
         }
@@ -62,7 +86,5 @@ public class PlayerRunState : PlayerStateBase
 
         player.Move(curSpeed);
     }
-
-    
     
 }

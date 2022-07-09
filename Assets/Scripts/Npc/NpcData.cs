@@ -51,12 +51,15 @@ public class NpcTalkDataContainer
 
     [Space] 
     public bool isScenePrecondtion;
-    public LockedPortalCaller caller;
     public int targetSceneID;
 
     [Space] 
     public bool willPushForwardGameChapter;
     public GameChapter targetChapter;
+
+    [Space] 
+    public bool willUpdateChapterGuide;
+    [TextArea] public string updatedChapterGuideContent;
 
     public void UnlockTargetTalk()
     {

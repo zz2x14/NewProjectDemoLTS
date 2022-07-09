@@ -8,6 +8,12 @@ public class BossSummonState : BossSummonedStateBase
     private bool summonOver =>
         stateDuration >= stateMachine.Anim.GetCurrentAnimatorStateInfo(0).length * bossSummon.SummonedCount;
 
+    public override void OnEnter()
+    {
+        base.OnEnter();
+        
+        GameManager.Instance.AddIntoBattleList(enemy);
+    }
 
     public override void OnGameLogicUpdate()
     {

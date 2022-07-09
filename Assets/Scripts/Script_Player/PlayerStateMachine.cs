@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using MyEventSpace;
 using UnityEngine.InputSystem;
 
 public class PlayerStateMachine : StateMachine
@@ -26,7 +27,7 @@ public class PlayerStateMachine : StateMachine
     private void OnEnable()
     {
         playerController.OnHurt += ToHurtState;
-        playerController.OnDeath += ToDeathState;
+        EventManager.Instance.AddEventHandlerListener(EventName.OnPlayerDeath,ToDeathState);
         playerController.OnForced += ToForcedState;
         playerController.OnTalk += ToTalkState;
     }
@@ -34,9 +35,9 @@ public class PlayerStateMachine : StateMachine
     private void OnDisable()
     {
         playerController.OnHurt -= ToHurtState;
-        playerController.OnDeath -= ToDeathState; 
+        EventManager.Instance.RemoveEventHandlerListener(EventName.OnPlayerDeath,ToDeathState);
         playerController.OnForced -= ToForcedState;
-        playerController.OnTalk -= ToTalkState;
+        playerController.OnTalk -= ToTalkState; 
     }
 
     private void Start()
@@ -88,7 +89,7 @@ public class PlayerStateMachine : StateMachine
         SwitchState(typeof(PlayerHurtState));
     }
 
-    private void ToDeathState()
+    private void ToDeathState(object sender,EventArgs e )
     {
         SwitchState(typeof(PlayerDeathState));
     }

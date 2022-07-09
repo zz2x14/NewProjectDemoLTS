@@ -1,9 +1,8 @@
  using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+ using UnityEngine;
  using UnityEngine.SceneManagement;
- using System;
  using TMPro;
+ using UnityEngine.Events;
  using UnityEngine.UI;
 
 
@@ -21,14 +20,11 @@ using UnityEngine;
 
      private Coroutine teleportCor;
 
-     private PlayerInput playerInput;
-     private PlayerController playerController;
+     // private PlayerInput playerInput;
+     // private PlayerController playerController;
 
-     private void Start()
-     {
-         playerInput = FindObjectOfType<PlayerInput>();
-         playerController = playerInput.transform.GetComponent<PlayerController>();
-     }
+     private const string TEXT_GETANEKEYTIP = "按任意键继续...";
+     private const string TEXT_LOADOVERTIP = "/自动保存成功/";
 
      public void Teleport(int sceneID)
      {
@@ -37,9 +33,10 @@ using UnityEngine;
  
      IEnumerator TeleportCor(int sceneID)
      {
-         playerInput.EnableSceneTeleportInput();
+         ComponentProvider.Instance.PlayerInputAvatar.EnableSceneTeleportInput();
          
-         playerController.SavePlayerData();
+         ComponentProvider.Instance.PlayerAvatar.SavePlayerData();
+         ComponentProvider.Instance.PlayerAvatar.DisableHealthBar();
          
          progressValue = 0f;
          
@@ -74,16 +71,17 @@ using UnityEngine;
              
              if ( async.progress >= 0.9f)
              {
-                 progressText.text = "按任意键继续...";
-                 saveTipText.text = "/自动保存成功/";
+                 progressText.text = TEXT_GETANEKEYTIP;
+                 saveTipText.text = TEXT_LOADOVERTIP ;
                  saveTipIcon.SetActive(true);
                  saveTipText.gameObject.SetActive(true);
                
-                 if (playerInput.IsSceneTeleportConfirmKeyPressed)
+                 if (ComponentProvider.Instance.PlayerInputAvatar.IsSceneTeleportConfirmKeyPressed)
                  {
-                     SetPlayerPos();
+                     SetPlayerPosToZero();
                      
-                     playerController.LoadPlayerData();
+                     ComponentProvider.Instance.PlayerAvatar.LoadPlayerData();
+                     ComponentProvider.Instance.PlayerAvatar.EnableHealthBar();
                      
                      bgCanvas.enabled = false;
                      progressCanvas.enabled = false;
@@ -94,8 +92,8 @@ using UnityEngine;
              
                      saveTipIcon.SetActive(false);
                      
-                     playerInput.DisableSceneTeleportInput();
-                     playerInput.EnableGameplayInput();
+                     ComponentProvider.Instance.PlayerInputAvatar.DisableSceneTeleportInput();
+                     ComponentProvider.Instance.PlayerInputAvatar.EnableGameplayInput();
                  }
              }
 
@@ -109,11 +107,8 @@ using UnityEngine;
 
      }
 
-     public void SetPlayerPos()
+     public void SetPlayerPosToZero()
      {
-         playerInput.transform.position = Vector3.zero;
+         ComponentProvider.Instance.PlayerPos.position = Vector3.zero;
      }
-     
-
-
  }

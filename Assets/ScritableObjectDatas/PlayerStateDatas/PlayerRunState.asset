@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: PlayerRunState
   m_EditorClassIdentifier: 
   animName: PlayerRun
-  runSpeed: 5
+  battleRunAnimName: PlayerRunInBattle
+  noBattleRunSpeed: 5
+  battleRunSpeed: 6
   acceleration: 50

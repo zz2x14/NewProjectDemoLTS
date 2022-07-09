@@ -10,7 +10,6 @@ public class TimelineTrigger : MonoBehaviour
 
     private float startTime;
     
-
     private void Awake()
     {
         director = GetComponent<PlayableDirector>();
@@ -30,7 +29,11 @@ public class TimelineTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        transform.GetChild(0).gameObject.SetActive(true);
+        
         director.Play();
         StartCoroutine(nameof(WaitPlayOverToDestroy));
     }
+    
+    
 }

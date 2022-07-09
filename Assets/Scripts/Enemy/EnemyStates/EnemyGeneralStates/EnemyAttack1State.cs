@@ -12,6 +12,8 @@ public class EnemyAttack1State : EnemyGeneralStateBase
         base.OnEnter();
         
         enemy.SetRbVelocity(Vector2.zero);
+        
+        GameManager.Instance.AddIntoBattleList(enemy);
     }
 
     public override void OnGameLogicUpdate()
