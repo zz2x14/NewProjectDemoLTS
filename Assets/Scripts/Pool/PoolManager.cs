@@ -10,6 +10,7 @@ public class PoolManager : PersistentSingletonTool<PoolManager>
 
     public Pool[] enemyBulletPools;
     public Pool[] playerBulletPools;
+    public Pool[] trapBulletPools;
     public Pool[] enemyPools;
     public Pool[] itemPools;
     public Pool[] UIPools;
@@ -22,9 +23,9 @@ public class PoolManager : PersistentSingletonTool<PoolManager>
         
         InitializePools(enemyBulletPools);
         InitializePools(playerBulletPools);
+        InitializePools(trapBulletPools);
         InitializePools(enemyPools);
         InitializePools(itemPools);
-        //InitializePools(UIPools);
         InitializeDamageValueUIPools(UIPools);
     }
     
@@ -33,6 +34,7 @@ public class PoolManager : PersistentSingletonTool<PoolManager>
     {
         CheckPoolSize(enemyBulletPools);
         CheckPoolSize(playerBulletPools);
+        CheckPoolSize(trapBulletPools);
         CheckPoolSize(enemyPools);
         CheckPoolSize(itemPools);
         CheckPoolSize(UIPools);

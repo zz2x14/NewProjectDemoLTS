@@ -42,12 +42,14 @@ public class ItemSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
             if (PlayerBackpackSystem.Instance.IsDropKeyPressed)
             {
                 PlayerBackpackSystem.Instance.RemoveItemFromBackpack(PlayerBackpackSystem.Instance.GetItemInBackpack(SiblingIndex));
-
-                if (itemIconImage.sprite == null)
-                {
-                    itemSlotImage.color = defaultColor;
-                    ItemDescriptionUI.Instance.ClearItemDes();
-                }
+            }
+            
+            if (itemIconImage.sprite == null)
+            {
+                itemSlotImage.color = defaultColor;
+                
+                PlayerBackpackSystem.Instance.DisableItemDesImage();
+                ItemDescriptionUI.Instance.ClearItemDes();
             }
         }
     }
@@ -68,7 +70,7 @@ public class ItemSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
             PlayerBackpackSystem.Instance.EnableItemDesImage();
         }
     }
-
+    
     public void OnPointerExit(PointerEventData eventData)
     {
         itemSlotImage.color = defaultColor;
@@ -76,4 +78,6 @@ public class ItemSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
         PlayerBackpackSystem.Instance.DisableItemDesImage();
         ItemDescriptionUI.Instance.ClearItemDes();
     }
+
+   
 }

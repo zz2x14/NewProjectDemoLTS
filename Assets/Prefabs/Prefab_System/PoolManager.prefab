@@ -51,6 +51,11 @@ MonoBehaviour:
   playerBulletPools:
   - prefab: {fileID: 4067718611587494796, guid: 1bd73e30552e78548a7453fd9c2ecdc1, type: 3}
     size: 3
+  trapBulletPools:
+  - prefab: {fileID: 190675103210147484, guid: 28aa5abdd4a73bb4884ec5e25466f45f, type: 3}
+    size: 1
+  - prefab: {fileID: 4920970825166053065, guid: af915104f0b7d9c4ba54399fb5a167d0, type: 3}
+    size: 9
   enemyPools:
   - prefab: {fileID: 4983766040459577310, guid: 7a1db3b666178bd49a7798f7c6269299, type: 3}
     size: 3

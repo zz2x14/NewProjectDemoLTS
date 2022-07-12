@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using MyEventSpace;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
+public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOverTime
 {
     [SerializeField] private PlayerData playerData;
     
@@ -24,7 +25,7 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
     [SerializeField] private Transform attackPoint03;
     [SerializeField] private float attackRange01;
     [SerializeField] private float attackRange02;
-    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask targetLayer;
 
     [Header("射击")] 
     [SerializeField] private float shootInterval;
@@ -72,6 +73,8 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
     public float MaxHealth => playerData.baseData.maxHealth;
 
     private PlayerHealthBar healthBar;
+
+    private Coroutine takeDamageOverTimeCor;
     
     private void Awake()
     {
@@ -249,20 +252,20 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
 
     public void Attack1()
     {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint01.position, attackRange01, enemyLayer);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint01.position, attackRange01, targetLayer);
 
-        if (hitEnemies.Length > 0)
+        if (hits.Length > 0)
         {
-            foreach (var enemy in hitEnemies)
+            foreach (var hit in hits)
             {
-                enemy.GetComponent<EnemyController>().TakenDamage(playerData.baseData.attackDamage);
-                UIManager.Instance.ShowDamageValue(enemy.transform.position,playerData.baseData.attackDamage);
+                hit.GetComponent<EnemyController>().TakenDamage(playerData.baseData.attackDamage);
+                UIManager.Instance.ShowDamageValue(hit.transform.position,playerData.baseData.attackDamage);
             }
         }
     }
     public void Attack2()
     {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint01.position, attackRange01, enemyLayer);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint01.position, attackRange01, targetLayer);
 
         if (hitEnemies.Length > 0)
         {
@@ -377,5 +380,23 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk
         healthBar.DisableHeatlthHUDCanvas();
     }
 
-    
+    public void TakeDamageOverTime(float duration,float damage)
+    {
+        if (takeDamageOverTimeCor != null)
+        {
+            StopCoroutine(takeDamageOverTimeCor);
+        }
+        takeDamageOverTimeCor = StartCoroutine(TakeDamageOverTimeCor(duration,damage));
+    }
+    public IEnumerator TakeDamageOverTimeCor(float duration,float damage)
+    {
+        float t = 0;
+        while (t < duration)
+        {
+            t += invincibleInterval;
+            TakenDamage(damage);
+            yield return invincibleCDWFS;
+        }
+       
+    }
 }

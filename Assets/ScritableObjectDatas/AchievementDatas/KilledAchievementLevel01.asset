@@ -16,9 +16,11 @@ MonoBehaviour:
     achievementID: 0
     achievementName: "\u5C0F\u8BD5\u725B\u5200"
     achievementDescription: "\u7B2C\u4E00\u6B21\u6253\u8D25\u654C\u4EBA\uFF0C \u624B\u90FD\u6296\u54AF~"
+    achievementTargetDes: "\u7D2F\u8BA1\u51FB\u6740\u654C\u4EBA\u6570\u91CF\u8FBE\u52301\u540D"
     achievementIcon: {fileID: 21300000, guid: ba00cd2a1526d084d9bbe5b88b0f5004, type: 3}
     achievementIconBgColor: {r: 0, g: 0, b: 0, a: 0.7490196}
     achievementType: 0
     isUnlocked: 0
   countData:
     targetCount: 1
+    countAcType: 0

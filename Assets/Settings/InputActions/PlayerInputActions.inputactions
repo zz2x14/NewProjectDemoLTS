@@ -292,16 +292,16 @@
                 {
                     "name": "SwitchNext",
                     "type": "Button",
-                    "id": "3f09657d-b77c-45dc-8952-197945ced154",
+                    "id": "38cbe177-6a01-48e9-b024-82345fd538fb",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SwitchLast",
+                    "name": "SwithLast",
                     "type": "Button",
-                    "id": "38cbe177-6a01-48e9-b024-82345fd538fb",
+                    "id": "3f09657d-b77c-45dc-8952-197945ced154",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -338,7 +338,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "SwitchNext",
+                    "action": "SwithLast",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -349,7 +349,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "SwitchLast",
+                    "action": "SwitchNext",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

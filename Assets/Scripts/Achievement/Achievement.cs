@@ -15,6 +15,7 @@ public class Achievement : ScriptableObject
     public int AchievementID => baseInfo.achievementID;
     public string AchievementName => baseInfo.achievementName;
     public string AchievementDes => baseInfo.achievementDescription;
+    public string AchievementTargetDes => baseInfo.achievementTargetDes;
     public Sprite AchievemetnIcon => baseInfo.achievementIcon;
     public Color AchievementIconBgColor => baseInfo.achievementIconBgColor;
     public AchievementType AchievementType => baseInfo.achievementType;
@@ -31,6 +32,7 @@ public class AchievementBaseData
     public int achievementID;
     public string achievementName;
     [TextArea] public string achievementDescription;
+    [TextArea] public string achievementTargetDes;
     public Sprite achievementIcon;
     public Color achievementIconBgColor;
     public AchievementType achievementType;

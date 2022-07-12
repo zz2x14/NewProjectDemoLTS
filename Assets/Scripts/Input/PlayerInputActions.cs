@@ -314,16 +314,16 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""SwitchNext"",
                     ""type"": ""Button"",
-                    ""id"": ""3f09657d-b77c-45dc-8952-197945ced154"",
+                    ""id"": ""38cbe177-6a01-48e9-b024-82345fd538fb"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SwitchLast"",
+                    ""name"": ""SwithLast"",
                     ""type"": ""Button"",
-                    ""id"": ""38cbe177-6a01-48e9-b024-82345fd538fb"",
+                    ""id"": ""3f09657d-b77c-45dc-8952-197945ced154"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -360,7 +360,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
-                    ""action"": ""SwitchNext"",
+                    ""action"": ""SwithLast"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -371,7 +371,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
-                    ""action"": ""SwitchLast"",
+                    ""action"": ""SwitchNext"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -419,7 +419,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_PlayerMenu_Switch = m_PlayerMenu.FindAction("Switch", throwIfNotFound: true);
         m_PlayerMenu_DropItem = m_PlayerMenu.FindAction("DropItem", throwIfNotFound: true);
         m_PlayerMenu_SwitchNext = m_PlayerMenu.FindAction("SwitchNext", throwIfNotFound: true);
-        m_PlayerMenu_SwitchLast = m_PlayerMenu.FindAction("SwitchLast", throwIfNotFound: true);
+        m_PlayerMenu_SwithLast = m_PlayerMenu.FindAction("SwithLast", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -645,7 +645,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMenu_Switch;
     private readonly InputAction m_PlayerMenu_DropItem;
     private readonly InputAction m_PlayerMenu_SwitchNext;
-    private readonly InputAction m_PlayerMenu_SwitchLast;
+    private readonly InputAction m_PlayerMenu_SwithLast;
     public struct PlayerMenuActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -653,7 +653,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Switch => m_Wrapper.m_PlayerMenu_Switch;
         public InputAction @DropItem => m_Wrapper.m_PlayerMenu_DropItem;
         public InputAction @SwitchNext => m_Wrapper.m_PlayerMenu_SwitchNext;
-        public InputAction @SwitchLast => m_Wrapper.m_PlayerMenu_SwitchLast;
+        public InputAction @SwithLast => m_Wrapper.m_PlayerMenu_SwithLast;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMenu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -672,9 +672,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @SwitchNext.started -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitchNext;
                 @SwitchNext.performed -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitchNext;
                 @SwitchNext.canceled -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitchNext;
-                @SwitchLast.started -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitchLast;
-                @SwitchLast.performed -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitchLast;
-                @SwitchLast.canceled -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitchLast;
+                @SwithLast.started -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwithLast;
+                @SwithLast.performed -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwithLast;
+                @SwithLast.canceled -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwithLast;
             }
             m_Wrapper.m_PlayerMenuActionsCallbackInterface = instance;
             if (instance != null)
@@ -688,9 +688,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @SwitchNext.started += instance.OnSwitchNext;
                 @SwitchNext.performed += instance.OnSwitchNext;
                 @SwitchNext.canceled += instance.OnSwitchNext;
-                @SwitchLast.started += instance.OnSwitchLast;
-                @SwitchLast.performed += instance.OnSwitchLast;
-                @SwitchLast.canceled += instance.OnSwitchLast;
+                @SwithLast.started += instance.OnSwithLast;
+                @SwithLast.performed += instance.OnSwithLast;
+                @SwithLast.canceled += instance.OnSwithLast;
             }
         }
     }
@@ -729,6 +729,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnSwitch(InputAction.CallbackContext context);
         void OnDropItem(InputAction.CallbackContext context);
         void OnSwitchNext(InputAction.CallbackContext context);
-        void OnSwitchLast(InputAction.CallbackContext context);
+        void OnSwithLast(InputAction.CallbackContext context);
     }
 }

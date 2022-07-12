@@ -1,17 +1,18 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using MyEventSpace;
 
-namespace MyEventSpace
+public static class EventName
+{
+    public const string OnEnemyDeath = nameof(EventManager.OnEnemyDeath);
+    public const string OnPlayerDeath = nameof(EventManager.OnPlayerDeath);
+    public const string OnPlayerMenuOpen = nameof(EventManager.OnPlayerMenuOpen);
+}
+
+namespace MyEventSpace// TODO:做到外部调用不到委托
 {
     public delegate void EventHandler(object sender, EventArgs e);
-    
-    public static class EventName
-    {
-        public const string OnEnemyDeath = nameof(EventManager.OnEnemyDeath);
-        public const string OnPlayerDeath = nameof(EventManager.OnPlayerDeath);
-    }
-    
     
     [DefaultExecutionOrder(205)]
     public class EventManager : PersistentSingletonTool<EventManager>
@@ -20,6 +21,7 @@ namespace MyEventSpace
         
         internal EventHandler OnEnemyDeath;
         internal EventHandler OnPlayerDeath; //对委托做一个保护
+        internal EventHandler OnPlayerMenuOpen;
     
         private void OnEnable()
         {
@@ -30,11 +32,12 @@ namespace MyEventSpace
         {
             ClearEventHandlerDic();
         }
-    
+
         private void InitializeEventDic()
         {
             eventDic.Add(EventName.OnEnemyDeath,OnEnemyDeath);
             eventDic.Add(EventName.OnPlayerDeath,OnPlayerDeath);
+            eventDic.Add(EventName.OnPlayerMenuOpen,OnPlayerMenuOpen);
         }
     
         public void AddEventHandlerListener(string eventName, EventHandler handler)

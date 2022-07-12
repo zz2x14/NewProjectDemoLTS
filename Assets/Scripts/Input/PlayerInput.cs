@@ -102,7 +102,7 @@ public class PlayerInput : MonoBehaviour//Sign:更新模式会影响到按键判
     public bool IsMenuSwitchKeyPressed => playerInputActions.PlayerMenu.Switch.WasPressedThisFrame();
     public bool IsDropItemKeyPressed => playerInputActions.PlayerMenu.DropItem.WasPressedThisFrame();
     public bool IsSwitchNextKeyPressed => playerInputActions.PlayerMenu.SwitchNext.WasPressedThisFrame();
-    public bool IsSwitchLastKeyPressed => playerInputActions.PlayerMenu.SwitchLast.WasPressedThisFrame();
+    public bool IsSwitchLastKeyPressed => playerInputActions.PlayerMenu.SwithLast.WasPressedThisFrame();
 
     private void OnEnable()
    {
@@ -159,7 +159,6 @@ public class PlayerInput : MonoBehaviour//Sign:更新模式会影响到按键判
          playerInputActions.SceneTeleport.Disable();
      }
      
-
      public void EnbaleOnlyTalkInput()
      {
          DisableAllInput();
@@ -171,7 +170,13 @@ public class PlayerInput : MonoBehaviour//Sign:更新模式会影响到按键判
          playerInputActions.Talk.Disable();
      }
 
-
-     
+     public void EnablePlayerMenuInput()
+     {
+         playerInputActions.PlayerMenu.Enable();
+     }
+     public void DisablePlayerMenuInput()
+     {
+         playerInputActions.PlayerMenu.Disable();
+     }
      
 }

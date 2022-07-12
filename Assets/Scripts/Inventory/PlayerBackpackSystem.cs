@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MyEventSpace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,7 +14,6 @@ using UnityEngine.UI;
 public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem>
 {
     private Canvas itemDesCanvas;
-    private Scrollbar backpackScrollBar;
     private Button packButton;
     
     private GameObject backpackFullTipGO;
@@ -25,8 +25,6 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
     [Header("ItemDes出现位置偏差")]
     [SerializeField] private Vector2 itemDesOffset;
     
-    private bool isOpen;
-
     private bool sortOver;
 
     private Color havedColor;
@@ -46,7 +44,6 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
         base.Awake();
         
         itemDesCanvas = GameObject.Find("ItemDescriptionDynamicCanvas").GetComponent<Canvas>();
-        backpackScrollBar = GameObject.Find("ScrollbarVertical").GetComponentInChildren<Scrollbar>();
         packButton = GameObject.Find("PackButton").GetComponent<Button>();
         
         backpackFullTipGO = GameObject.Find("BackpackFullTipContainer");
@@ -63,19 +60,15 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
     private void OnEnable()
     {
         packButton.onClick.AddListener(PackPlayerBackpack);
+        
+        EventManager.Instance.AddEventHandlerListener(EventName.OnPlayerMenuOpen,OpenAndCloseBackpack);
     }
 
     private void OnDisable()
     {
         packButton.onClick.RemoveAllListeners();
-    }
-
-    private void Update()
-    {
-        if (ComponentProvider.Instance.PlayerInputAvatar.IsMenuSwitchKeyPressed && GameManager.Instance._GameChapter != GameChapter.ZeroChapter) 
-        {
-            OpenAndCloseBackpack();
-        }
+        
+        EventManager.Instance.RemoveEventHandlerListener(EventName.OnPlayerMenuOpen,OpenAndCloseBackpack);
     }
 
     private void InitializeSlotItemsGO()
@@ -87,32 +80,12 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
         }
     }
 
-    public void OpenAndCloseBackpack()
+    public void OpenAndCloseBackpack(object sender,EventArgs e)
     {
-        isOpen = !isOpen;
-        PlayerMenuSystem.Instance.SwitchPlayerMenu(isOpen);
-        PlayerMenuSystem.Instance.EnableTargetCanvas(0);
-        
-        //TODO:暂时不直接显示第一个物品的信息
-        //ItemDescriptionUI.Instance.ShowTopItemDes(GetTopItemInBackpack());
+        if (!ComponentProvider.Instance.PlayerInputAvatar.IsMenuSwitchKeyPressed 
+            || GameManager.Instance._GameChapter == GameChapter.ZeroChapter) return;
+            
         ItemDescriptionUI.Instance.ClearItemDes();
-        
-        if (isOpen)
-        {
-            backpackScrollBar.value = 1;
-            
-            ComponentProvider.Instance.PlayerInputAvatar.DisableGamePlayInput();
-            
-            Time.timeScale = 0;
-            GameManager.Instance._GameState = GameState.Paused;
-        }
-        else
-        {
-            ComponentProvider.Instance.PlayerInputAvatar.EnableGameplayInput();
-
-            Time.timeScale = 1;
-            GameManager.Instance._GameState = GameState.Playing;
-        }
         
         UpdatePlayerBackpack();
         playerBackpack.UpdateCapacity();

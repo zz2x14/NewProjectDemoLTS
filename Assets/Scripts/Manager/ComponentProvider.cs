@@ -16,5 +16,6 @@ public class ComponentProvider : PersistentSingletonTool<ComponentProvider>//TOD
         PlayerAvatar = FindObjectOfType<PlayerController>();
         PlayerInputAvatar = PlayerAvatar.GetComponent<PlayerInput>();
         PlayerPos = PlayerAvatar.transform;
+        
     }
 }

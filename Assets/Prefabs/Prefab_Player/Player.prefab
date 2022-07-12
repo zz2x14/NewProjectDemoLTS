@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 47943f0232b28e5449842887ea2302ae, type: 2}
-  invincibleInterval: 0.5
+  invincibleInterval: 1
   rollInterval: 1
   normalColl: {fileID: 1307628065200457680}
   hangColl: {fileID: 1307628065200457676}
@@ -275,7 +275,7 @@ MonoBehaviour:
   attackPoint03: {fileID: 0}
   attackRange01: 0.85
   attackRange02: 0.5
-  enemyLayer:
+  targetLayer:
     serializedVersion: 2
     m_Bits: 8192
   shootInterval: 2
@@ -438,7 +438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundLayer:
     serializedVersion: 2
-    m_Bits: 1664
+    m_Bits: 8390272
   radius: 0.1
 --- !u!1 &1307628066235521019
 GameObject:

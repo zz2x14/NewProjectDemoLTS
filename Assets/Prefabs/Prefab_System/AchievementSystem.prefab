@@ -26,7 +26,7 @@ RectTransform:
   m_GameObject: {fileID: 2027277408862901925}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 8721165148097400301}
   - {fileID: 8721165148232468489}
@@ -105,12 +105,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7810196747973a54a96a6b4b9cc74a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  achievementSlotList: []
+  allAchievementList:
+  - {fileID: 11400000, guid: b836d04bb6f480e46b1f7a303565b257, type: 2}
+  - {fileID: 11400000, guid: 3696234d682528240a14258a5b005761, type: 2}
+  - {fileID: 11400000, guid: adc757449bcce2e4ea3352c277a4e21c, type: 2}
   UIShowCanvas: {fileID: 8721165146861538678}
   achievementIconBg: {fileID: 8721165148155202775}
   achievementIcon: {fileID: 8721165147285938743}
   curUINameText: {fileID: 8721165147707814476}
   curUIDesText: {fileID: 8721165148005955740}
-  curEnemyKilledCount: 0
+  totalEnemyKilledCount: 0
   killedAcList:
   - {fileID: 11400000, guid: b836d04bb6f480e46b1f7a303565b257, type: 2}
   totalCoinGainedCount: 0
