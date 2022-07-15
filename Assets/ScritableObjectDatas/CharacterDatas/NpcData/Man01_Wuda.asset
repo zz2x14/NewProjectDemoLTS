@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a50fb949eac80644a8a8d68f62d9946e, type: 3}
+  m_Name: Man01_Wuda
+  m_EditorClassIdentifier: 
+  npcBaseData:
+    npcName: "\u6B66\u5927"
+    npcID: 2
+    npcPortrait: {fileID: 21300000, guid: 4f373fff39ea7414f83ede62e89b018e, type: 3}
+  containers:
+  - talkSceneName: "\u6CD5\u5E08\u534F\u4F1A"
+    talkID: 3
+    isTalked: 0
+    isForcedTalk: 1
+    thisTalkData: {fileID: 11400000, guid: 97299dc7a78d497499d17f8ff2975752, type: 2}
+    matchingChapter: 3
+    isTalkPrecondition: 1
+    lockedTalkData: {fileID: 11400000, guid: b15472c8b5ee6bb4bb9925a4d44c2b7a, type: 2}
+    isScenePrecondtion: 0
+    targetSceneID: 0
+    willPushForwardGameChapter: 0
+    targetChapter: 0
+    willUpdateChapterGuide: 0
+    updatedChapterGuideContent: "\u91CE\u5916\u5F52\u6765\uFF0C\u6709\u60CA\u65E0\u9669\u3002\n\u4E3A\u4E86\u4E4B\u540E\u7684\u63A2\u9669\u80FD\u6D3B\u7740\u56DE\u6765\uFF0C\u5728\u6B66\u5927\u7684\u4ECB\u7ECD\u4E0B\u524D\u5916\u9A7B\u624E\u5728\u6751\u897F\u5916\u7684\u6CD5\u5E08\u5DE1\u56DE\u961F\u3002\n(\u6CBF\u7740\u6751\u5411\u524D\u8D70\u5C31\u80FD\u5230\u8FBE\u9A7B\u624E\u70B9\u4E86)"

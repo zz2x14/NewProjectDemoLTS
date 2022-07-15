@@ -5,7 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "EnemyState/EnemyAttackTransitionState",fileName = "EnemyAttackTransitionState")]
 public class EnemyAttackTransitionState : EnemyGeneralStateBase
 {
-    public bool readyAttack => stateDuration >= stateMachine.Anim.GetCurrentAnimatorStateInfo(0).length;
+    [SerializeField] private float watiTime;
+    public bool readyAttack => stateDuration >= watiTime;
   
     public override void OnGameLogicUpdate()
     {

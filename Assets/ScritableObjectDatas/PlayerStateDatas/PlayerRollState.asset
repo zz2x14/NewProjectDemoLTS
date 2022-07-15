@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PlayerRollState
   m_EditorClassIdentifier: 
   animName: PlayerRoll
-  rollSpeed: 8
+  rollSpeed: 6

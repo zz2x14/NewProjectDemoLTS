@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b186a604cae4d46ab417842f3ac1fa, type: 3}
+  m_Name: Woman01TalkData02
+  m_EditorClassIdentifier: 
+  locked: 0
+  talkContentList:
+  - "\u8BA9\u6211\u770B\u770B\uFF0C\u6CA1\u7F3A\u80F3\u818A\u5C11\u817F\u5427\u3002\u6211\u6CA1\u8BF4\u9519\u5427\uFF0C\u76F8\u4FE1\u4F60\uFF0C\u5BF9\u4F60\u6765\u8BF4\u662F\u5C0F\u83DC\u4E00\u789F\u3002"
+  - "\u4FDD\u9669\u8D77\u89C1\uFF0C\u662F\u5F97\u8BA9\u4F60\u591A\u5B66\u4E24\u62DB(\u514D\u8D39\u82E6\u529B\u5C31\u8FD9\u4E00\u4E2A\u554A)\uFF0C\u6B66\u5927\u56DE\u6751\u5B50\u4E86\uFF0C\u4F60\u53BB\u627E\u4ED6\u5427\u3002"

@@ -11,7 +11,7 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 
-public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem>
+public class PlayerBackpackSystem : SingletonTool<PlayerBackpackSystem>
 {
     private Canvas itemDesCanvas;
     private Button packButton;
@@ -22,7 +22,7 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
     [SerializeField] private PlayerBackpack playerBackpack;
     [SerializeField] private List<GameObject> itemSlotGOList;
     
-    [Header("ItemDes出现位置偏差")]
+    [Header("ItemDes出现位置偏差")] 
     [SerializeField] private Vector2 itemDesOffset;
     
     private bool sortOver;
@@ -32,12 +32,13 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
 
     public int BackpackCapacity => playerBackpack.Capacity;
 
-    public bool IsDropKeyPressed => ComponentProvider.Instance.PlayerInputAvatar.IsDropItemKeyPressed;
+    public bool IsDropKeyPressed => ComponentProvider.Instance.PlayerInputAvatar.IsMultiFunctionKeyPressed;
 
     public float OffsetX => itemDesOffset.x;
     public float OffsetY => itemDesOffset.y;
     
-    public int coinGotCount { get; set; }
+    public int CoinGotCount { get; set; }
+    public int CurCoinCount { get; set; }
 
     protected override void Awake()
     {
@@ -138,6 +139,7 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
                     {
                         if (playerBackpack.SlotList[i].ItemHeld.ItemID == 0)
                         {
+                            CurCoinCount++;
                             AchievementSystem.Instance.TotalCoinCountIncrease();
                         }
                         
@@ -165,9 +167,9 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
         playerBackpack.UpdateCapacity();
     }
 
-    public void GetItemMultiple(Item item)
+    public void GetCoinMultiple(Item item)
     {
-        for (int i = 0; i < coinGotCount; i++)
+        for (int i = 0; i < CoinGotCount; i++)
         {
             AddItemIntoBackPack(item);
         }
@@ -179,7 +181,12 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
         {
             if (playerBackpack.SlotList[i].ItemHeld == itemGot)
             {
-                playerBackpack.SlotList[i].HeldCount--;
+                playerBackpack.SlotList[i].HeldCount = Mathf.Max(0, playerBackpack.SlotList[i].HeldCount - 1);
+                
+                if (playerBackpack.SlotList[i].ItemHeld.ItemID == 0)
+                {
+                    CurCoinCount = Mathf.Max(0, CurCoinCount - 1);
+                }
                 
                 if (playerBackpack.SlotList[i].HeldCount == 0)
                 {
@@ -273,24 +280,22 @@ public class PlayerBackpackSystem : PersistentSingletonTool<PlayerBackpackSystem
     {
         itemDesCanvas.transform.position = targetPos;//Sign:是可以直接让transform转为RectTransform的
     }
-
-    bool packover;
     
     public void PackPlayerBackpack()
     {
         do
         {
-            packover = true;
+            sortOver = true;
             
             for (int i = 0; i < playerBackpack.SlotList.Count - 1; i++)
             {
                 if (playerBackpack.SlotList[i].HeldCount < playerBackpack.SlotList[i + 1].HeldCount)
                 {
                     SwitchItem(i,i + 1);
-                    packover = false;
+                    sortOver = false;
                 }
             }
             
-        } while (!packover);
+        } while (!sortOver);
     }
 }

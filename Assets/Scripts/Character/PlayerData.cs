@@ -41,17 +41,19 @@ public class PlayerData : CharacterData
             playerTalkDatas[i].playerTalkingPortrait = matchingSpriteTable[playerTalkDatas[i].playerTalkingEmotion];
         }
     }
+
 }
 
-[System.Serializable]
+[Serializable]
 public class PlayerSelfData
 {
     public float shootDamage;
 }
 
-[System.Serializable]
+[Serializable]
 public class PlayerTalkData
 {
+    public string talkSceneName;
     public bool isTalked;
     
     public GameChapter talkingMatchingChapter;

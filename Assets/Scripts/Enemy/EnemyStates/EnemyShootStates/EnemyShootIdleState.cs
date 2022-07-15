@@ -10,7 +10,7 @@ public class EnemyShootIdleState : EnemyShootBaseState
         
         enemy.SetRbVelocity(Vector2.zero);
         
-        GameManager.Instance.DepartFromBattleList(enemy,EventArgs.Empty);
+        GameManager.Instance.DepartFromBattleList(enemy);
     }
 
     public override void OnGameLogicUpdate()

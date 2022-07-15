@@ -27,8 +27,6 @@ public class GameManager : PersistentSingletonTool<GameManager>
 
     private void OnEnable()
     {
-        EventManager.Instance.AddEventHandlerListener(EventName.OnEnemyDeath,DepartFromBattleList);
-        
         StartCoroutine(nameof(BattleStateCor));
     }
 
@@ -53,10 +51,9 @@ public class GameManager : PersistentSingletonTool<GameManager>
             battleTargetsList.Add(target); 
     }
 
-    public void DepartFromBattleList(object target,EventArgs e)
+    public void DepartFromBattleList(EnemyController target)
     {
-        var enemy = target as EnemyController;
-        battleTargetsList.Remove(enemy);
+        battleTargetsList.Remove(target);
     }
 
     public void ClearBattleList()
@@ -64,11 +61,29 @@ public class GameManager : PersistentSingletonTool<GameManager>
         battleTargetsList.Clear();
     }
 
+    public void ShoppingStateOpreation(bool shopping)
+    {
+        gameState = shopping ? GameState.Shopping : GameState.Playing;
+        Time.timeScale = shopping ? 0 : 1;
+        
+        if (shopping)
+        {
+            ComponentProvider.Instance.PlayerInputAvatar.DisableGamePlayInput();
+            ComponentProvider.Instance.PlayerInputAvatar.DisablePlayerMenuInput();
+        }
+        else
+        {
+            ComponentProvider.Instance.PlayerInputAvatar.EnableGameplayInput();
+            ComponentProvider.Instance.PlayerInputAvatar.EnablePlayerMenuInput();
+        }
+    }
+
 }
 
 public enum GameState
 {
     Playing,
+    Shopping,
     Paused,
     GameOver
 }
@@ -84,4 +99,7 @@ public enum GameChapter
     ZeroChapter,
     FirstChapter,
     SecondChapter,
+    ThirdChapter,
+    FourthChapter,
+    FifthChapter
 }

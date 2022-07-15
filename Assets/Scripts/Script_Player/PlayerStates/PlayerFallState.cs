@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(menuName = "PlayerState/PlayerFallState",fileName = "PlayerFallState")]
 public class PlayerFallState : PlayerStateBase
 {
+    [SerializeField] private float fallMoveSpeed;
     [SerializeField] private AnimationCurve fallCurve;
     [SerializeField] private AnimationCurve moveFallCurve;
     [SerializeField] private AnimationCurve climbFallCurve;
@@ -63,6 +64,8 @@ public class PlayerFallState : PlayerStateBase
     public override void OnPhysicalLogicUpdate()
     {
         base.OnPhysicalLogicUpdate();
+        
+        player.Move(fallMoveSpeed);
 
         if (player.IsInStairs)
         {

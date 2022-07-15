@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PlayerDoubleJumpState
   m_EditorClassIdentifier: 
   animName: PlayerDoubleJump
-  doubleJumpForce: 5
+  doubleJumpForce: 4.5
   jumpMoveSpeed: 3

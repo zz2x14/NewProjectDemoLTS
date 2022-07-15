@@ -26,23 +26,23 @@ public class ItemDroppedFromEnemy : MonoBehaviour
         probabilityGotList = new List<int>(itemDroppedList.Count);
     }
 
-    private void OnEnable()
-    {
-        probabilityGotList.Clear();
-    }
 
     public void DropItemAndCoin()
     {
-        PlayerBackpackSystem.Instance.coinGotCount = 0;
+        coinRandomValue = 0;
+        PlayerBackpackSystem.Instance.CoinGotCount = 0;
         
         coinRandomValue = Random.Range(1, 101);
-        PlayerBackpackSystem.Instance.coinGotCount = Random.Range(coinDroppedMinNum, coinDroppedMaxNum);
+        
+        PlayerBackpackSystem.Instance.CoinGotCount = Random.Range(coinDroppedMinNum, coinDroppedMaxNum);
         
         if (coinRandomValue <= coinProbability)
         {
             PoolManager.Instance.Release(coinPrefab, transform.position);
         }
 
+        if (itemDroppedList.Count == 0) return;
+        
         for (int i = 0; i < itemDroppedList.Count; i++)
         {
             probabilityGotList.Add(GetProbabilityValue());
@@ -59,7 +59,7 @@ public class ItemDroppedFromEnemy : MonoBehaviour
 
     private void OnDisable()
     {
-        DropItemAndCoin();
+        probabilityGotList.Clear();
     }
 
     //Sign:重要的思维逻辑

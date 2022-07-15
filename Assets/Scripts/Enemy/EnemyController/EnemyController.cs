@@ -4,19 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using MyEventSpace;
+using UnityEngine.Events;
 
 public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动画冲突问题 以及动画被打断问题
 {
     private Rigidbody2D rb;
+    private ItemDroppedFromEnemy dropTool;
     
     public EnemyData enemyData;
 
     [Header("移动")] 
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float chaseSpeed;
-    
+
     [Header("玩家检测")] 
-    [SerializeField] protected float detectorRange;
+    [SerializeField] protected Transform detectorPoint;
+    [SerializeField] protected Vector2 detectorRange;
     [SerializeField] protected LayerMask playerLayer;
     
     [FormerlySerializedAs("attackStopDistance")]
@@ -28,7 +31,7 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
     [SerializeField] protected Transform attackPoint;
     
     //Sign:属性也是可以复写的
-    public virtual bool FoundPlayer => Physics2D.OverlapCircle(transform.position, detectorRange, playerLayer);
+    public virtual bool FoundPlayer => Physics2D.OverlapBox(detectorPoint.position, detectorRange, 0f,playerLayer);
     public bool PlayerInAttackRange => Physics2D.OverlapCircle(attackPoint.position, attackRange ,playerLayer);
 
     public Transform PlayerPos { get; private set; }
@@ -41,11 +44,14 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
 
     private EnemyStateMachine enemyStateMachine;
     private List<EnemyStateBase> enemyStateStock;
+    
+    public event UnityAction OnDealth = delegate {  };
 
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-       
+        dropTool = GetComponent<ItemDroppedFromEnemy>();
+
         InitializeEnemy();
     }
 
@@ -63,19 +69,19 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
 
     protected virtual void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position,detectorRange);
-        
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(attackPoint.position,attackRange);
+        // Gizmos.color = Color.magenta;
+        // Gizmos.DrawWireCube(transform.position,detectorRange);
+        //
+        // Gizmos.color = Color.yellow;
+        // Gizmos.DrawWireSphere(attackPoint.position,attackRange);
     }
 
     private void InitializeEnemy()
     {
         enemyStateMachine = GetComponent<EnemyStateMachine>();
         FillStateStock();
-        
-        enemyData = Instantiate(enemyData);//和状态是同样的道理，敌人不该共用共享一个敌人数据，而是根据提供的数据克隆出自己的数据
+        //和状态是同样的道理，敌人不该共用共享一个敌人数据，而是根据提供的数据克隆出自己的数据
+        enemyData = Instantiate(enemyData);
     }
     private void FillStateStock()
     {
@@ -181,8 +187,24 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
         
         if (enemyData.baseData.curHealth == 0)
         {
-            EventManager.Instance.EventHandlerTrigger(EventName.OnEnemyDeath,this);
+            Death();
         }
     }
-   
+
+    private void OnDisable()
+    {
+        DropSth();
+    }
+
+    private void Death()
+    {
+        GameManager.Instance.DepartFromBattleList(this);
+        OnDealth.Invoke();
+        EventManager.Instance.EventHandlerTrigger(EventName.OnEnemyDeath,null);
+    }
+
+    public void DropSth()
+    {
+        dropTool.DropItemAndCoin();
+    }
 }

@@ -10,13 +10,13 @@ public class AutomaticDisableCanvasTool : MonoBehaviour
     private Canvas thisCanvas;
 
     private Coroutine cor;
-    private WaitForSeconds disableWFS;
+    private WaitForSecondsRealtime disableRWFS;
 
     private void Awake()
     {
         thisCanvas = GetComponent<Canvas>();
         
-        disableWFS = new WaitForSeconds(waitDisableCanvasTime);
+        disableRWFS = new WaitForSecondsRealtime(waitDisableCanvasTime);
     }
 
  
@@ -34,7 +34,7 @@ public class AutomaticDisableCanvasTool : MonoBehaviour
     {
         thisCanvas.enabled = true;
 
-        yield return disableWFS;
+        yield return disableRWFS;
 
         thisCanvas.enabled = false;
         

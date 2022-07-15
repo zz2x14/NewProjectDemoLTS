@@ -57,9 +57,7 @@ public class PlayerJumpState : PlayerStateBase
         
         if (player.CanHang && !player.IsGrounded)
         {
-            player.EnableHangColl();
             playerStateMachine.SwitchState(typeof(PlayerHangState));
-            
         }
         
         if (player.IsInStairs)

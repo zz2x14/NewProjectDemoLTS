@@ -10,7 +10,7 @@ public class EnemyHomingState : EnemyStateBase
     {
         base.OnEnter();
         
-        GameManager.Instance.DepartFromBattleList(enemy,EventArgs.Empty);
+        GameManager.Instance.DepartFromBattleList(enemy);
     }
 
     public override void OnGameLogicUpdate()
@@ -28,7 +28,6 @@ public class EnemyHomingState : EnemyStateBase
                     stateMachine.SwitchState(typeof(EnemyGeneralChaseState));
                     break;
             }
-            
             return;
         }
 

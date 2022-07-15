@@ -31,11 +31,13 @@ public class ItemInWorld : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            if (PlayerBackpackSystem.Instance.IsFull()) return;
+            
             if (!testReduce)
             {
                 if (thisItem.ItemID == 0)
                 {
-                    PlayerBackpackSystem.Instance.GetItemMultiple(thisItem);
+                    PlayerBackpackSystem.Instance.GetCoinMultiple(thisItem);
                 }
                 else
                 {
@@ -47,8 +49,6 @@ public class ItemInWorld : MonoBehaviour
             {
                 PlayerBackpackSystem.Instance.RemoveItemFromBackpack(thisItem);
             }
-
-            if (PlayerBackpackSystem.Instance.IsFull()) return;
             
             gameObject.SetActive(false);
         }

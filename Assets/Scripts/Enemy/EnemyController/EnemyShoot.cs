@@ -11,7 +11,6 @@ public class EnemyShoot : EnemyController
    [Header("射击")] 
    [SerializeField] private float shootInterval;
    [SerializeField] private float shootRange;
-   [SerializeField] private Transform shootDetectorPoint;
 
    [Header("子弹")] 
    [SerializeField] private GameObject bulletPrefab;
@@ -29,7 +28,7 @@ public class EnemyShoot : EnemyController
    public override bool FoundPlayer =>
       Physics2D.Raycast(attackPoint.position, -transform.right * transform.localScale.x, shootRange, playerLayer);
    
-   public override bool CloseToPlayer() => Physics2D.OverlapCircle(shootDetectorPoint.position, detectorRange,playerLayer);
+   public override bool CloseToPlayer() => Physics2D.OverlapBox(detectorPoint.position, detectorRange,playerLayer);
 
    protected override void OnDrawGizmos()
    {
@@ -37,7 +36,7 @@ public class EnemyShoot : EnemyController
       Gizmos.DrawRay(attackPoint.position,- transform.right * transform.localScale.x * shootRange);
 
       Gizmos.color = Color.yellow;
-      Gizmos.DrawWireSphere(shootDetectorPoint.position,detectorRange);
+      Gizmos.DrawWireCube(detectorPoint.position,detectorRange);
    }
 
    // public Vector2 GetEscapePoint()

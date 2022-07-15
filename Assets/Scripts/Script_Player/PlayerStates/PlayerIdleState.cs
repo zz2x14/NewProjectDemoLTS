@@ -11,6 +11,8 @@ public class PlayerIdleState : PlayerStateBase
     {
         base.OnEnter();
 
+        player.SetGravity(1f);
+
         player.JumpCount = 2;
 
         curSpeed = player.MoveSpeed;

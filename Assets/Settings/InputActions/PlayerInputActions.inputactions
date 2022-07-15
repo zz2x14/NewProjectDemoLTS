@@ -76,6 +76,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DamageMagicHotkey",
+                    "type": "Button",
+                    "id": "a02cfc64-0980-40c7-9b3c-1a7fcfe069a6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CureMagicHotkey",
+                    "type": "Button",
+                    "id": "438af095-0754-49df-8ee9-a0c8640fc308",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ControlMagicHotkey",
+                    "type": "Button",
+                    "id": "5f9f42ee-5e09-4217-853b-178cc182bc72",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -188,6 +215,39 @@
                     "action": "GameConfirm",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6deb2202-50c0-4ebf-ae9f-6e16e1aa7c11",
+                    "path": "<Keyboard>/u",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "DamageMagicHotkey",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3c6ecf7b-238c-460d-8172-c5d5ae558be9",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "CureMagicHotkey",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0d5dd5b5-f695-45f2-86f4-d82b325480f6",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "ControlMagicHotkey",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -281,7 +341,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "DropItem",
+                    "name": "MultiFunction",
                     "type": "Button",
                     "id": "2d3d7f27-6e67-48f0-bb16-6e8c1d017903",
                     "expectedControlType": "Button",
@@ -327,7 +387,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "DropItem",
+                    "action": "MultiFunction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

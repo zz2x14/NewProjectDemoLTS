@@ -7,9 +7,12 @@ using UnityEngine.Events;
 public class CharacterBase : MonoBehaviour,ITakenDamage
 {
     public event UnityAction OnHurt = delegate { };
+   
     
     public virtual void TakenDamage(float value)
     {
         OnHurt.Invoke();
     }
+
+    
 }

@@ -17,16 +17,15 @@ MonoBehaviour:
     npcID: 0
     npcPortrait: {fileID: 21300000, guid: 563eaed6492dbd84ab8896bb33b58e9b, type: 3}
   containers:
-  - talkSceneName: "\u521D\u56DE\u6751\u5E84\u548C\u8001\u67D0\u5BF9\u8BDD"
+  - talkSceneName: "\u521D\u56DE\u6751\u5E84"
     talkID: 0
     isTalked: 0
     isForcedTalk: 1
     thisTalkData: {fileID: 11400000, guid: 4dfc7905c83e14b4ba02fe59fce6e698, type: 2}
     matchingChapter: 1
     isTalkPrecondition: 1
-    lockedTalkData: {fileID: 11400000, guid: 4f9d288b8127a144bb53aaac39aa8221, type: 2}
+    lockedTalkData: {fileID: 11400000, guid: 2f77cbc08e215f8419d0d812901d5dc9, type: 2}
     isScenePrecondtion: 0
-    caller: {fileID: 0}
     targetSceneID: 0
     willPushForwardGameChapter: 0
     targetChapter: 0

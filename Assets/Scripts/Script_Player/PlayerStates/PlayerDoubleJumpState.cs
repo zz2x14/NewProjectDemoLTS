@@ -25,6 +25,11 @@ public class PlayerDoubleJumpState : PlayerStateBase
         {
             playerStateMachine.SwitchState(typeof(PlayerJumpAttackState));
         }
+
+        if (player.CanHang && !player.IsGrounded)
+        {
+            playerStateMachine.SwitchState(typeof(PlayerHangState));
+        }
         
         if (!player.IsGrounded && player.IsFalling)
         {

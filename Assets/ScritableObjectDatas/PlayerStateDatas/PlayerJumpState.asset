@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerJumpState
   m_EditorClassIdentifier: 
   animName: PlayerJump
-  jumpForce: 6.45
-  hangJumpForce: 6
-  climbJumpForce: 6.5
+  jumpForce: 4
+  hangJumpForce: 5
+  climbJumpForce: 5.5
   jumpMoveSpeed: 3

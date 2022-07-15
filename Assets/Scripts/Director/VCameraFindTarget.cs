@@ -15,10 +15,11 @@ public class VCameraFindTarget : MonoBehaviour
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         playerController = FindObjectOfType<PlayerController>();
 
         virtualCamera.Follow = playerController.transform;
     }
+
 }

@@ -71,7 +71,7 @@ Preset:
   - target: {fileID: 0}
     propertyPath: containers.Array.data[0].lockedTalkData
     value: 
-    objectReference: {fileID: 11400000, guid: 4f9d288b8127a144bb53aaac39aa8221, type: 2}
+    objectReference: {fileID: 11400000, guid: 2f77cbc08e215f8419d0d812901d5dc9, type: 2}
   - target: {fileID: 0}
     propertyPath: containers.Array.data[0].isScenePrecondtion
     value: 0
@@ -79,5 +79,21 @@ Preset:
   - target: {fileID: 0}
     propertyPath: containers.Array.data[0].targetSceneID
     value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: containers.Array.data[0].willPushForwardGameChapter
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: containers.Array.data[0].targetChapter
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: containers.Array.data[0].willUpdateChapterGuide
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: containers.Array.data[0].updatedChapterGuideContent
+    value: "\u6751\u91CC\u7684\u6ED1\u5B50\u6709\u4E8B\u60C5\u627E\u6211\uFF0C\u4E0D\u77E5\u9053\u662F\u4EC0\u4E48\u4E8B...\n(\u6ED1\u5B50\u5728\u6751\u5B50\u6700\u4E1C\u4FA7\uFF0C\u6751\u4E1C\u9760\u8FD1\u53F3\u8FB9)"
     objectReference: {fileID: 0}
   m_ExcludedProperties: []

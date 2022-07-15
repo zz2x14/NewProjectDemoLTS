@@ -7,6 +7,8 @@ using UnityEngine.Serialization;
 
 public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOverTime
 {
+    private static PlayerController instance;
+    
     [SerializeField] private PlayerData playerData;
     
     [Header("无敌时间")]
@@ -23,6 +25,7 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOv
     [SerializeField] private Transform attackPoint01;
     [SerializeField] private Transform attackPoint02;
     [SerializeField] private Transform attackPoint03;
+    [SerializeField] private Transform jumpAttackPoint;
     [SerializeField] private float attackRange01;
     [SerializeField] private float attackRange02;
     [SerializeField] private LayerMask targetLayer;
@@ -93,7 +96,18 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOv
 
         rollCDWFS = new WaitForSeconds(rollInterval);
         invincibleCDWFS = new WaitForSeconds(invincibleInterval);
-        
+
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            if (instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
         DontDestroyOnLoad(gameObject);
     }
 
@@ -120,11 +134,17 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOv
    
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
+        Gizmos.color = Color.black;
         Gizmos.DrawWireSphere(attackPoint01.position,attackRange01);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint02.position,attackRange02);
         
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(attackPoint02.position,attackRange02);
+        Gizmos.DrawWireSphere(jumpAttackPoint.position,attackRange02);
+        
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(attackPoint03.position,attackRange02);
     }
 
     #region RbVelocity
@@ -192,15 +212,15 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOv
 
     public void CollStartRoll()
     {
-        gameObject.layer = 19;
-        //normalColl.isTrigger = false;
-        //SetGravity(1f);
+        //gameObject.layer = 19;
+        normalColl.isTrigger = true;
+        SetGravity(0f);
     }
     public void CollEndRoll()
     {
-        gameObject.layer = 6;
-        // normalColl.isTrigger = true;
-        //SetGravity(0f);
+        //gameObject.layer = 6;
+        normalColl.isTrigger = false;
+        SetGravity(1f);
     }
 
     #endregion
@@ -252,7 +272,7 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOv
 
     public void Attack1()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPoint01.position, attackRange01, targetLayer);
+        var hits = Physics2D.OverlapCircleAll(attackPoint01.position, attackRange01, targetLayer);
 
         if (hits.Length > 0)
         {
@@ -265,7 +285,33 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOv
     }
     public void Attack2()
     {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint01.position, attackRange01, targetLayer);
+        var hitEnemies = Physics2D.OverlapCircleAll(attackPoint02.position, attackRange02, targetLayer);
+
+        if (hitEnemies.Length > 0)
+        {
+            foreach (var enemy in hitEnemies)
+            {
+                enemy.GetComponent<ITakenDamage>().TakenDamage(playerData.baseData.attackDamage);
+                UIManager.Instance.ShowDamageValue(enemy.transform.position,playerData.baseData.attackDamage);
+            }
+        }
+    }
+    public void Attack3()
+    {
+        var hitEnemies = Physics2D.OverlapCircleAll(attackPoint03.position, attackRange02, targetLayer);
+
+        if (hitEnemies.Length > 0)
+        {
+            foreach (var enemy in hitEnemies)
+            {
+                enemy.GetComponent<ITakenDamage>().TakenDamage(playerData.baseData.attackDamage);
+                UIManager.Instance.ShowDamageValue(enemy.transform.position,playerData.baseData.attackDamage);
+            }
+        }
+    }
+    public void JumpAttack()
+    {
+        var hitEnemies = Physics2D.OverlapCircleAll(jumpAttackPoint.position, attackRange02, targetLayer);
 
         if (hitEnemies.Length > 0)
         {
@@ -349,12 +395,15 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOv
     {
         for (int i = 0; i < playerData.playerTalkDatas.Count; i++)
         {
-            if (playerData.playerTalkDatas[i].talkID == matchingID)
+            if (!playerData.playerTalkDatas[i].isTalked)
             {
-                playerData.playerTalkDatas[i].isTalked = true;//匹配上后标记为已经触发过的对话，并设置该对话player对应的肖像
-                TalkCenter.Instance.SetPlayerTalkingPortrait(playerData.playerTalkDatas[i].playerTalkingPortrait);
+                if (playerData.playerTalkDatas[i].talkID == matchingID)
+                {
+                    playerData.playerTalkDatas[i].isTalked = true;//匹配上后标记为已经触发过的对话，并设置该对话player对应的肖像
+                    TalkCenter.Instance.SetPlayerTalkingPortrait(playerData.playerTalkDatas[i].playerTalkingPortrait);
                     
-                return playerData.playerTalkDatas[i].talkList;
+                    return playerData.playerTalkDatas[i].talkList;
+                }
             }
         }
         return null;
@@ -398,5 +447,11 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOv
             yield return invincibleCDWFS;
         }
        
+    }
+
+    public void FillHealth()
+    {
+        playerData.InitializeHealth();
+        healthBar.FillHealthBarImmediately();
     }
 }

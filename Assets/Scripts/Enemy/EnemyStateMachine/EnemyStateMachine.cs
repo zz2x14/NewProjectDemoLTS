@@ -29,13 +29,13 @@ public class EnemyStateMachine : StateMachine
     private void OnEnable()
     {
         enemyController.OnHurt += ToHurtState;
-        EventManager.Instance.AddEventHandlerListener(EventName.OnEnemyDeath,ToDeathState);
+        enemyController.OnDealth += ToDeathState;
     }
 
     private void OnDisable()
     {
         enemyController.OnHurt -= ToHurtState;
-        EventManager.Instance.RemoveEventHandlerListener(EventName.OnEnemyDeath,ToDeathState);
+        enemyController.OnDealth += ToDeathState;
     }
 
     private void Start()
@@ -77,7 +77,7 @@ public class EnemyStateMachine : StateMachine
         SwitchState(typeof(EnemyHurtState));
     }
 
-    private void ToDeathState(object sender,EventArgs e)
+    private void ToDeathState()
     {
         SwitchState(typeof(EnemyDeathState));
     }

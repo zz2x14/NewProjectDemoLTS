@@ -10,6 +10,7 @@ public static class EventName
     public const string OnPlayerMenuOpen = nameof(EventManager.OnPlayerMenuOpen);
 }
 
+//Sign:一对多和多对一的使用情况
 namespace MyEventSpace// TODO:做到外部调用不到委托
 {
     public delegate void EventHandler(object sender, EventArgs e);

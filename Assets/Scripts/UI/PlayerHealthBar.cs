@@ -75,6 +75,12 @@ public class PlayerHealthBar : MonoBehaviour
         }
     }
 
+    public void FillHealthBarImmediately()
+    {
+        healthBar.fillAmount = 1f;
+        healthBarEffect.fillAmount = 1f;
+    }
+
     public void EnableHealthHUDCanvas()
     {
         thisCanvas.enabled = true;

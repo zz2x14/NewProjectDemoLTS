@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83e10803df89e294bb05e0ac726f7ec5, type: 3}
+  m_Name: ParalysisMagicData
+  m_EditorClassIdentifier: 
+  magicBase:
+    magicID: 10
+    magicName: "\u9EBB\u75F9\u672F"
+    magicIcon: {fileID: 21300000, guid: 50ddac099329f0843b99748b47eca009, type: 3}
+    magicDescription: "\u9EBB\u75F9\u654C\u4EBA\uFF0C\u5750\u4EE5\u5F85\u6BD9"
+    magicCost: 1500
+  isMaster: 0
+  magicType: 2
+  ControlMagicData:
+    controlValue: 0

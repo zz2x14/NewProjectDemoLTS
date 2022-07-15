@@ -12,6 +12,7 @@ public class TimelineTool: MonoBehaviour
     [SerializeField] private PlayableDirector playableDirector;
 
     private const string NAME_PLAYERTFTWEENTARCK = "PlayerTfTweenTrack";
+    private const string NAME_PLAYERANIMATORTRACK = "PlayerWalkAnimToPlayerIdleAnimTrack";
 
     private void Awake()
     {
@@ -20,6 +21,11 @@ public class TimelineTool: MonoBehaviour
             if (bindingInfo.streamName == NAME_PLAYERTFTWEENTARCK)
             {
                 playableDirector.SetGenericBinding(bindingInfo.sourceObject,FindObjectOfType<PlayerController>().transform);
+            }
+
+            if (bindingInfo.streamName == NAME_PLAYERANIMATORTRACK)
+            {
+                playableDirector.SetGenericBinding(bindingInfo.sourceObject,FindObjectOfType<PlayerController>().GetComponentInChildren<Animator>());
             }
         }
     }

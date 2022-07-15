@@ -14,6 +14,7 @@ public class PlayerRollState : PlayerStateBase
         player.StartRollCDCor();
 
         player.CollStartRoll();
+        
         player.SetRbVelocityX(rollSpeed * player.transform.localScale.x);
     }
 

@@ -25,6 +25,7 @@
 
      private const string TEXT_GETANEKEYTIP = "按任意键继续...";
      private const string TEXT_LOADOVERTIP = "/自动保存成功/";
+     private const int SCENEID_TOWN = 1;
 
      public void Teleport(int sceneID)
      {
@@ -33,6 +34,11 @@
  
      IEnumerator TeleportCor(int sceneID)
      {
+         if (sceneID == SCENEID_TOWN)
+         {
+             ComponentProvider.Instance.PlayerAvatar.FillHealth();
+         }
+         
          ComponentProvider.Instance.PlayerInputAvatar.EnableSceneTeleportInput();
          
          ComponentProvider.Instance.PlayerAvatar.SavePlayerData();

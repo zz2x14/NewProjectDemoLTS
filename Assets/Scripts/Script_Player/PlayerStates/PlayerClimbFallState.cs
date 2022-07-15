@@ -11,10 +11,13 @@ public class PlayerClimbFallState : PlayerStateBase
     public override void OnEnter()
     {
         base.OnEnter();
-        
-        player.SetPosWithStairs(climbFallFallDistance);
-        //Sign:因使用的是Composite碰撞体，若Tilemap完整一格为单位1的正方形，所以下楼梯的瞬下移距离应略大于1
-        //TODO:↑感觉还可以优化...
+
+        if (playerStateMachine.LastState.GetType() == typeof(PlayerIdleState))
+        {
+            player.SetPosWithStairs(climbFallFallDistance);
+            //Sign:因使用的是Composite碰撞体，若Tilemap完整一格为单位1的正方形，所以下楼梯的瞬下移距离应略大于1
+            //TODO:↑感觉还可以优化...
+        }
         
         Physics2D.IgnoreLayerCollision(6,9,true);
     }

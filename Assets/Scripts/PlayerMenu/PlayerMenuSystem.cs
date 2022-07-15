@@ -22,6 +22,8 @@ public class PlayerMenuSystem : PersistentSingletonTool<PlayerMenuSystem>
     private Color elseWhiteColor;
     private Color elseBlackColor;
 
+    private const string NAME_MAGICTITLE = "法术";
+
     protected override void Awake()
     {
         base.Awake();
@@ -111,6 +113,14 @@ public class PlayerMenuSystem : PersistentSingletonTool<PlayerMenuSystem>
         {
             playerMenuCanvasList[i].enabled = i == index;
         }
+    }
+
+    public void UnlockMagicInterface()
+    {
+        navigationNameList[2].text = NAME_MAGICTITLE;
+        playerMenuCanvasList[2].transform.GetChild(0).gameObject.SetActive(false);
+        playerMenuCanvasList[2].transform.GetChild(1).gameObject.SetActive(true);
+        playerMenuCanvasList[2].transform.GetChild(2).gameObject.SetActive(true);
     }
     
 }

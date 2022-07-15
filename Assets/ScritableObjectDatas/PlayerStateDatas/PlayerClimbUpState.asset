@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animName: PlayerClimbUp
   climbSpeed: 3
-  popForce: 6
+  moveDistanceFromStairs: {x: 0, y: 0.25, z: 0}

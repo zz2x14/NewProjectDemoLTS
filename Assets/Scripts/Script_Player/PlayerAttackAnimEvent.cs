@@ -22,5 +22,15 @@ public class PlayerAttackAnimEvent : MonoBehaviour
         myself.Attack2();
     }
 
+    public void Attack3AnimationEvent()
+    {
+        myself.Attack3();
+    }
+
+    public void JumpAttackAnimationEvent()
+    {
+        myself.JumpAttack();
+    }
+
   
 }

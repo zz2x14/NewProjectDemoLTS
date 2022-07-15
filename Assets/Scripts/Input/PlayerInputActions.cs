@@ -98,6 +98,33 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DamageMagicHotkey"",
+                    ""type"": ""Button"",
+                    ""id"": ""a02cfc64-0980-40c7-9b3c-1a7fcfe069a6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CureMagicHotkey"",
+                    ""type"": ""Button"",
+                    ""id"": ""438af095-0754-49df-8ee9-a0c8640fc308"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ControlMagicHotkey"",
+                    ""type"": ""Button"",
+                    ""id"": ""5f9f42ee-5e09-4217-853b-178cc182bc72"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -210,6 +237,39 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""GameConfirm"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6deb2202-50c0-4ebf-ae9f-6e16e1aa7c11"",
+                    ""path"": ""<Keyboard>/u"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""DamageMagicHotkey"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c6ecf7b-238c-460d-8172-c5d5ae558be9"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""CureMagicHotkey"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0d5dd5b5-f695-45f2-86f4-d82b325480f6"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""ControlMagicHotkey"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -303,7 +363,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""DropItem"",
+                    ""name"": ""MultiFunction"",
                     ""type"": ""Button"",
                     ""id"": ""2d3d7f27-6e67-48f0-bb16-6e8c1d017903"",
                     ""expectedControlType"": ""Button"",
@@ -349,7 +409,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""PC"",
-                    ""action"": ""DropItem"",
+                    ""action"": ""MultiFunction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -407,6 +467,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Gameplay_Fall = m_Gameplay.FindAction("Fall", throwIfNotFound: true);
         m_Gameplay_Shoot = m_Gameplay.FindAction("Shoot", throwIfNotFound: true);
         m_Gameplay_GameConfirm = m_Gameplay.FindAction("GameConfirm", throwIfNotFound: true);
+        m_Gameplay_DamageMagicHotkey = m_Gameplay.FindAction("DamageMagicHotkey", throwIfNotFound: true);
+        m_Gameplay_CureMagicHotkey = m_Gameplay.FindAction("CureMagicHotkey", throwIfNotFound: true);
+        m_Gameplay_ControlMagicHotkey = m_Gameplay.FindAction("ControlMagicHotkey", throwIfNotFound: true);
         // SceneTeleport
         m_SceneTeleport = asset.FindActionMap("SceneTeleport", throwIfNotFound: true);
         m_SceneTeleport_Confirm = m_SceneTeleport.FindAction("Confirm", throwIfNotFound: true);
@@ -417,7 +480,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         // PlayerMenu
         m_PlayerMenu = asset.FindActionMap("PlayerMenu", throwIfNotFound: true);
         m_PlayerMenu_Switch = m_PlayerMenu.FindAction("Switch", throwIfNotFound: true);
-        m_PlayerMenu_DropItem = m_PlayerMenu.FindAction("DropItem", throwIfNotFound: true);
+        m_PlayerMenu_MultiFunction = m_PlayerMenu.FindAction("MultiFunction", throwIfNotFound: true);
         m_PlayerMenu_SwitchNext = m_PlayerMenu.FindAction("SwitchNext", throwIfNotFound: true);
         m_PlayerMenu_SwithLast = m_PlayerMenu.FindAction("SwithLast", throwIfNotFound: true);
     }
@@ -487,6 +550,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Fall;
     private readonly InputAction m_Gameplay_Shoot;
     private readonly InputAction m_Gameplay_GameConfirm;
+    private readonly InputAction m_Gameplay_DamageMagicHotkey;
+    private readonly InputAction m_Gameplay_CureMagicHotkey;
+    private readonly InputAction m_Gameplay_ControlMagicHotkey;
     public struct GameplayActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -499,6 +565,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Fall => m_Wrapper.m_Gameplay_Fall;
         public InputAction @Shoot => m_Wrapper.m_Gameplay_Shoot;
         public InputAction @GameConfirm => m_Wrapper.m_Gameplay_GameConfirm;
+        public InputAction @DamageMagicHotkey => m_Wrapper.m_Gameplay_DamageMagicHotkey;
+        public InputAction @CureMagicHotkey => m_Wrapper.m_Gameplay_CureMagicHotkey;
+        public InputAction @ControlMagicHotkey => m_Wrapper.m_Gameplay_ControlMagicHotkey;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -532,6 +601,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @GameConfirm.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnGameConfirm;
                 @GameConfirm.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnGameConfirm;
                 @GameConfirm.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnGameConfirm;
+                @DamageMagicHotkey.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDamageMagicHotkey;
+                @DamageMagicHotkey.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDamageMagicHotkey;
+                @DamageMagicHotkey.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDamageMagicHotkey;
+                @CureMagicHotkey.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCureMagicHotkey;
+                @CureMagicHotkey.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCureMagicHotkey;
+                @CureMagicHotkey.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCureMagicHotkey;
+                @ControlMagicHotkey.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnControlMagicHotkey;
+                @ControlMagicHotkey.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnControlMagicHotkey;
+                @ControlMagicHotkey.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnControlMagicHotkey;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -560,6 +638,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @GameConfirm.started += instance.OnGameConfirm;
                 @GameConfirm.performed += instance.OnGameConfirm;
                 @GameConfirm.canceled += instance.OnGameConfirm;
+                @DamageMagicHotkey.started += instance.OnDamageMagicHotkey;
+                @DamageMagicHotkey.performed += instance.OnDamageMagicHotkey;
+                @DamageMagicHotkey.canceled += instance.OnDamageMagicHotkey;
+                @CureMagicHotkey.started += instance.OnCureMagicHotkey;
+                @CureMagicHotkey.performed += instance.OnCureMagicHotkey;
+                @CureMagicHotkey.canceled += instance.OnCureMagicHotkey;
+                @ControlMagicHotkey.started += instance.OnControlMagicHotkey;
+                @ControlMagicHotkey.performed += instance.OnControlMagicHotkey;
+                @ControlMagicHotkey.canceled += instance.OnControlMagicHotkey;
             }
         }
     }
@@ -643,7 +730,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerMenu;
     private IPlayerMenuActions m_PlayerMenuActionsCallbackInterface;
     private readonly InputAction m_PlayerMenu_Switch;
-    private readonly InputAction m_PlayerMenu_DropItem;
+    private readonly InputAction m_PlayerMenu_MultiFunction;
     private readonly InputAction m_PlayerMenu_SwitchNext;
     private readonly InputAction m_PlayerMenu_SwithLast;
     public struct PlayerMenuActions
@@ -651,7 +738,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         private @PlayerInputActions m_Wrapper;
         public PlayerMenuActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Switch => m_Wrapper.m_PlayerMenu_Switch;
-        public InputAction @DropItem => m_Wrapper.m_PlayerMenu_DropItem;
+        public InputAction @MultiFunction => m_Wrapper.m_PlayerMenu_MultiFunction;
         public InputAction @SwitchNext => m_Wrapper.m_PlayerMenu_SwitchNext;
         public InputAction @SwithLast => m_Wrapper.m_PlayerMenu_SwithLast;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMenu; }
@@ -666,9 +753,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Switch.started -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitch;
                 @Switch.performed -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitch;
                 @Switch.canceled -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitch;
-                @DropItem.started -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnDropItem;
-                @DropItem.performed -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnDropItem;
-                @DropItem.canceled -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnDropItem;
+                @MultiFunction.started -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnMultiFunction;
+                @MultiFunction.performed -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnMultiFunction;
+                @MultiFunction.canceled -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnMultiFunction;
                 @SwitchNext.started -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitchNext;
                 @SwitchNext.performed -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitchNext;
                 @SwitchNext.canceled -= m_Wrapper.m_PlayerMenuActionsCallbackInterface.OnSwitchNext;
@@ -682,9 +769,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Switch.started += instance.OnSwitch;
                 @Switch.performed += instance.OnSwitch;
                 @Switch.canceled += instance.OnSwitch;
-                @DropItem.started += instance.OnDropItem;
-                @DropItem.performed += instance.OnDropItem;
-                @DropItem.canceled += instance.OnDropItem;
+                @MultiFunction.started += instance.OnMultiFunction;
+                @MultiFunction.performed += instance.OnMultiFunction;
+                @MultiFunction.canceled += instance.OnMultiFunction;
                 @SwitchNext.started += instance.OnSwitchNext;
                 @SwitchNext.performed += instance.OnSwitchNext;
                 @SwitchNext.canceled += instance.OnSwitchNext;
@@ -714,6 +801,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnFall(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnGameConfirm(InputAction.CallbackContext context);
+        void OnDamageMagicHotkey(InputAction.CallbackContext context);
+        void OnCureMagicHotkey(InputAction.CallbackContext context);
+        void OnControlMagicHotkey(InputAction.CallbackContext context);
     }
     public interface ISceneTeleportActions
     {
@@ -727,7 +817,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     public interface IPlayerMenuActions
     {
         void OnSwitch(InputAction.CallbackContext context);
-        void OnDropItem(InputAction.CallbackContext context);
+        void OnMultiFunction(InputAction.CallbackContext context);
         void OnSwitchNext(InputAction.CallbackContext context);
         void OnSwithLast(InputAction.CallbackContext context);
     }

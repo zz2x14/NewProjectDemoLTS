@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PlayerFallState
   m_EditorClassIdentifier: 
   animName: PlayerFall
+  fallMoveSpeed: 2.5
   fallCurve:
     serializedVersion: 2
     m_Curve:

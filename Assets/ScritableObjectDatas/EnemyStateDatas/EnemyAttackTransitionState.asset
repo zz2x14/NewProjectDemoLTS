@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: EnemyAttackTransitionState
   m_EditorClassIdentifier: 
   animName: Idle
+  watiTime: 0.5

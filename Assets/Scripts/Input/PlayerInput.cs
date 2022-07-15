@@ -88,6 +88,10 @@ public class PlayerInput : MonoBehaviour//Sign:更新模式会影响到按键判
     public bool IsClimbKey => playerInputActions.Gameplay.Climb.WasPerformedThisFrame();
     public bool IsClimbKeyReleased => playerInputActions.Gameplay.Climb.WasReleasedThisFrame();
 
+    public bool IsDamageMagicKeyReleased => playerInputActions.Gameplay.DamageMagicHotkey.WasPressedThisFrame();
+    public bool IsCureMagickeyReleased => playerInputActions.Gameplay.CureMagicHotkey.WasPressedThisFrame();
+    public bool IsControlMagicKeyReleased => playerInputActions.Gameplay.ControlMagicHotkey.WasPressedThisFrame();
+
     public bool IsGameConfirmKeyPressed => playerInputActions.Gameplay.GameConfirm.WasPressedThisFrame();
 
     //SystemKeys
@@ -100,15 +104,21 @@ public class PlayerInput : MonoBehaviour//Sign:更新模式会影响到按键判
     
     //PlayerMenu
     public bool IsMenuSwitchKeyPressed => playerInputActions.PlayerMenu.Switch.WasPressedThisFrame();
-    public bool IsDropItemKeyPressed => playerInputActions.PlayerMenu.DropItem.WasPressedThisFrame();
+    public bool IsMultiFunctionKeyPressed => playerInputActions.PlayerMenu.MultiFunction.WasPressedThisFrame();
     public bool IsSwitchNextKeyPressed => playerInputActions.PlayerMenu.SwitchNext.WasPressedThisFrame();
     public bool IsSwitchLastKeyPressed => playerInputActions.PlayerMenu.SwithLast.WasPressedThisFrame();
 
+    private void Awake()
+    {
+        
+        playerInputActions = new PlayerInputActions();//是要初始化的
+        
+        //playerInputActions.Gameplay.SetCallbacks(this);//Sign：使用接口注册事件是要登记的
+    }
+
     private void OnEnable()
    {
-       playerInputActions = new PlayerInputActions();//是要初始化的
-
-       //playerInputActions.Gameplay.SetCallbacks(this);//Sign：使用接口注册事件是要登记的
+       EnableAllInput();
    }
 
     private void OnDisable()
@@ -177,6 +187,7 @@ public class PlayerInput : MonoBehaviour//Sign:更新模式会影响到按键判
      public void DisablePlayerMenuInput()
      {
          playerInputActions.PlayerMenu.Disable();
+         EnableOneInput(playerInputActions.PlayerMenu.Switch);
      }
      
 }

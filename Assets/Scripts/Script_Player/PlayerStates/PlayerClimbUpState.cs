@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerClimbUpState : PlayerStateBase
 {
     [SerializeField] private float climbSpeed;
+    [SerializeField] private Vector3 moveDistanceFromStairs;
     
     public override void OnEnter()
     {
@@ -22,9 +23,8 @@ public class PlayerClimbUpState : PlayerStateBase
         
         if (!player.IsInStairs)
         {
-            player.SetGravity(1f);
-            player.SetPosWithStairs(Vector3.up);
-            playerStateMachine.SwitchState(typeof(PlayerIdleState));
+            player.SetPosWithStairs(moveDistanceFromStairs);
+            playerStateMachine.SwitchState(typeof(PlayerLandState));
             return;
         }
 
@@ -55,6 +55,8 @@ public class PlayerClimbUpState : PlayerStateBase
     public override void OnExit()
     {
         base.OnExit();
+        
+        player.SetRbVelocity(Vector2.zero);
         
         Physics2D.IgnoreLayerCollision(6,9,false);
     }

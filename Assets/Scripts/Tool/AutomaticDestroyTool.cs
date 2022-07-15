@@ -8,10 +8,11 @@ public class AutomaticDestroyTool : MonoBehaviour
     [SerializeField] private float destroyTime;
     [SerializeField] private bool needDestroy;
 
-    private WaitForSeconds destroyWFS;
+    private WaitForSecondsRealtime destroyRWFS;
+    
     private void Awake()
     {
-        destroyWFS = new WaitForSeconds(destroyTime);
+        destroyRWFS = new WaitForSecondsRealtime(destroyTime);//Sign:会受到时间停止的影响，故使用Realtime
     }
 
     private void OnEnable()
@@ -21,8 +22,8 @@ public class AutomaticDestroyTool : MonoBehaviour
 
     IEnumerator AutoDestroyCor()
     {
-        yield return destroyWFS;
-
+        yield return destroyRWFS;
+        
         if (!needDestroy)
         {
             gameObject.SetActive(false);

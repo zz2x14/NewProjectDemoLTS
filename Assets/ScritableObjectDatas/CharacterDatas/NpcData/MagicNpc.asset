@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a50fb949eac80644a8a8d68f62d9946e, type: 3}
+  m_Name: MagicNpc
+  m_EditorClassIdentifier: 
+  npcBaseData:
+    npcName: "\u6CD5\u4E1D\u513F"
+    npcID: 3
+    npcPortrait: {fileID: 21300000, guid: 3da354d6cd095cb4fa78a447b6200d86, type: 3}
+  containers:
+  - talkSceneName: "\u89E3\u9501\u6CD5\u672F"
+    talkID: 4
+    isTalked: 0
+    isForcedTalk: 1
+    thisTalkData: {fileID: 11400000, guid: b15472c8b5ee6bb4bb9925a4d44c2b7a, type: 2}
+    matchingChapter: 3
+    isTalkPrecondition: 0
+    lockedTalkData: {fileID: 0}
+    isScenePrecondtion: 0
+    targetSceneID: 0
+    willPushForwardGameChapter: 0
+    targetChapter: 0
+    willUpdateChapterGuide: 1
+    updatedChapterGuideContent: "\u5728\u6CD5\u5E08\u534F\u4F1A\u5B66\u5230\u4E86\u7B2C\u4E00\u95E8\u6CD5\u672F\uFF0C\u8FEB\u4E0D\u53CA\u5F85\u5730\u5927\u5C55\u8EAB\u624B...\n\u56DE\u53BB\u627E\u6B66\u5927\u5427\uFF0C\u597D\u50CF\u6709\u5173\u5148\u950B\u961F\u7684\u4E8B\u60C5\u627E\u6211\u3002"
