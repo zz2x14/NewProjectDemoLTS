@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using MyEventSpace;
+using UnityEditor.Animations;
 using UnityEngine.Events;
 
-public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动画冲突问题 以及动画被打断问题
+public class EnemyController : CharacterBase,IEnemy ,ISpeedDown,ILimitAction//TODO:玩家和敌人的动画冲突问题 以及动画被打断问题
 {
     private Rigidbody2D rb;
+    private SpriteRenderer sR;
     private ItemDroppedFromEnemy dropTool;
     
     public EnemyData enemyData;
@@ -29,7 +31,7 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
     [Header("攻击通用")] 
     [SerializeField] protected float attackRange;
     [SerializeField] protected Transform attackPoint;
-    
+
     //Sign:属性也是可以复写的
     public virtual bool FoundPlayer => Physics2D.OverlapBox(detectorPoint.position, detectorRange, 0f,playerLayer);
     public bool PlayerInAttackRange => Physics2D.OverlapCircle(attackPoint.position, attackRange ,playerLayer);
@@ -47,12 +49,35 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
     
     public event UnityAction OnDealth = delegate {  };
 
+    public float OnGroundHeight => transform.position.y;
+    
+    private Color coldColor;
+    private Color poisoningColor;
+    private Color paralyticColor;
+
+    private Coroutine overTimeDamageCor;
+    
+    public Vector2 ThrowedForce { get; set; }
+
+    private Animator anim;
+    private RuntimeAnimatorController defaultAnimController;
+    public float TransmutationDuration { get; set; }
+    public bool inTransmutation;
+
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        sR = GetComponentInChildren<SpriteRenderer>();
         dropTool = GetComponent<ItemDroppedFromEnemy>();
 
+        coldColor = new Color(0f, 0.85f, 1f, 1f);
+        poisoningColor = new Color(0.7f, 0f, 1f, 1f);
+        paralyticColor = new Color(0.3f, 0.3f, 0.3f, 1f);
+
         InitializeEnemy();
+
+        anim = GetComponentInChildren<Animator>();
+        defaultAnimController = anim.runtimeAnimatorController;
     }
 
     protected virtual void OnEnable()
@@ -60,6 +85,13 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
         OriginalPos = transform.position;
       
         enemyData.InitializeHealth();
+
+        inTransmutation = false;
+    }
+    
+    private void OnDisable()
+    {
+        DropSth();
     }
 
     protected virtual void Start()
@@ -135,7 +167,7 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
             ? Vector3.one
             : flipXScale;
     }
-    
+   
     public void ChasePlayerHorizontal()
     {
         FaceToPlayer();
@@ -179,6 +211,8 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
 
     public override void TakenDamage(float value)
     {
+        if(inTransmutation) return;
+        
         if(enemyData.baseData.curHealth <= 0) return;
         
         base.TakenDamage(value);
@@ -190,10 +224,32 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
             Death();
         }
     }
-
-    private void OnDisable()
+    
+    public void StartOverTimeDamageCor(float interval, float duration, float damage)
     {
-        DropSth();
+        if (overTimeDamageCor != null)
+        {
+            StopCoroutine(overTimeDamageCor);
+        }
+
+        overTimeDamageCor = StartCoroutine(TakenDamageOverTimeCor(interval, duration, damage));
+    }
+
+    public IEnumerator TakenDamageOverTimeCor(float interval, float duration, float damage)
+    {
+        float t = 0;
+        var intervalWFS = new WaitForSeconds(interval);
+        
+        while (t < duration)
+        {
+            sR.color = poisoningColor;
+            
+            t += interval;
+            TakenDamage(damage);
+            yield return intervalWFS;
+        }
+        
+        sR.color = Color.white;
     }
 
     private void Death()
@@ -206,5 +262,59 @@ public class EnemyController : CharacterBase,IEnemy //TODO:玩家和敌人的动
     public void DropSth()
     {
         dropTool.DropItemAndCoin();
+    }
+
+    public void StartSpeedDownCor(float duration)
+    {
+        StartCoroutine(SpeedDownCor(duration));
+    }
+
+    public IEnumerator SpeedDownCor(float duration)
+    {
+        chaseSpeed /= 2;
+        moveSpeed /= 2;
+        sR.color = coldColor;
+
+        yield return new WaitForSeconds(duration);
+
+        chaseSpeed *= 2;
+        moveSpeed *= 2;
+        sR.color = Color.white;
+    }
+
+    public void BeThrowed(Vector2 force)
+    {
+        ThrowedForce = force;
+        enemyStateMachine.ToThrowedState();
+    }
+
+    public void BeTransmutation(RuntimeAnimatorController transmutationAnimController,float duration)
+    {
+        inTransmutation = true;
+        anim.runtimeAnimatorController = transmutationAnimController;
+        enemyStateMachine.ToTransmutationState();
+        TransmutationDuration = duration;
+    }
+
+    public void DefartFromTransmutation()
+    {
+        inTransmutation = false;
+        anim.runtimeAnimatorController = defaultAnimController;
+    }
+
+    public void StartLimitActionCor(float duration)
+    {
+        StartCoroutine(LimitActionCor(duration));
+    }
+
+    public IEnumerator LimitActionCor(float duration)
+    {
+        sR.color = paralyticColor;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        
+        yield return new WaitForSeconds(duration);
+
+        sR.color = Color.white;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 }

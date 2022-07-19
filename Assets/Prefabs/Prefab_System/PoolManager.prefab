@@ -59,6 +59,32 @@ MonoBehaviour:
   enemyPools:
   - prefab: {fileID: 4983766040459577310, guid: 7a1db3b666178bd49a7798f7c6269299, type: 3}
     size: 3
+  magicPools:
+  - prefab: {fileID: 7264675766018157920, guid: ca0d4e23d67e8d04799fbc3d2d5115bf, type: 3}
+    size: 1
+  - prefab: {fileID: 1143183819745927040, guid: 90483be065d70694ba241a8dc0850374, type: 3}
+    size: 1
+  - prefab: {fileID: 4090802670145127190, guid: 70069ee053c37bd4ea4857705b70ddce, type: 3}
+    size: 1
+  - prefab: {fileID: 3680757421081382970, guid: 9b151056b7087e840902a2a87bc22be2, type: 3}
+    size: 1
+  - prefab: {fileID: 1303330816137490416, guid: 292068b84c597ab439cf1dfd81639dbe, type: 3}
+    size: 1
+  - prefab: {fileID: 3079270103951816733, guid: c27c6699a0893cd43b82922a9086dfcd, type: 3}
+    size: 1
+  - prefab: {fileID: 7070421546970484062, guid: 48d18dd1ad827cc428a5a1fa1a3f639f, type: 3}
+    size: 1
+  magicOnPlayerPosPools:
+  - prefab: {fileID: 5188450435032266872, guid: 9edf925a58beda14e8891b0a5d4b7870, type: 3}
+    size: 1
+  - prefab: {fileID: 5393253286396330878, guid: 0c8d2bc2450de5f44ac8b38d5f28f4b2, type: 3}
+    size: 1
+  - prefab: {fileID: 2716765377340463927, guid: e3aa8db95d09e9d41b9e13f0151047f1, type: 3}
+    size: 1
+  - prefab: {fileID: 3778166268956621814, guid: f031ee1fff85e1d44b420fec1ad6976e, type: 3}
+    size: 1
+  - prefab: {fileID: 6303105609405855943, guid: 90ae17e933d89464bb27fdc884204fe2, type: 3}
+    size: 1
   itemPools:
   - prefab: {fileID: 3783766657752792890, guid: 85c2e1fc59aa8424bb225ba7e544bf0e, type: 3}
     size: 5

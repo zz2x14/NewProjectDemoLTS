@@ -8,6 +8,10 @@ using UnityEngine.UI;
 
 public class NpcMagic : NpcController
 {
+    [Header("对话")] 
+    [SerializeField] private TalkData targetTalk;
+    [SerializeField] [TextArea] private string guideContentMasterFirstMagic;
+    
     [Header("UI")]
     [SerializeField] private Canvas confirmCanvas;
     [SerializeField] private Canvas magicCanvas;
@@ -20,7 +24,7 @@ public class NpcMagic : NpcController
     [SerializeField] private List<Button> magicSlotButtonList = new List<Button>(); 
 
     [Header("法术")] 
-    [SerializeField] private List<Magic> magicList = new List<Magic>();
+    [SerializeField] private List<MagicDataContainer> magicList = new List<MagicDataContainer>();
 
     private Button closeButton;
 
@@ -30,6 +34,8 @@ public class NpcMagic : NpcController
     private const string TIP_COINNOTENOUGH = "金币不足！";
     private const string TIP_MASTERSUCCESSFULLY = "成功精通法术！";
 
+    private bool canMagic;
+
     protected override void Awake()
     {
         base.Awake();
@@ -37,15 +43,17 @@ public class NpcMagic : NpcController
         closeButton = magicCanvas.transform.GetChild(5).GetComponent<Button>();
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-         StartCoroutine(nameof(OpenMagicInterfaceCor));
+        StartCoroutine(nameof(OpenMagicInterfaceCor));
 
         UpdateMagicSlot();
         
         closeButton.onClick.AddListener(DisableMagicCanvas);
         confirmMasterButton.onClick.AddListener(ConfirmMasterMagic);
         cancelMasterButton.onClick.AddListener(DisableConfirmMasterGO);
+        
+        base.OnEnable();
     }
 
     private void OnDisable()
@@ -73,11 +81,15 @@ public class NpcMagic : NpcController
     {
         base.OnTriggerEnter2D(col);
         
+        if(targetTalk.locked) return;
+        
         confirmCanvas.enabled = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        if(targetTalk.locked) return;
+        
         confirmCanvas.enabled = false;
     }
     
@@ -143,12 +155,12 @@ public class NpcMagic : NpcController
         
         UpdateMagicSlot();
 
-        if (CurMagicIndex == 0)
-        {
-            PlayerMenuSystem.Instance.UnlockMagicInterface();
-            PlayerMagicSystem.Instance.UnlockMagicHotbars();
-            PlayerMagicSystem.Instance.UpdateMagicListInPM();
-        }
+        if (CurMagicIndex != 0) return;
+        
+        PlayerMenuSystem.Instance.UnlockMagicInterface();
+        PlayerMagicSystem.Instance.UnlockMagicHotbars();
+        PlayerMagicSystem.Instance.UpdateMagicListInPM();
+        ChapterGuideContentUI.Instance.UpdateChapterGuideContent(guideContentMasterFirstMagic);
     }
     
 }

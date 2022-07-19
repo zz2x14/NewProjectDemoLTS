@@ -17,8 +17,12 @@ MonoBehaviour:
     magicName: "\u9B54\u6CD5\u4E4B\u624B"
     magicIcon: {fileID: 21300000, guid: 288ddf9786e500b48896d9659edc5e08, type: 3}
     magicDescription: "\u51DD\u6210\u9B54\u6CD5\u4E4B\u624B\uFF0C\u6254\u51FA\u654C\u4EBA"
+    magicPrefab: {fileID: 1303330816137490416, guid: 292068b84c597ab439cf1dfd81639dbe, type: 3}
+    magicCD: 5
     magicCost: 500
-  isMaster: 0
+  isMaster: 1
+  isReady: 1
   magicType: 2
+  magicApproach: 2
   ControlMagicData:
     controlValue: 0

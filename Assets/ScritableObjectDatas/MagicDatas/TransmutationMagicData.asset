@@ -13,12 +13,16 @@ MonoBehaviour:
   m_Name: TransmutationMagicData
   m_EditorClassIdentifier: 
   magicBase:
-    magicID: 11
+    magicID: 10
     magicName: "\u53D8\u5F62\u672F"
     magicIcon: {fileID: 21300000, guid: dce7a9deb2eca054198ee6125f8153e4, type: 3}
     magicDescription: "\u5C06\u654C\u4EBA\u53D8\u6210\u5C0F\u52A8\u7269\u7684\u795E\u5947\u6CD5\u672F"
-    magicCost: 2500
-  isMaster: 0
+    magicPrefab: {fileID: 3079270103951816733, guid: c27c6699a0893cd43b82922a9086dfcd, type: 3}
+    magicCD: 5
+    magicCost: 1500
+  isMaster: 1
+  isReady: 1
   magicType: 2
+  magicApproach: 0
   ControlMagicData:
-    controlValue: 0
+    controlValue: 5

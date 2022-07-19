@@ -14,5 +14,10 @@ public class CharacterBase : MonoBehaviour,ITakenDamage
         OnHurt.Invoke();
     }
 
+    public virtual void RecoverHealth(float value)
+    {
+        
+    }
+
     
 }

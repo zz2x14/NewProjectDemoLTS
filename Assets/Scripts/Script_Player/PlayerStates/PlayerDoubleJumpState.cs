@@ -7,6 +7,8 @@ public class PlayerDoubleJumpState : PlayerStateBase
 {
     [SerializeField] private float doubleJumpForce;
     [SerializeField] private float jumpMoveSpeed;
+
+    private float finalJumpForce;
     
     public override void OnEnter()
     {
@@ -14,7 +16,9 @@ public class PlayerDoubleJumpState : PlayerStateBase
 
         player.JumpCount--;
         
-        player.SetRbVelocityY(doubleJumpForce);
+        finalJumpForce = player.InLevitation ? doubleJumpForce * 1.5f: doubleJumpForce;
+        
+        player.SetRbVelocityY(finalJumpForce);
     }
 
     public override void OnGameLogicUpdate()

@@ -2,23 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrapPoisonDart : TrapWait,IGiveDamageOverTime
+public class TrapPoisonDart : TrapWait,IGivePlayerDamageOverTime
 {
     [Header("持续伤害时间")]
     [SerializeField] private float duration;
-    
-    public float Duration { get; set; }
-    
-    protected override void Awake()
-    {
-        base.Awake();
 
-        Duration = duration;
-    }
-
-    public void GiveDamageOverTime(ITakenDamageOverTime target)
+    public void GiveDamageOverTime(IPlayerDebuff target)
     {
-        target.TakeDamageOverTime(Duration,trapDamage);
+        target.TakenDamageOverTime(duration,trapDamage);
     }
 
     public override void HitPlayer01()
@@ -27,7 +18,7 @@ public class TrapPoisonDart : TrapWait,IGiveDamageOverTime
         
         if (player !=null)
         {
-            GiveDamageOverTime(player.GetComponent<ITakenDamageOverTime>());
+            GiveDamageOverTime(player.GetComponent<IPlayerDebuff>());
         }
     }
 }

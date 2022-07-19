@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MyEventSpace;
 using UnityEngine;
 
 public class LockedPortalCaller : MonoBehaviour
@@ -9,12 +10,18 @@ public class LockedPortalCaller : MonoBehaviour
     
     private void OnEnable()
     {
-        if (!portalDataContainer.IsLocked)
-        {
-            SceneController.Instance.Teleport(portalDataContainer.TargetSceneID);
+        EventManager.Instance.AddEventHandlerListener(EventName.OnSceneTeleport,RestorePortalData);
 
-            RecoverPortalData();
-        }
+        if (portalDataContainer.IsLocked) return;
+
+        SceneController.Instance.Teleport(portalDataContainer.TargetSceneID);
+
+        RestorePortalData(null,EventArgs.Empty);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Instance.RemoveEventHandlerListener(EventName.OnSceneTeleport,RestorePortalData);
     }
 
     public void UnlockAndSetSceneID(int id)
@@ -23,9 +30,9 @@ public class LockedPortalCaller : MonoBehaviour
         portalDataContainer.TargetSceneID = id;
     }
 
-    public void RecoverPortalData()
+    public void RestorePortalData(object o, EventArgs e)
     {
         portalDataContainer.IsLocked = true;
-        portalDataContainer.TargetSceneID = 0;
+        portalDataContainer.TargetSceneID = -1;
     }
 }

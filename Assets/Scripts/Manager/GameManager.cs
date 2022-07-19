@@ -25,6 +25,37 @@ public class GameManager : PersistentSingletonTool<GameManager>
     }
     public PlayerBattleState _BattleState => playerBattleState;
 
+    public Vector3 CurBattleTargetPos => battleTargetsList[0].transform.position;
+    public Vector3 CurBattleTargetPosWithOffset => new Vector3(battleTargetsList[0].transform.position.x,
+        battleTargetsList[0].transform.position.y - battleTargetsList[0].OnGroundHeight, 0f);
+    public Vector3 FindOneTargetPosWithOffset()
+    {
+        for (int i = 0; i < FindObjectsOfType<EnemyController>().Length; i++)
+        {
+            if (FindObjectsOfType<EnemyController>().Length > 0)
+            {
+                return  new Vector3(FindObjectsOfType<EnemyController>()[0].transform.position.x,
+                    FindObjectsOfType<EnemyController>()[0].transform.position.y - FindObjectsOfType<EnemyController>()[0].OnGroundHeight, 0f);
+            }
+        }
+
+        return ComponentProvider.Instance.PlayerPos.position;
+    }
+    public Vector3 FindOneTargetPos()
+    {
+        for (int i = 0; i < FindObjectsOfType<EnemyController>().Length; i++)
+        {
+            if (FindObjectsOfType<EnemyController>().Length > 0)
+            {
+                return  FindObjectsOfType<EnemyController>()[0].transform.position;
+            }
+        }
+
+        return ComponentProvider.Instance.PlayerPos.position;
+    }
+
+    public EnemyController CurBattleTarget => battleTargetsList[0];
+
     private void OnEnable()
     {
         StartCoroutine(nameof(BattleStateCor));
@@ -78,12 +109,30 @@ public class GameManager : PersistentSingletonTool<GameManager>
         }
     }
 
+    public void PlayerMenuingStateOpreation(bool playerMeuning)
+    {
+        gameState = playerMeuning ? GameState.Paused : GameState.Playing;
+        Time.timeScale = playerMeuning ? 0 : 1;
+        
+        if (playerMeuning)
+        {
+            ComponentProvider.Instance.PlayerInputAvatar.DisableGamePlayInput();
+            ComponentProvider.Instance.PlayerInputAvatar.EnablePlayerMenuInput();
+        }
+        else
+        {
+            ComponentProvider.Instance.PlayerInputAvatar.EnableGameplayInput();
+            ComponentProvider.Instance.PlayerInputAvatar.DisablePlayerMenuInputWithoutSwitchKey();
+        }
+    }
+
 }
 
 public enum GameState
 {
     Playing,
     Shopping,
+    PlayerMeuning,
     Paused,
     GameOver
 }

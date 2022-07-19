@@ -13,12 +13,16 @@ MonoBehaviour:
   m_Name: TreatmentMagicData
   m_EditorClassIdentifier: 
   magicBase:
-    magicID: 7
+    magicID: 6
     magicName: "\u590D\u82CF\u4E4B\u98CE"
     magicIcon: {fileID: 21300000, guid: 0527594fc5c0185458cb25538034801b, type: 3}
-    magicDescription: "\u798F\u97F3\u73AF\u8EAB\uFF0C\u6B7B\u8005\u82CF\u751F"
-    magicCost: 3000
-  isMaster: 0
+    magicDescription: "\u798F\u97F3\u73AF\u8EAB\uFF0C\u5982\u6C90\u6625\u98CE"
+    magicPrefab: {fileID: 3778166268956621814, guid: f031ee1fff85e1d44b420fec1ad6976e, type: 3}
+    magicCD: 5
+    magicCost: 1800
+  isMaster: 1
+  isReady: 1
   magicType: 1
+  magicApproach: 1
   cureMagicData:
-    cureValue: 0
+    cureValue: 10

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "MagicData/DamageMagicData",fileName = "NewDamageMagicData")]
-public class DamageMagic : Magic
+public class DamageMagic : MagicDataContainer
 {
     [SerializeField] private DamageMagicData damageMagicData;
     public float Damage => damageMagicData.damageValue;

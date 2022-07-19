@@ -5,9 +5,16 @@ using MyEventSpace;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOverTime
+public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ICureOverTime
 {
     private static PlayerController instance;
+    
+    private Rigidbody2D rb;
+    
+    private PlayerInput playerInput;
+    private PlayerGroundDetector groundDetector;
+    private PlayerHangDetector hangDetector;
+    private PlayerOnStairsDetector stairsDetector;
     
     [SerializeField] private PlayerData playerData;
     
@@ -36,17 +43,9 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOv
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float bulletSpeed;
 
-    private Canvas talkingCanvas;
-
-    private float lastShootTime;
-    public bool CanShoot => lastShootTime <= Time.time - shootInterval;
-
-    private Rigidbody2D rb;
-    
-    private PlayerInput playerInput;
-    private PlayerGroundDetector groundDetector;
-    private PlayerHangDetector hangDetector;
-    private PlayerOnStairsDetector stairsDetector;
+    [Header("法术")] 
+    [SerializeField] private Transform castMagicPoint;
+    [SerializeField] private Transform magicEffectiveOnPlayerPos; 
     
     public float MoveSpeed => rb.velocity.x;
 
@@ -55,29 +54,44 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOv
     public bool IsGrounded => groundDetector.IsOnGround;
     public bool CanHang => hangDetector.CanHang;
     public bool IsFalling => rb.velocity.y < 0f;
-
     public bool IsInStairs => stairsDetector.IsInStairs;
     public bool IsOnStairs => stairsDetector.IsOnStairs;
 
+    private PlayerHealthBar healthBar;
+    
     private Coroutine invincibleCor;
+    private Coroutine takeDamageOverTimeCor;
     private WaitForSeconds invincibleCDWFS;
     private bool canHurt = true;
+    
+    public float CurHealth => playerData.baseData.curHealth;
+    public float MaxHealth => playerData.baseData.maxHealth;
 
     public bool CanRoll { get; set; }
     public bool RollCDOver { get; private set; }
     private Coroutine litmitRollCor;
     private WaitForSeconds rollCDWFS;
 
-    public Vector2 ForcedForce { get; set; }
     public event Action OnForced = delegate {  };
+    public Vector2 ForcedForce { get; set; }
+    
     public event Action OnTalk = delegate {  };
+    private Canvas talkingCanvas;
+    
+    private float lastShootTime;
+    public bool CanShoot => lastShootTime <= Time.time - shootInterval;
 
-    public float CurHealth => playerData.baseData.curHealth;
-    public float MaxHealth => playerData.baseData.maxHealth;
+    public bool IsCastMagic { get; set; }
+    //public bool IsCastMagicAnimOver { get; set; }
+    public Vector3 CastMagicPoint => castMagicPoint.position;
+    public Vector3 MagicEffectivePos => magicEffectiveOnPlayerPos.position;
+    
+    private Amulet amuletMagic;
+    public int CurAmueltTimeNum { get; set; }
 
-    private PlayerHealthBar healthBar;
-
-    private Coroutine takeDamageOverTimeCor;
+    private Coroutine cureOverTimeCor;
+    
+    public bool InLevitation { get; private set; }
     
     private void Awake()
     {
@@ -117,6 +131,10 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOv
 
         CanRoll = true;
         RollCDOver = true;
+
+        InLevitation = false;
+        CurAmueltTimeNum = 0;
+        amuletMagic = GetComponentInChildren<Amulet>(true);
     }
 
     private void Start()
@@ -129,9 +147,10 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOv
     private void OnDisable()
     {
         GameManager.Instance.ClearBattleList();
+        
+        StopAllCoroutines();
     }
 
-   
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
@@ -177,7 +196,7 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOv
 
     #endregion
 
-    #region StatesMethod
+    #region AboutStatesMethod
     
     public void SetGravity(float gravity)
     {
@@ -252,6 +271,13 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOv
     
     public override void TakenDamage(float value)
     {
+        if (CurAmueltTimeNum > 0 && amuletMagic != null)
+        {
+            CurAmueltTimeNum = Mathf.Max(CurAmueltTimeNum - 1, 0);
+            amuletMagic.UpdateAmuletLayer(CurAmueltTimeNum);
+            return;
+        }
+        
         if(playerData.baseData.curHealth <= 0 || !canHurt) return;
 
         if (invincibleCor != null)
@@ -428,16 +454,22 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOv
     {
         healthBar.DisableHeatlthHUDCanvas();
     }
-
-    public void TakeDamageOverTime(float duration,float damage)
+    
+    public void FillHealth()
+    {
+        playerData.InitializeHealth();
+        healthBar.UpdateHealthBarImmediately(playerData.baseData.curHealth,playerData.baseData.maxHealth);
+    }
+    
+    public void TakenDamageOverTime(float duration,float damage)
     {
         if (takeDamageOverTimeCor != null)
         {
             StopCoroutine(takeDamageOverTimeCor);
         }
-        takeDamageOverTimeCor = StartCoroutine(TakeDamageOverTimeCor(duration,damage));
+        takeDamageOverTimeCor = StartCoroutine(TakenDamageOverTimeCor(duration,damage));
     }
-    public IEnumerator TakeDamageOverTimeCor(float duration,float damage)
+    public IEnumerator TakenDamageOverTimeCor(float duration,float damage)
     {
         float t = 0;
         while (t < duration)
@@ -446,12 +478,67 @@ public class PlayerController : CharacterBase,IPlayerDebuff,ITalk,ITakenDamageOv
             TakenDamage(damage);
             yield return invincibleCDWFS;
         }
-       
     }
 
-    public void FillHealth()
+    public override void RecoverHealth(float value)
     {
-        playerData.InitializeHealth();
-        healthBar.FillHealthBarImmediately();
+        playerData.baseData.curHealth = Mathf.Min(playerData.baseData.curHealth + value, playerData.baseData.maxHealth);
+        healthBar.UpdateHealthBarImmediately(playerData.baseData.curHealth,playerData.baseData.maxHealth);
+    }
+    public void StopPlayerDebuff()
+    {
+        CanRoll = true;
+
+        if (litmitRollCor != null)
+        {
+            StopCoroutine(litmitRollCor);
+        }
+
+        if (takeDamageOverTimeCor != null)
+        {
+            StopCoroutine(takeDamageOverTimeCor);
+        }
+    }
+
+    public void StartCureOverTimeCor(float interval, float duration,float cureValue)
+    {
+        if(playerData.baseData.curHealth == playerData.baseData.maxHealth) return;
+        
+        if (cureOverTimeCor != null)
+        {
+            StopCoroutine(cureOverTimeCor);
+        }
+
+        cureOverTimeCor = StartCoroutine(CureOverTimeCor(interval,duration,cureValue));
+    }
+    public IEnumerator CureOverTimeCor(float interval, float duration,float cureValue)
+    {
+        float t = 0;
+        var intervalWFS = new WaitForSeconds(interval);
+        
+        while (t < duration && playerData.baseData.curHealth < playerData.baseData.maxHealth)
+        {
+            t += interval;
+            playerData.baseData.curHealth =
+                Mathf.Min(playerData.baseData.curHealth + cureValue, playerData.baseData.maxHealth);
+            
+            healthBar.UpdateHealthBar();
+            
+            yield return intervalWFS;
+        }
+    }
+
+    public void StartLevitationCor(float duration)
+    {
+        StartCoroutine(LevitationCor(duration));
+    }
+
+    IEnumerator LevitationCor(float duration)
+    {
+        InLevitation = true;
+
+        yield return new WaitForSeconds(duration);
+
+        InLevitation = false;
     }
 }

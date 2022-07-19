@@ -19,6 +19,7 @@ public class PlayerHealthBar : MonoBehaviour
     private float curRate;
 
     private Coroutine decreasedCor;
+    private Coroutine increasedCor;
 
     private void Awake()
     {
@@ -45,19 +46,29 @@ public class PlayerHealthBar : MonoBehaviour
         targetRate = curRate;
     }
 
-    private void UpdateHealthBar()
+    public void UpdateHealthBar ()
     {
         targetRate = player.CurHealth / player.MaxHealth;
         
-        if (decreasedCor != null)
+        if (curRate > targetRate)
         {
-            StopCoroutine(decreasedCor);
-        }
-
-        if (targetRate < curRate)
-        {
+            if (decreasedCor != null)
+            {
+                StopCoroutine(decreasedCor);
+            }
+            
             healthBar.fillAmount = targetRate;
             decreasedCor = StartCoroutine(BarDecreasedEffectCor(healthBarEffect));
+        }
+        else
+        {
+            if (increasedCor != null)
+            {
+                StopCoroutine(increasedCor);
+            }
+            
+            healthBarEffect.fillAmount = targetRate;
+            increasedCor = StartCoroutine(BarIncreasedEffectCor(healthBar));
         }
     }
 
@@ -74,11 +85,24 @@ public class PlayerHealthBar : MonoBehaviour
             yield return null;
         }
     }
-
-    public void FillHealthBarImmediately()
+    IEnumerator BarIncreasedEffectCor(Image bar)
     {
-        healthBar.fillAmount = 1f;
-        healthBarEffect.fillAmount = 1f;
+        if (isDelay)
+            yield return new WaitForSeconds(effectDelay);
+        
+        while (curRate < targetRate)
+        {
+            curRate += Time.deltaTime * decreaseSpeed;
+            bar.fillAmount = curRate;
+            
+            yield return null;
+        }
+    }
+
+    public void UpdateHealthBarImmediately(float curValue,float maxValue)
+    {
+        healthBar.fillAmount = curValue / maxValue;
+        healthBarEffect.fillAmount = healthBar.fillAmount;
     }
 
     public void EnableHealthHUDCanvas()

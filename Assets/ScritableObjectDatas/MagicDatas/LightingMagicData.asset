@@ -17,8 +17,12 @@ MonoBehaviour:
     magicName: "\u96F7\u5149\u672F"
     magicIcon: {fileID: 21300000, guid: 696f5b20ef441d8489c40cf9e2975d94, type: 3}
     magicDescription: "\u96F7\u5149\u4E00\u95EA\uFF0C\u6BC1\u5929\u706D\u5730"
+    magicPrefab: {fileID: 3680757421081382970, guid: 9b151056b7087e840902a2a87bc22be2, type: 3}
+    magicCD: 5
     magicCost: 1800
-  isMaster: 0
+  isMaster: 1
+  isReady: 1
   magicType: 0
+  magicApproach: 0
   damageMagicData:
     damageValue: 0

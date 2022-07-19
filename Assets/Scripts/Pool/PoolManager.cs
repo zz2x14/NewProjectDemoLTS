@@ -12,8 +12,11 @@ public class PoolManager : PersistentSingletonTool<PoolManager>
     public Pool[] playerBulletPools;
     public Pool[] trapBulletPools;
     public Pool[] enemyPools;
+    public Pool[] magicPools;
+    public Pool[] magicOnPlayerPosPools;
     public Pool[] itemPools;
     public Pool[] UIPools;
+    
 
     private const string DAMAGEUIPARENTNAME = "DamageValueeEffectCanvas";
     
@@ -25,6 +28,8 @@ public class PoolManager : PersistentSingletonTool<PoolManager>
         InitializePools(playerBulletPools);
         InitializePools(trapBulletPools);
         InitializePools(enemyPools);
+        InitializePools(magicPools);
+        InitializePoolsWhichOnPlayerPos(magicOnPlayerPosPools);
         InitializePools(itemPools);
         InitializeDamageValueUIPools(UIPools);
     }
@@ -36,6 +41,8 @@ public class PoolManager : PersistentSingletonTool<PoolManager>
         CheckPoolSize(playerBulletPools);
         CheckPoolSize(trapBulletPools);
         CheckPoolSize(enemyPools);
+        CheckPoolSize(magicPools);
+        CheckPoolSize(magicOnPlayerPosPools);
         CheckPoolSize(itemPools);
         CheckPoolSize(UIPools);
     }
@@ -72,6 +79,18 @@ public class PoolManager : PersistentSingletonTool<PoolManager>
         for (int i = 0; i < pools.Length; i++)
         {
             pools[i].ParentTransform = GameObject.Find(DAMAGEUIPARENTNAME).transform;
+            
+            poolTable.Add(pools[i].Prefab,pools[i]);
+            
+            pools[i].Init();
+        }
+    }
+    
+    private void InitializePoolsWhichOnPlayerPos(Pool[] pools)
+    {
+        for (int i = 0; i < pools.Length; i++)
+        {
+            pools[i].ParentTransform = FindObjectOfType<PlayerController>().transform;
             
             poolTable.Add(pools[i].Prefab,pools[i]);
             

@@ -13,12 +13,16 @@ MonoBehaviour:
   m_Name: ForstSpikeMagicData
   m_EditorClassIdentifier: 
   magicBase:
-    magicID: 1
+    magicID: 2
     magicName: "\u51B0\u971C\u4E4B\u523A"
     magicIcon: {fileID: 21300000, guid: af690149609260a4fa9d1580e89b21cc, type: 3}
-    magicDescription: "\u51DD\u7ED3\u7A7A\u6C14\uFF0C\u4EE5\u51B0\u971C\u523A\u51FB"
-    magicCost: 250
-  isMaster: 0
+    magicDescription: "\u51DD\u7ED3\u7A7A\u6C14\uFF0C\u4EE5\u51B0\u4E3A\u523A"
+    magicPrefab: {fileID: 1143183819745927040, guid: 90483be065d70694ba241a8dc0850374, type: 3}
+    magicCD: 5
+    magicCost: 650
+  isMaster: 1
+  isReady: 1
   magicType: 0
+  magicApproach: 2
   damageMagicData:
     damageValue: 0

@@ -16,9 +16,13 @@ MonoBehaviour:
     magicID: 8
     magicName: "\u98D8\u6D6E\u672F"
     magicIcon: {fileID: 21300000, guid: 00f7e9b6e26ef7f46b35098384f12ac6, type: 3}
-    magicDescription: "\u4F7F\u654C\u4EBA\u98D8\u6D6E\u8D77\u6765\uFF0C\u98DE\u5411\u7A7A\u4E2D"
+    magicDescription: "\u8EAB\u8F7B\u5982\u71D5\uFF0C\u8DF3\u9AD8\u9AD8"
+    magicPrefab: {fileID: 6303105609405855943, guid: 90ae17e933d89464bb27fdc884204fe2, type: 3}
+    magicCD: 5
     magicCost: 400
-  isMaster: 0
+  isMaster: 1
+  isReady: 1
   magicType: 2
+  magicApproach: 1
   ControlMagicData:
-    controlValue: 0
+    controlValue: 8

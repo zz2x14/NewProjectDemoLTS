@@ -31,6 +31,11 @@ public class PlayerIdleState : PlayerStateBase
         {
             playerStateMachine.SwitchState(typeof(PlayerShootState));
         }
+
+        if (player.IsCastMagic)
+        {
+            playerStateMachine.SwitchState(typeof(PlayerCastMagicState));
+        }
         
         if (player.IsOnStairs)
         {

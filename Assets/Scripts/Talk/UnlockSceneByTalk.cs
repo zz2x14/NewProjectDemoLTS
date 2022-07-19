@@ -10,5 +10,5 @@ public class UnlockSceneByTalk : MonoBehaviour
     {
         managedPortal.UnlockAndSetSceneID(sceneID);
     }
-
+   
 }

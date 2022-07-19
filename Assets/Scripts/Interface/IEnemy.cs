@@ -25,4 +25,7 @@ public interface IEnemy
 
     void FaceToTarget(Vector3 target);
     void FaceToPlayer();
+
+    void StartOverTimeDamageCor(float interval, float duration, float damage);
+    IEnumerator TakenDamageOverTimeCor(float interval,float duration,float damage);
 }

@@ -1074,7 +1074,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -592, y: 27799.979}
+  m_AnchoredPosition: {x: -592, y: 1639252.8}
   m_SizeDelta: {x: 1184, y: 1500}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &223655333
@@ -13539,20 +13539,21 @@ MonoBehaviour:
   - {fileID: 1234929577}
   magicListInPM:
   - {fileID: 11400000, guid: 26438812c4949d248a905684f3b136d1, type: 2}
-  - {fileID: 11400000, guid: 48d5defa9165af74fb26d493759f3dcf, type: 2}
   - {fileID: 11400000, guid: 91f258712c6f1d64fadedda1869c3e4a, type: 2}
+  - {fileID: 11400000, guid: 48d5defa9165af74fb26d493759f3dcf, type: 2}
   - {fileID: 11400000, guid: f86ea04a4745105479cb0af7624e9012, type: 2}
   - {fileID: 11400000, guid: 5c633e9c33f048744906712e50d32a55, type: 2}
   - {fileID: 11400000, guid: 60dc8a70c2e0c4c43a65061368da20bc, type: 2}
-  - {fileID: 11400000, guid: 8038964aca6c381478ddd4912f7ff243, type: 2}
   - {fileID: 11400000, guid: 51bb139524b9c484d93a4810040b63b2, type: 2}
+  - {fileID: 11400000, guid: 8038964aca6c381478ddd4912f7ff243, type: 2}
   - {fileID: 11400000, guid: a3ea5ba9763a54b478bc1029f83fbfa5, type: 2}
   - {fileID: 11400000, guid: 6adc9ee5104ee824a8d696c946fca5c1, type: 2}
-  - {fileID: 11400000, guid: 0e2e5544b2cd04d4bbd720715ee4d9c9, type: 2}
   - {fileID: 11400000, guid: 108d89f916c1ad84790409ef443ad497, type: 2}
+  - {fileID: 11400000, guid: 0e2e5544b2cd04d4bbd720715ee4d9c9, type: 2}
   curDamageMagic: {fileID: 0}
   curCureMagic: {fileID: 0}
   curControlMagic: {fileID: 0}
+  castMagicDelayTime: 0.5
 --- !u!1 &6393261765479956034
 GameObject:
   m_ObjectHideFlags: 0
@@ -22788,7 +22789,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00032459092, y: 13684.706}
+  m_AnchoredPosition: {x: -0.00032459092, y: 525891.25}
   m_SizeDelta: {x: 0, y: 805.1821}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &7880651240703536298
@@ -23124,7 +23125,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7880651240802420774}
   - component: {fileID: 7880651240802420769}
-  - component: {fileID: 608249910}
   m_Layer: 5
   m_Name: ChapterGuideDynamiCanvas
   m_TagString: Untagged
@@ -23173,19 +23173,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &608249910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7880651240802420773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a17a7e8ed2cff0d46b13d9cc87db764b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  contentText: {fileID: 7880651241613226497}
 --- !u!1 &7880651240803195589
 GameObject:
   m_ObjectHideFlags: 0
@@ -28469,6 +28456,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7880651241611324312}
   - component: {fileID: 7880651241611324313}
+  - component: {fileID: 6059960808564664552}
   m_Layer: 5
   m_Name: ChapterGuideCanvas
   m_TagString: Untagged
@@ -28518,6 +28506,19 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &6059960808564664552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7880651241611324319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a17a7e8ed2cff0d46b13d9cc87db764b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contentText: {fileID: 7880651241613226497}
 --- !u!1 &7880651241613226503
 GameObject:
   m_ObjectHideFlags: 0

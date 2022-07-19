@@ -32,7 +32,7 @@ TagManager:
   - Npc
   - ItemInWorld
   - Trap
-  - 
+  - Magic
   - 
   - 
   - 
@@ -88,6 +88,9 @@ TagManager:
     locked: 0
   - name: Bullet
     uniqueID: 4271364975
+    locked: 0
+  - name: Magic
+    uniqueID: 2506248611
     locked: 0
   - name: UI
     uniqueID: 1879631455

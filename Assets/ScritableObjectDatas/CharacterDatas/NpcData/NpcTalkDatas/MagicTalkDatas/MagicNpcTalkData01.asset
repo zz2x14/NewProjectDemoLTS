@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9b186a604cae4d46ab417842f3ac1fa, type: 3}
-  m_Name: MagicTalkData01
+  m_Name: MagicNpcTalkData01
   m_EditorClassIdentifier: 
-  locked: 1
+  locked: 0
   talkContentList:
   - "\u539F\u6765\u662F\u6B66\u5927\u53EB\u4F60\u6765\u7684\uFF0C\u6211\u6B20\u4ED6\u4E00\u4E2A\u5927\u4EBA\u60C5\uFF0C\u5C31\u7834\u4F8B\u6559\u4F60\u5427\uFF0C\u4F60\u53EF\u522B\u5230\u5904\u5BA3\u4F20\u554A\uFF01"
   - "\u522B\u6025\u522B\u6025\uFF0C \u5929\u4E0B\u6CA1\u6709\u514D\u8D39\u7684\u5348\u9910\u3002\u6211\u53EF\u4EE5\u6559\u4F60\uFF0C\u4F46\u662F\u662F\u8981\u6536\u8D39\u7684\u3002"

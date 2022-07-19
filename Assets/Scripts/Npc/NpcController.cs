@@ -17,6 +17,10 @@ public class NpcController : MonoBehaviour
     [Header("是否产生对话")]
     [SerializeField] private bool willTalk;
 
+    [Header("出现对应章节")] 
+    [SerializeField] private bool isAppearing;
+    [SerializeField] private GameChapter npcAppearingChapter;
+
     public bool IsMover => isMover;
 
     private List<string> curTalkList = new List<string>();
@@ -43,7 +47,18 @@ public class NpcController : MonoBehaviour
             nameText.text = npcData.npcBaseData.npcName;
         }
     }
-    
+
+    protected virtual void OnEnable()
+    {
+        if (isAppearing)
+        {
+            if (npcAppearingChapter != GameManager.Instance._GameChapter)
+            {
+                gameObject.SetActive(false);
+            }
+        }
+    }
+
     protected virtual void OnTriggerEnter2D(Collider2D col)
     {
         if (!willTalk) return;

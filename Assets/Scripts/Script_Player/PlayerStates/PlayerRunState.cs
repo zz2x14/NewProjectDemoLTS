@@ -56,6 +56,11 @@ public class PlayerRunState : PlayerStateBase
             playerStateMachine.SwitchState(typeof(PlayerShootState));
         }
         
+        if (player.IsCastMagic)
+        {
+            playerStateMachine.SwitchState(typeof(PlayerCastMagicState));
+        }
+        
         if (player.CanRoll && player.RollCDOver && input.IsRollKeyPressed && playerAblity.RollUnlocked)
         {
             playerStateMachine.SwitchState(typeof(PlayerRollState));

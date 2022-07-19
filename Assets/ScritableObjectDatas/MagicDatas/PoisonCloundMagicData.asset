@@ -13,12 +13,16 @@ MonoBehaviour:
   m_Name: PoisonCloundMagicData
   m_EditorClassIdentifier: 
   magicBase:
-    magicID: 2
+    magicID: 1
     magicName: "\u6BD2\u4E91\u672F"
     magicIcon: {fileID: 21300000, guid: 37554cb233f23ca4ea2c048d4f88ddc4, type: 3}
     magicDescription: "\u6BD2\u4E91\u6BD2\u4E91\uFF0C\u4FB5\u8680\u5C14\u8EAB"
-    magicCost: 750
-  isMaster: 0
+    magicPrefab: {fileID: 4090802670145127190, guid: 70069ee053c37bd4ea4857705b70ddce, type: 3}
+    magicCD: 5
+    magicCost: 250
+  isMaster: 1
+  isReady: 1
   magicType: 0
+  magicApproach: 2
   damageMagicData:
     damageValue: 0

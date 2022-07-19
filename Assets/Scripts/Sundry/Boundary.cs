@@ -11,7 +11,7 @@ public class Boundary : MonoBehaviour
 
     private PlayerController player;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         player = FindObjectOfType<PlayerController>();
     }

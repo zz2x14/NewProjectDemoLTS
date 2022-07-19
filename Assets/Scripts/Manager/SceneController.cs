@@ -1,4 +1,6 @@
+ using System;
  using System.Collections;
+ using MyEventSpace;
  using UnityEngine;
  using UnityEngine.SceneManagement;
  using TMPro;
@@ -17,26 +19,27 @@
      [SerializeField] private TextMeshProUGUI saveTipText;
      [SerializeField] private GameObject saveTipIcon;
      [SerializeField] private GameObject sceneFaderImage;
-
+     
      private Coroutine teleportCor;
-
-     // private PlayerInput playerInput;
-     // private PlayerController playerController;
 
      private const string TEXT_GETANEKEYTIP = "按任意键继续...";
      private const string TEXT_LOADOVERTIP = "/自动保存成功/";
+     
      private const int SCENEID_TOWN = 1;
 
      public void Teleport(int sceneID)
      {
-        teleportCor = StartCoroutine(TeleportCor(sceneID));
+         if(sceneID < 0 )return;
+         teleportCor = StartCoroutine(TeleportCor(sceneID));
      }
  
      IEnumerator TeleportCor(int sceneID)
      {
+         EventManager.Instance.EventHandlerTrigger(EventName.OnSceneTeleport,null,EventArgs.Empty);
+         
          if (sceneID == SCENEID_TOWN)
          {
-             ComponentProvider.Instance.PlayerAvatar.FillHealth();
+             ComponentProvider.Instance.PlayerAvatar.FillHealth();//回到城镇恢复所有血量
          }
          
          ComponentProvider.Instance.PlayerInputAvatar.EnableSceneTeleportInput();
@@ -100,6 +103,8 @@
                      
                      ComponentProvider.Instance.PlayerInputAvatar.DisableSceneTeleportInput();
                      ComponentProvider.Instance.PlayerInputAvatar.EnableGameplayInput();
+                     
+                    
                  }
              }
 

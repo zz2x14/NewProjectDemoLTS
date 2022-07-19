@@ -13,12 +13,16 @@ MonoBehaviour:
   m_Name: AmuletMagicData
   m_EditorClassIdentifier: 
   magicBase:
-    magicID: 6
+    magicID: 7
     magicName: "\u62A4\u8EAB\u7B26"
     magicIcon: {fileID: 21300000, guid: 19a4501906d7da94abd3e26eba949e1f, type: 3}
     magicDescription: "\u8EAB\u8FB9\u751F\u6210\u7ED3\u754C\uFF0C\u62B5\u6321\u654C\u4EBA\u7684\u653B\u51FB"
-    magicCost: 1800
-  isMaster: 0
+    magicPrefab: {fileID: 2716765377340463927, guid: e3aa8db95d09e9d41b9e13f0151047f1, type: 3}
+    magicCD: 5
+    magicCost: 3000
+  isMaster: 1
+  isReady: 1
   magicType: 1
+  magicApproach: 1
   cureMagicData:
-    cureValue: 0
+    cureValue: 3

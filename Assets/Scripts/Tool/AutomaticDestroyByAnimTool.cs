@@ -20,6 +20,8 @@ public class AutomaticDestroyByAnimTool : MonoBehaviour
 
     private void OnEnable()
     {
+        isOver = false;
+        
         StartCoroutine(nameof(WaitAnimOverAndDestroyCor));
     }
 
@@ -41,5 +43,7 @@ public class AutomaticDestroyByAnimTool : MonoBehaviour
     private void OnDisable()
     {
         StopAllCoroutines();
+        
+        isOver = false;
     }
 }

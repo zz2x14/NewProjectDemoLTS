@@ -12,7 +12,7 @@ public abstract class PlayerStateBase : ScriptableObject,IState
 
     protected Animator animator => playerStateMachine.Anim;
     protected int animID;
-    [SerializeField] private string animName;
+    [SerializeField] protected string animName;
 
     protected float curSpeed;
 

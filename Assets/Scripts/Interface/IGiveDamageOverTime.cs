@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IGiveDamageOverTime
+public interface IGivePlayerDamageOverTime
 {
-    public float Duration { get; set; }
-    public void GiveDamageOverTime(ITakenDamageOverTime target);
+    public void GiveDamageOverTime(IPlayerDebuff target);
 }

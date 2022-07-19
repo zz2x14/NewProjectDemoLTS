@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Town-Field PortalData
   m_EditorClassIdentifier: 
   portalData:
-    targetSceneID: 2
-    isLocked: 0
+    targetSceneID: -1
+    isLocked: 1

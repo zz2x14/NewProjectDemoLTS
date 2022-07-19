@@ -81,4 +81,14 @@ public class EnemyStateMachine : StateMachine
     {
         SwitchState(typeof(EnemyDeathState));
     }
+
+    public void ToThrowedState()
+    {
+        SwitchState(typeof(EnemyThrowedState));
+    }
+
+    public void ToTransmutationState()
+    {
+        SwitchState(typeof(EnemyTransmutationState));
+    }
 }

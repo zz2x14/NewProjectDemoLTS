@@ -88,9 +88,9 @@ public class PlayerInput : MonoBehaviour//Sign:更新模式会影响到按键判
     public bool IsClimbKey => playerInputActions.Gameplay.Climb.WasPerformedThisFrame();
     public bool IsClimbKeyReleased => playerInputActions.Gameplay.Climb.WasReleasedThisFrame();
 
-    public bool IsDamageMagicKeyReleased => playerInputActions.Gameplay.DamageMagicHotkey.WasPressedThisFrame();
-    public bool IsCureMagickeyReleased => playerInputActions.Gameplay.CureMagicHotkey.WasPressedThisFrame();
-    public bool IsControlMagicKeyReleased => playerInputActions.Gameplay.ControlMagicHotkey.WasPressedThisFrame();
+    public bool IsDamageMagicKeyPressed=> playerInputActions.Gameplay.DamageMagicHotkey.WasPressedThisFrame();
+    public bool IsCureMagickeyPressed => playerInputActions.Gameplay.CureMagicHotkey.WasPressedThisFrame();
+    public bool IsControlMagicKeyPressed => playerInputActions.Gameplay.ControlMagicHotkey.WasPressedThisFrame();
 
     public bool IsGameConfirmKeyPressed => playerInputActions.Gameplay.GameConfirm.WasPressedThisFrame();
 
@@ -187,7 +187,10 @@ public class PlayerInput : MonoBehaviour//Sign:更新模式会影响到按键判
      public void DisablePlayerMenuInput()
      {
          playerInputActions.PlayerMenu.Disable();
+     }
+     public void DisablePlayerMenuInputWithoutSwitchKey()
+     {
+         playerInputActions.PlayerMenu.Disable();
          EnableOneInput(playerInputActions.PlayerMenu.Switch);
      }
-     
 }

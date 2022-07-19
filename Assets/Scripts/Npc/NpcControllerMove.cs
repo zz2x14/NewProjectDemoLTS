@@ -34,12 +34,14 @@ public class NpcControllerMove : NpcController
         flipScale = new Vector3(-defaultScaleX, transform.localScale.y, transform.localScale.z);
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
         if (needName)
         {
             StartCoroutine(nameof(NameTextScaleFollowNpcCor));
         }
+        
+        base.OnEnable();
     }
 
     private void OnDisable()

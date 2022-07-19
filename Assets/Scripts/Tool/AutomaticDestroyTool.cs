@@ -7,12 +7,21 @@ public class AutomaticDestroyTool : MonoBehaviour
 {
     [SerializeField] private float destroyTime;
     [SerializeField] private bool needDestroy;
+    [SerializeField] private bool scaledTime;
 
+    private WaitForSeconds destroyWFS;
     private WaitForSecondsRealtime destroyRWFS;
     
     private void Awake()
     {
-        destroyRWFS = new WaitForSecondsRealtime(destroyTime);//Sign:会受到时间停止的影响，故使用Realtime
+        if (scaledTime)
+        {
+            destroyWFS = new WaitForSeconds(destroyTime);
+        }
+        else
+        {
+            destroyRWFS = new WaitForSecondsRealtime(destroyTime);//Sign:会受到时间停止的影响，故使用Realtime
+        }
     }
 
     private void OnEnable()
@@ -22,7 +31,14 @@ public class AutomaticDestroyTool : MonoBehaviour
 
     IEnumerator AutoDestroyCor()
     {
-        yield return destroyRWFS;
+        if (scaledTime)
+        {
+            yield return destroyWFS;
+        }
+        else
+        {
+            yield return destroyRWFS;
+        }
         
         if (!needDestroy)
         {

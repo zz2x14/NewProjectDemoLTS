@@ -12,7 +12,4 @@ public class EnemyGeneral : EnemyController
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(attackPoint.position,attackRange);
     }
-    
-  
-    
 }

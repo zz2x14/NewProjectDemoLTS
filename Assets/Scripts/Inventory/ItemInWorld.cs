@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MyEventSpace;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -19,12 +20,19 @@ public class ItemInWorld : MonoBehaviour
 
     private void OnEnable()
     {
+        EventManager.Instance.AddEventHandlerListener(EventName.OnSceneTeleport,DisableSelf);
+        
         rb = GetComponent<Rigidbody2D>();
 
         randomForceX = Random.Range(itemMinForce.x, itemMaxForce.x);
         randomForceY = Random.Range(itemMinForce.y, itemMaxForce.y);
         
         rb.AddForce(new Vector2(randomForceX,randomForceY),ForceMode2D.Force);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Instance.RemoveEventHandlerListener(EventName.OnSceneTeleport,DisableSelf);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -52,6 +60,12 @@ public class ItemInWorld : MonoBehaviour
             
             gameObject.SetActive(false);
         }
+    }
+
+    //传送时物品禁用
+    private void DisableSelf(object o ,EventArgs e)
+    {
+        gameObject.SetActive(false);
     }
     
     

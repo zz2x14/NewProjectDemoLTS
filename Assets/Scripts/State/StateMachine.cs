@@ -11,7 +11,8 @@ public abstract class StateMachine : MonoBehaviour
     
     private Animator anim;
     public Animator Anim => anim;
-    
+    public AnimatorStateInfo AnimInfo { get; set; }
+
     protected Dictionary<Type, IState> stateTable;
     
     protected virtual void Awake()

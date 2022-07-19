@@ -13,8 +13,6 @@ public class PlayerMenuSystem : PersistentSingletonTool<PlayerMenuSystem>
     [SerializeField] private List<Image> navigationImageList = new List<Image>();
     [SerializeField] private List<TextMeshProUGUI> navigationNameList = new List<TextMeshProUGUI>();
 
-    private PlayerInput playerInput;
-
     private int canvasIndex;
 
     private bool isOpen;
@@ -27,8 +25,6 @@ public class PlayerMenuSystem : PersistentSingletonTool<PlayerMenuSystem>
     protected override void Awake()
     {
         base.Awake();
-
-        playerInput = FindObjectOfType<PlayerInput>();
 
         canvasIndex = 0;
         
@@ -50,30 +46,21 @@ public class PlayerMenuSystem : PersistentSingletonTool<PlayerMenuSystem>
         playerMenuCanvas.enabled = isOpen;
         EnableTargetCanvas(0);
         EnableTargetNavigation(0);
+        
+        GameManager.Instance.PlayerMenuingStateOpreation(isOpen);
 
         if (isOpen)
-        {
-            Time.timeScale = 0f;
-            ComponentProvider.Instance.PlayerInputAvatar.DisableGamePlayInput();
-            ComponentProvider.Instance.PlayerInputAvatar.EnablePlayerMenuInput();
-            GameManager.Instance._GameState = GameState.Paused;
-            
+        { 
             EventManager.Instance.EventHandlerTrigger(EventName.OnPlayerMenuOpen,e);
         }
-        else
-        {
-            Time.timeScale = 1f;
-            ComponentProvider.Instance.PlayerInputAvatar.DisablePlayerMenuInput();
-            ComponentProvider.Instance.PlayerInputAvatar.EnableGameplayInput();
-            GameManager.Instance._GameState = GameState.Playing;
-        }
+       
     }
 
     private void SwitchPlayerMenuObject()
     {
         if(!isOpen) return;
         
-        if (playerInput.IsSwitchNextKeyPressed)
+        if (ComponentProvider.Instance.PlayerInputAvatar.IsSwitchNextKeyPressed)
         {
             canvasIndex++;
             
@@ -83,7 +70,7 @@ public class PlayerMenuSystem : PersistentSingletonTool<PlayerMenuSystem>
             EnableTargetCanvas(canvasIndex);
             EnableTargetNavigation(canvasIndex);
         }
-        else if (playerInput.IsSwitchLastKeyPressed)
+        else if (ComponentProvider.Instance.PlayerInputAvatar.IsSwitchLastKeyPressed)
         {
             canvasIndex--;
             if (canvasIndex < 0)

@@ -9,10 +9,14 @@ public class PlayerJumpState : PlayerStateBase
     [SerializeField] private float hangJumpForce;
     [SerializeField] private float climbJumpForce;
     [SerializeField] private float jumpMoveSpeed;
+
+    private float finalJumpForce;
     
     public override void OnEnter()
     {
         base.OnEnter();
+
+        finalJumpForce = player.InLevitation ? jumpForce * 1.5f : jumpForce ;
 
         player.JumpCount--;
         
@@ -26,7 +30,7 @@ public class PlayerJumpState : PlayerStateBase
             return;
         }
 
-        player.SetRbVelocityY(playerStateMachine.LastState.GetType() == typeof(PlayerHangState) ? hangJumpForce: jumpForce);
+        player.SetRbVelocityY(playerStateMachine.LastState.GetType() == typeof(PlayerHangState) ? hangJumpForce: finalJumpForce);
     }
 
     public override void OnGameLogicUpdate()

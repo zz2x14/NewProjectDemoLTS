@@ -8,6 +8,7 @@ public static class EventName
     public const string OnEnemyDeath = nameof(EventManager.OnEnemyDeath);
     public const string OnPlayerDeath = nameof(EventManager.OnPlayerDeath);
     public const string OnPlayerMenuOpen = nameof(EventManager.OnPlayerMenuOpen);
+    public const string OnSceneTeleport = nameof(EventManager.OnSceneTeleport);
 }
 
 //Sign:一对多和多对一的使用情况
@@ -23,6 +24,7 @@ namespace MyEventSpace// TODO:做到外部调用不到委托
         internal EventHandler OnEnemyDeath;
         internal EventHandler OnPlayerDeath; //对委托做一个保护
         internal EventHandler OnPlayerMenuOpen;
+        internal EventHandler OnSceneTeleport;
     
         private void OnEnable()
         {
@@ -39,6 +41,7 @@ namespace MyEventSpace// TODO:做到外部调用不到委托
             eventDic.Add(EventName.OnEnemyDeath,OnEnemyDeath);
             eventDic.Add(EventName.OnPlayerDeath,OnPlayerDeath);
             eventDic.Add(EventName.OnPlayerMenuOpen,OnPlayerMenuOpen);
+            eventDic.Add(EventName.OnSceneTeleport,OnSceneTeleport);
         }
     
         public void AddEventHandlerListener(string eventName, EventHandler handler)

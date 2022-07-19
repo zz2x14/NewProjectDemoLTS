@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "MagicData/ControlMagicData",fileName = "NewControlMagicData")]
-public class ControlMagic : Magic
+public class ControlMagic : MagicDataContainer
 {
     [SerializeField] private ControlMagicData ControlMagicData;
     public float ControlValue => ControlMagicData.controlValue;

@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PlayerMagicSystem : SingletonTool<PlayerMagicSystem>
-{ 
+{
     private Canvas magicHotbarHUDCanvas;
     private Image damageTypeMagicHotbarIcon;
     private Image cureTypeMagicHotbarIcon;
@@ -16,19 +17,26 @@ public class PlayerMagicSystem : SingletonTool<PlayerMagicSystem>
     [SerializeField] private List<GameObject> magicSlotListInPM = new List<GameObject>();
     
     [Header("法术")]
-    [SerializeField] private List<Magic> magicListInPM = new List<Magic>();
+    [SerializeField] private List<MagicDataContainer> magicListInPM = new List<MagicDataContainer>();
     [SerializeField] private DamageMagic curDamageMagic;
     [SerializeField] private CureMagic curCureMagic;
     [SerializeField] private ControlMagic curControlMagic;
+
+    [Space] [SerializeField] private float castMagicDelayTime;
 
     private Color notMasterColor;
     private Color clickedColor;
     private Color notClickedColor;
 
+    private Color magicNotReadyHotbarColor;
+
     public bool IsMagicClicked { get; set; }
     public int MagicIndex { get; set; }
 
-    private Dictionary<string, Magic> magicDic = new Dictionary<string, Magic>();
+    private Dictionary<string, UnityAction<GameObject>> magicCastApproachDic = new Dictionary<string, UnityAction<GameObject>>();
+
+    private  WaitForSeconds castMagicDelayWFS;//TODO:为什么waitUntil只有第一次才生效
+    private Coroutine castMagicCor;
 
     protected override void Awake()
     {
@@ -37,6 +45,7 @@ public class PlayerMagicSystem : SingletonTool<PlayerMagicSystem>
         notMasterColor = new Color(0f, 0f, 0f, 0.5f);
         clickedColor = new Color(0f, 0f, 0f, 0.4f);
         notClickedColor = new Color(1f, 1f, 1f, 0.4f);
+        magicNotReadyHotbarColor = new Color(1f, 1f, 1f, 0.5f);
 
         magicHotbarHUDCanvas = GameObject.Find("PlayerMagicHotbarCanvas_Dynamic").GetComponent<Canvas>();
 
@@ -45,6 +54,8 @@ public class PlayerMagicSystem : SingletonTool<PlayerMagicSystem>
         controlTypeMagicHotbarIcon = GameObject.Find("CurControlMagicIcon").GetComponent<Image>();
 
         InitializeMagicDic();
+
+        castMagicDelayWFS = new WaitForSeconds(castMagicDelayTime);
     }
 
     private void OnEnable()
@@ -58,6 +69,11 @@ public class PlayerMagicSystem : SingletonTool<PlayerMagicSystem>
         }
     }
 
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     private void Update()
     {
         if (IsMagicClicked && ComponentProvider.Instance.PlayerInputAvatar.IsMultiFunctionKeyPressed)
@@ -66,27 +82,38 @@ public class PlayerMagicSystem : SingletonTool<PlayerMagicSystem>
             CancelMagicClick(MagicIndex);
         }
 
-        if (ComponentProvider.Instance.PlayerInputAvatar.IsDamageMagicKeyReleased && curDamageMagic != null)
+        if (ComponentProvider.Instance.PlayerInputAvatar.IsDamageMagicKeyPressed && curDamageMagic != null && curDamageMagic.isReady)
         {
-            
+            if (ContainsMagic(curDamageMagic.Name))
+            {
+                ComponentProvider.Instance.PlayerAvatar.IsCastMagic = true;
+                
+                StartCastMagicCor(magicCastApproachDic[curDamageMagic.Name],curDamageMagic.MagicPrefab);
+                
+                StartMagicCDCor(damageTypeMagicHotbarIcon,curDamageMagic);
+            }
+        } 
+        if (ComponentProvider.Instance.PlayerInputAvatar.IsCureMagickeyPressed && curCureMagic != null && curCureMagic.isReady)
+        {
+            if (ContainsMagic(curCureMagic.Name))
+            {
+                ComponentProvider.Instance.PlayerAvatar.IsCastMagic = true;
+                
+                StartCastMagicCor(magicCastApproachDic[curCureMagic.Name],curCureMagic.MagicPrefab);
+                
+                StartMagicCDCor(cureTypeMagicHotbarIcon,curCureMagic);
+            }
         }
-
-        if (ComponentProvider.Instance.PlayerInputAvatar.IsCureMagickeyReleased && curCureMagic != null)
+        if (ComponentProvider.Instance.PlayerInputAvatar.IsControlMagicKeyPressed && curControlMagic != null && curControlMagic.isReady)
         {
-            
-        }
-
-        if (ComponentProvider.Instance.PlayerInputAvatar.IsControlMagicKeyReleased && curControlMagic != null)
-        {
-            
-        }
-    }
-
-    public void InitializeMagicDic()
-    {
-        for (int i = 0; i < magicListInPM.Count; i++)
-        {
-            magicDic.Add(magicListInPM[i].Name,magicListInPM[i]);
+            if (ContainsMagic(curControlMagic.Name))
+            {
+                ComponentProvider.Instance.PlayerAvatar.IsCastMagic = true;
+                
+                StartCastMagicCor(magicCastApproachDic[curControlMagic.Name],curControlMagic.MagicPrefab);
+                
+                StartMagicCDCor(controlTypeMagicHotbarIcon,curControlMagic);
+            }
         }
     }
 
@@ -151,5 +178,73 @@ public class PlayerMagicSystem : SingletonTool<PlayerMagicSystem>
         magicSlotListInPM[index].transform.GetChild(0).GetComponent<Image>().color = notClickedColor;
     }
     
-    
+    public void InitializeMagicDic()
+    {
+        foreach (var magic in magicListInPM)
+        {
+            switch (magic.magicApproach)
+            {
+                case MagicApproach.General:
+                    magicCastApproachDic.Add(magic.Name,CastMagicGeneral);
+                    break;
+                case MagicApproach.OnPlayer:
+                    magicCastApproachDic.Add(magic.Name,CastMagicOnPlayerPos);
+                    break;
+                case MagicApproach.OnEnemy:
+                    magicCastApproachDic.Add(magic.Name,CastMagicOnEnemyPos);
+                    break;
+            }
+        }
+    }
+
+    public bool ContainsMagic(string magicName)
+    {
+        return magicCastApproachDic.ContainsKey(magicName);
+    }
+
+    private void StartCastMagicCor(UnityAction<GameObject> castMagicFunc,GameObject magicPrefab)
+    {
+        if (castMagicCor != null)
+        {
+            StopCoroutine(castMagicCor);
+        }
+
+        castMagicCor = StartCoroutine(CastMagicCor(castMagicFunc, magicPrefab));
+    }
+    IEnumerator CastMagicCor(UnityAction<GameObject> castMagicFunc,GameObject magicPrefab)
+    {
+        yield return castMagicDelayWFS;
+        
+        castMagicFunc.Invoke(magicPrefab);
+    }
+
+    public void CastMagicGeneral(GameObject magicPrefab)
+    {
+        PoolManager.Instance.Release(magicPrefab,ComponentProvider.Instance.PlayerAvatar.CastMagicPoint);
+    }
+    public void CastMagicOnPlayerPos(GameObject magicPrefab)
+    {
+        PoolManager.Instance.Release(magicPrefab,ComponentProvider.Instance.PlayerAvatar.MagicEffectivePos);
+    }
+    public void CastMagicOnEnemyPos(GameObject magicPrefab)
+    {
+        PoolManager.Instance.Release(magicPrefab,
+            GameManager.Instance._BattleState == PlayerBattleState.InBattle ? 
+                GameManager.Instance.CurBattleTargetPosWithOffset:GameManager.Instance.FindOneTargetPosWithOffset());
+    }
+
+    private void StartMagicCDCor(Image curMagicHorbarIcon,MagicDataContainer magic)
+    {
+        StartCoroutine(WaitMagicCDCor(curMagicHorbarIcon,magic));
+    }
+    IEnumerator WaitMagicCDCor(Image curMagicHorbarIcon,MagicDataContainer magic)
+    {
+        magic.isReady = false;
+        curMagicHorbarIcon.color = magicNotReadyHotbarColor;
+        
+        yield return new WaitForSeconds(magic.ColdDown);
+
+        magic.isReady = true;
+        curMagicHorbarIcon.color = Color.white;
+    }
 }
